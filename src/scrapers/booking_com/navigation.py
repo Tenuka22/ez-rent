@@ -1,10 +1,12 @@
 import os
+import time
 
 from playwright.async_api import Page
 from returns.result import Failure, Result, Success
 
 from src.scrapers.booking_com.browser import modal_dismisser
 from src.scrapers.booking_com.playwright_urls import BookingComUrls
+from src.utils.logger import logger
 
 
 async def set_booking_com_counter(page: Page, input_id: str, target: int) -> None:
@@ -57,8 +59,8 @@ async def goto_properties_page(
         )
         try:
             await flexible_modal.wait_for(state="visible", timeout=5000)
-        except:
-            print("Flexible modal did not appear, continuing...")
+        except Exception:
+            logger.debug("Flexible modal did not appear, continuing...")
 
         # Select weekend option
         weekend_btn = page.locator(
@@ -117,7 +119,7 @@ async def goto_properties_page(
             await page.wait_for_timeout(500)  # wait before retrying
 
         if not selected:
-            print("No autocomplete option found, using typed destination as fallback.")
+            logger.info("No autocomplete option found, using typed destination as fallback.")
 
         # Click the Search button
         search_btn = page.locator('span:has-text("Search")').first
@@ -130,8 +132,8 @@ async def goto_properties_page(
 
     except Exception as e:
         os.makedirs("./errors", exist_ok=True)
-        await page.screenshot(path="./errors/go_to_properties.png")
-        import traceback
-
-        traceback.print_exc()
+        await page.screenshot(
+            path=f"./errors/{destination}_a{adults}_r{rooms}_{int(time.time())}.png"
+        )
+        logger.exception(e)
         return Failure(str(e))

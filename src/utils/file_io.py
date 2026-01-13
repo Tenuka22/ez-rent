@@ -5,17 +5,15 @@ import pandas as pd
 
 from src.core.data_models import ScrapedData
 
-BOOKING_COM_DATA_CSV_PATH = "./scraped/booking_com_data.csv"
-
 
 def save_scraped_data_to_csv(
-    data: List[ScrapedData], destination: str, adults: int, rooms: int
+    data: List[ScrapedData], destination: str, adults: int, rooms: int, limit: int
 ) -> None:
     if not data:
         return
 
     # Define the directory and file path
-    file_path = f"./scraped/properties/{destination}/{adults}/{rooms}/data.csv"
+    file_path = f"./scraped/properties/{destination}/{adults}/{rooms}/limit_{limit}.csv"
     dir_name = os.path.dirname(file_path)
 
     # Create the directory if it doesn't exist
@@ -51,3 +49,15 @@ def save_scraped_data_to_csv(
 
     new_df = pd.DataFrame(data_dicts)
     new_df.to_csv(file_path, index=False)
+
+
+def read_scraped_data_from_csv(file_path: str) -> List[ScrapedData]:
+    """Reads scraped data from a CSV file and returns a list of ScrapedData objects."""
+    df = pd.read_csv(file_path)
+    # Replace NaN with None for proper ScrapedData initialization
+    df = df.where(pd.notnull(df), None)
+
+    data = []
+    for _, row in df.iterrows():
+        data.append(ScrapedData(**row.to_dict()))
+    return data

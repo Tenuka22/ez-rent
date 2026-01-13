@@ -5,6 +5,7 @@ from playwright.async_api import Page
 from returns.result import Failure, Result, Success
 
 from src.core.data_models import ScrapedData
+from src.utils.logger import logger
 
 
 async def modal_dismisser(page: Page):
@@ -42,7 +43,7 @@ async def scrape_properties_data(page: Page, limit: int) -> Result[List[ScrapedD
 
             # Extract property cards
             property_cards = await page.locator('[data-testid="property-card"]').all()
-            print(f"Found {len(property_cards)} properties on current scroll")
+            logger.debug(f"Found {len(property_cards)} properties on current scroll")
 
             for idx, card in enumerate(property_cards):
                 try:
@@ -225,20 +226,20 @@ async def scrape_properties_data(page: Page, limit: int) -> Result[List[ScrapedD
                         taxes_and_fees=taxes_and_fees,
                     )
                     hotels.append(hotel_data)
-                    print(f"Scraped: {name}")
+                    logger.info(f"Scraped: {name}")
 
                     if len(hotels) >= limit:
-                        print(f"Scraped {limit} properties, stopping.")
+                        logger.info(f"Scraped {limit} properties, stopping.")
                         return Success(hotels[:limit])
 
                 except Exception as e:
-                    print(f"Error extracting hotel {idx}: {e}")
+                    logger.error(f"Error extracting hotel {idx}: {e}")
                     continue
 
             # Check if "Load more results" button exists
             load_more_btn = page.locator('button:has-text("Load more results")').first
             if await load_more_btn.count() > 0 and await load_more_btn.is_visible():
-                print("Clicking 'Load more results'...")
+                logger.info("Clicking 'Load more results'...")
                 await load_more_btn.click()
                 await asyncio.sleep(3)  # wait for more results to load
                 last_height = await page.evaluate(
@@ -252,7 +253,7 @@ async def scrape_properties_data(page: Page, limit: int) -> Result[List[ScrapedD
             if new_height == last_height:
                 same_count += 1
                 if same_count >= 2:  # bottom reached
-                    print("Reached bottom, finished scraping.")
+                    logger.info("Reached bottom, finished scraping.")
                     break
             else:
                 same_count = 0
@@ -263,4 +264,5 @@ async def scrape_properties_data(page: Page, limit: int) -> Result[List[ScrapedD
         return Success(hotels)
 
     except Exception as e:
+        logger.error(f"Error during scraping: {e}")
         return Failure(f"Error during scraping: {e}")

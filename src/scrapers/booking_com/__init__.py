@@ -1,3 +1,5 @@
+import os
+import time
 from typing import List
 
 from playwright.async_api import async_playwright
@@ -11,7 +13,8 @@ from src.scrapers.booking_com.browser import (
 )
 from src.scrapers.booking_com.playwright_urls import BookingComUrls
 from src.utils.cache import cache_url, get_cached_url
-from src.utils.file_io import save_scraped_data_to_csv
+from src.utils.file_io import read_scraped_data_from_csv, save_scraped_data_to_csv
+from src.utils.logger import logger
 
 
 async def scrape_booking_com_data(
@@ -19,7 +22,14 @@ async def scrape_booking_com_data(
     adults: int = 2,
     rooms: int = 1,
     limit: int = 100,
+    force_refetch: bool = False,
 ) -> Result[List[ScrapedData], str]:
+    file_path = f"./scraped/properties/{destination}/{adults}/{rooms}/limit_{limit}.csv"
+    if not force_refetch and os.path.exists(file_path):
+        if (time.time() - os.path.getmtime(file_path)) < 86400:  # 24 hours
+            logger.info(f"Using cached data from {file_path}")
+            return Success(read_scraped_data_from_csv(file_path))
+
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=False, slow_mo=500)
         try:
@@ -37,7 +47,7 @@ async def scrape_booking_com_data(
             )
 
             if cached_url:
-                print(f"Proceeding with the cached_URL {cached_url}")
+                logger.info(f"Proceeding with the cached_URL {cached_url}")
                 await page.goto(cached_url, wait_until="networkidle")
 
                 await modal_dismisser(page)
@@ -46,7 +56,7 @@ async def scrape_booking_com_data(
                     '[data-testid="property-card"]', timeout=30_000
                 )
             else:
-                print("Proceeding to get the URL")
+                logger.info("Proceeding to get the URL")
                 urls = BookingComUrls()
                 result = await goto_properties_page(
                     page=page,
@@ -79,7 +89,7 @@ async def scrape_booking_com_data(
 
             if isinstance(scraped_data_result, Success):
                 save_scraped_data_to_csv(
-                    scraped_data_result.unwrap(), destination, adults, rooms
+                    scraped_data_result.unwrap(), destination, adults, rooms, limit
                 )
 
             return scraped_data_result

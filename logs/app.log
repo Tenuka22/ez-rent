@@ -1,0 +1,150 @@
+2026-01-13 23:20:31 | INFO     | __main__:main:11 - Please provide the scraping parameters:
+2026-01-13 23:20:40 | INFO     | __main__:main:30 - 
+Starting scraper with parameters:
+2026-01-13 23:20:40 | INFO     | __main__:main:31 -   Destination: Unawatuna
+2026-01-13 23:20:40 | INFO     | __main__:main:32 -   Adults: 2
+2026-01-13 23:20:40 | INFO     | __main__:main:33 -   Rooms: 1
+2026-01-13 23:20:40 | INFO     | __main__:main:34 -   Limit: 100
+2026-01-13 23:20:40 | INFO     | __main__:main:35 -   Force Refetch: False
+2026-01-13 23:20:40 | INFO     | __main__:main:36 - ------------------------------
+2026-01-13 23:20:40 | INFO     | src.scrapers.booking_com:scrape_booking_com_data:30 - Using cached data from ./scraped/properties/Unawatuna/2/1/limit_100.csv
+2026-01-13 23:20:40 | SUCCESS  | __main__:main:50 - Scraping successful! Found 100 properties.
+2026-01-13 23:23:16 | INFO     | __main__:main:11 - Please provide the scraping parameters:
+2026-01-13 23:23:21 | INFO     | __main__:main:30 - 
+Starting scraper with parameters:
+2026-01-13 23:23:21 | INFO     | __main__:main:31 -   Destination: Unawatuna
+2026-01-13 23:23:21 | INFO     | __main__:main:32 -   Adults: 2
+2026-01-13 23:23:21 | INFO     | __main__:main:33 -   Rooms: 1
+2026-01-13 23:23:21 | INFO     | __main__:main:34 -   Limit: 100
+2026-01-13 23:23:21 | INFO     | __main__:main:35 -   Force Refetch: False
+2026-01-13 23:23:21 | INFO     | __main__:main:36 - ------------------------------
+2026-01-13 23:23:21 | INFO     | src.scrapers.booking_com:scrape_booking_com_data:30 - Using cached data from ./scraped/properties/Unawatuna/2/1/limit_100.csv
+2026-01-13 23:23:21 | SUCCESS  | __main__:main:50 - Scraping successful! Found 100 properties.
+2026-01-13 23:23:55 | INFO     | __main__:main:11 - Please provide the scraping parameters:
+2026-01-13 23:24:02 | INFO     | __main__:main:30 - 
+Starting scraper with parameters:
+2026-01-13 23:24:02 | INFO     | __main__:main:31 -   Destination: Sunset Mirage Villa
+2026-01-13 23:24:02 | INFO     | __main__:main:32 -   Adults: 2
+2026-01-13 23:24:02 | INFO     | __main__:main:33 -   Rooms: 1
+2026-01-13 23:24:02 | INFO     | __main__:main:34 -   Limit: 100
+2026-01-13 23:24:02 | INFO     | __main__:main:35 -   Force Refetch: False
+2026-01-13 23:24:02 | INFO     | __main__:main:36 - ------------------------------
+2026-01-13 23:24:03 | INFO     | src.scrapers.booking_com:scrape_booking_com_data:59 - Proceeding to get the URL
+2026-01-13 23:24:30 | DEBUG    | src.scrapers.booking_com.navigation:goto_properties_page:63 - Flexible modal did not appear, continuing...
+2026-01-13 23:24:58 | DEBUG    | src.scrapers.booking_com.browser:scrape_properties_data:46 - Found 25 properties on current scroll
+2026-01-13 23:24:58 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Marine Suites
+2026-01-13 23:24:58 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Granbell Hotel Colombo
+2026-01-13 23:24:58 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: C 1 Colombo Fort
+2026-01-13 23:24:58 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Galle Face Hotel
+2026-01-13 23:24:59 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Cinnamon Lakeside
+2026-01-13 23:24:59 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Marino Beach Colombo
+2026-01-13 23:24:59 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Greenscape Colombo
+2026-01-13 23:24:59 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Drop Inn Hostels
+2026-01-13 23:24:59 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Trillium Boutique Express Hotel - Ward Place
+2026-01-13 23:24:59 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: SeSaya Poshtel & Bistro - Colombo's Newest and Finest Poshtel Dorms and Rooms
+2026-01-13 23:24:59 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Fern Colombo
+2026-01-13 23:24:59 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Grand Oriental Hotel
+2026-01-13 23:24:59 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: City Stay By Sunrise
+2026-01-13 23:25:00 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Galle Face Terrace Hostel by Tourlux
+2026-01-13 23:25:00 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Granny's House
+2026-01-13 23:25:00 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Four Petals Inn
+2026-01-13 23:25:00 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Colombo, Trizen Luxury Apartments, Sri Lanka
+2026-01-13 23:25:00 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Cinnamon Life at City of Dreams
+2026-01-13 23:25:00 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Adaaran Retreat Colombo 07
+2026-01-13 23:25:00 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: The Steuart by Citrus
+2026-01-13 23:25:00 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Viveka Hotel Colombo
+2026-01-13 23:25:00 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Marine Bay Colombo
+2026-01-13 23:25:01 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: The Kingsbury Colombo
+2026-01-13 23:25:01 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Cinnamon Grand Colombo
+2026-01-13 23:25:01 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Sofia Colombo City Hotel
+2026-01-13 23:25:03 | DEBUG    | src.scrapers.booking_com.browser:scrape_properties_data:46 - Found 47 properties on current scroll
+2026-01-13 23:25:03 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Marine Suites
+2026-01-13 23:25:03 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Granbell Hotel Colombo
+2026-01-13 23:25:03 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: C 1 Colombo Fort
+2026-01-13 23:25:03 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Galle Face Hotel
+2026-01-13 23:25:03 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Cinnamon Lakeside
+2026-01-13 23:25:03 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Marino Beach Colombo
+2026-01-13 23:25:04 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Greenscape Colombo
+2026-01-13 23:25:04 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Drop Inn Hostels
+2026-01-13 23:25:04 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Trillium Boutique Express Hotel - Ward Place
+2026-01-13 23:25:04 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: SeSaya Poshtel & Bistro - Colombo's Newest and Finest Poshtel Dorms and Rooms
+2026-01-13 23:25:04 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Fern Colombo
+2026-01-13 23:25:04 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Grand Oriental Hotel
+2026-01-13 23:25:04 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: City Stay By Sunrise
+2026-01-13 23:25:04 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Galle Face Terrace Hostel by Tourlux
+2026-01-13 23:25:05 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Granny's House
+2026-01-13 23:25:05 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Four Petals Inn
+2026-01-13 23:25:05 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Colombo, Trizen Luxury Apartments, Sri Lanka
+2026-01-13 23:25:05 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Cinnamon Life at City of Dreams
+2026-01-13 23:25:05 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Adaaran Retreat Colombo 07
+2026-01-13 23:25:05 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: The Steuart by Citrus
+2026-01-13 23:25:05 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Viveka Hotel Colombo
+2026-01-13 23:25:05 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Marine Bay Colombo
+2026-01-13 23:25:05 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: The Kingsbury Colombo
+2026-01-13 23:25:06 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Cinnamon Grand Colombo
+2026-01-13 23:25:06 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Sofia Colombo City Hotel
+2026-01-13 23:25:06 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: ITC Ratnadipa, a Luxury Collection Hotel, Colombo
+2026-01-13 23:25:06 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: De Saram House by Geoffrey Bawa
+2026-01-13 23:25:06 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Urban Deck
+2026-01-13 23:25:06 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: The Auresta Colombo
+2026-01-13 23:25:06 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Motel VIP
+2026-01-13 23:25:06 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: CEYLON STAYZ
+2026-01-13 23:25:06 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: GSH Colombo
+2026-01-13 23:25:07 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Shangri-La Colombo
+2026-01-13 23:25:07 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Colombo Downtown Monkey Backpackers Hostel
+2026-01-13 23:25:07 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Anugaa in The City
+2026-01-13 23:25:07 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Zest Metropole
+2026-01-13 23:25:07 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Opulence Colombo
+2026-01-13 23:25:07 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Cinnamon Red Colombo
+2026-01-13 23:25:07 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Lucky Wave Beach Resort
+2026-01-13 23:25:07 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Venue Colombo
+2026-01-13 23:25:08 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Cinnamon Life Residencies - Luxury 2 Bedroom Apartment 18th Floor
+2026-01-13 23:25:08 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Havelock City Hostel, Colombo
+2026-01-13 23:25:08 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Colombo Trizen J&J future Apart ment
+2026-01-13 23:25:08 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Manaal Palace
+2026-01-13 23:25:08 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Highbury Colombo
+2026-01-13 23:25:08 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Urban Girl Hostel
+2026-01-13 23:25:08 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: MercuryFM 103 Guest House - Colombo 3
+2026-01-13 23:25:10 | DEBUG    | src.scrapers.booking_com.browser:scrape_properties_data:46 - Found 68 properties on current scroll
+2026-01-13 23:25:10 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Marine Suites
+2026-01-13 23:25:11 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Granbell Hotel Colombo
+2026-01-13 23:25:11 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: C 1 Colombo Fort
+2026-01-13 23:25:11 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Galle Face Hotel
+2026-01-13 23:25:11 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Cinnamon Lakeside
+2026-01-13 23:25:11 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Marino Beach Colombo
+2026-01-13 23:25:11 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Greenscape Colombo
+2026-01-13 23:25:11 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Drop Inn Hostels
+2026-01-13 23:25:12 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Trillium Boutique Express Hotel - Ward Place
+2026-01-13 23:25:12 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: SeSaya Poshtel & Bistro - Colombo's Newest and Finest Poshtel Dorms and Rooms
+2026-01-13 23:25:12 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Fern Colombo
+2026-01-13 23:25:12 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Grand Oriental Hotel
+2026-01-13 23:25:12 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: City Stay By Sunrise
+2026-01-13 23:25:12 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Galle Face Terrace Hostel by Tourlux
+2026-01-13 23:25:13 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Granny's House
+2026-01-13 23:25:13 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Four Petals Inn
+2026-01-13 23:25:13 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Colombo, Trizen Luxury Apartments, Sri Lanka
+2026-01-13 23:25:13 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Cinnamon Life at City of Dreams
+2026-01-13 23:25:13 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Adaaran Retreat Colombo 07
+2026-01-13 23:25:13 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: The Steuart by Citrus
+2026-01-13 23:25:14 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Viveka Hotel Colombo
+2026-01-13 23:25:14 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Marine Bay Colombo
+2026-01-13 23:25:14 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: The Kingsbury Colombo
+2026-01-13 23:25:14 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Cinnamon Grand Colombo
+2026-01-13 23:25:14 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Sofia Colombo City Hotel
+2026-01-13 23:25:15 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Nyne Hotels Lake Lodge - Colombo
+2026-01-13 23:25:15 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Thilhara Colombo
+2026-01-13 23:25:15 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:229 - Scraped: Seconds Hostel - Colombo
+2026-01-13 23:25:15 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:232 - Scraped 100 properties, stopping.
+2026-01-13 23:25:15 | SUCCESS  | __main__:main:50 - Scraping successful! Found 100 properties.
+2026-01-13 23:25:30 | INFO     | __main__:main:11 - Please provide the scraping parameters:
+2026-01-13 23:26:44 | INFO     | __main__:main:11 - Please provide the scraping parameters:
+2026-01-13 23:26:51 | INFO     | __main__:main:30 - 
+Starting scraper with parameters:
+2026-01-13 23:26:51 | DEBUG    | __main__:main:31 -   Destination: Unawatuna
+2026-01-13 23:26:51 | DEBUG    | __main__:main:32 -   Adults: 2
+2026-01-13 23:26:51 | DEBUG    | __main__:main:33 -   Rooms: 1
+2026-01-13 23:26:51 | DEBUG    | __main__:main:34 -   Limit: 100
+2026-01-13 23:26:51 | DEBUG    | __main__:main:35 -   Force Refetch: False
+2026-01-13 23:26:51 | INFO     | __main__:main:36 - ------------------------------
+2026-01-13 23:26:51 | INFO     | src.scrapers.booking_com:scrape_booking_com_data:30 - Using cached data from ./scraped/properties/Unawatuna/2/1/limit_100.csv
+2026-01-13 23:26:51 | SUCCESS  | __main__:main:50 - Scraping successful! Found 100 properties.
