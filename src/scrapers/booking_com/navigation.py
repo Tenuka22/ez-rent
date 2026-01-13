@@ -9,29 +9,46 @@ from src.scrapers.booking_com.playwright_urls import BookingComUrls
 from src.utils.logger import logger
 
 
-async def set_booking_com_counter(page: Page, input_id: str, target: int) -> None:
-    container = page.locator(f"input#{input_id}").locator("..").locator("..")
-    value_span = container.locator('span.e32aa465fd[aria-hidden="true"]').first
-    buttons = container.locator("button")
-    minus_btn = buttons.nth(0)
-    plus_btn = buttons.nth(1)
+async def set_booking_com_counter(
+    page: Page, input_id: str, target: int
+) -> Result[None, str]:
+    """
+    Sets the value of a counter on booking.com (e.g., number of adults, rooms).
 
-    current = int(await value_span.inner_text())
+    Args:
+        page: Playwright page object.
+        input_id: The ID of the input element associated with the counter.
+        target: The target value to set the counter to.
 
-    # Increase
-    while current < target:
-        if not await plus_btn.is_enabled():
-            break  # can't increase, exit loop
-        await plus_btn.click()
-        current += 1
+    Returns:
+        Result[None, str]: Success(None) if the counter is set, Failure with an error message otherwise.
+    """
+    try:
+        container = page.locator(f"input#{input_id}").locator("..").locator("..")
+        value_span = container.locator('span.e32aa465fd[aria-hidden="true"]').first
+        buttons = container.locator("button")
+        minus_btn = buttons.nth(0)
+        plus_btn = buttons.nth(1)
 
-    # Decrease
-    while current > target:
-        if not await minus_btn.is_enabled():
-            break  # can't decrease, exit loop
-        await minus_btn.click()
-        current -= 1
+        current = int(await value_span.inner_text())
 
+        # Increase
+        while current < target:
+            if not await plus_btn.is_enabled():
+                break  # can't increase, exit loop
+            await plus_btn.click()
+            current += 1
+
+        # Decrease
+        while current > target:
+            if not await minus_btn.is_enabled():
+                break  # can't decrease, exit loop
+            await minus_btn.click()
+            current -= 1
+        return Success(None)
+    except Exception as e:
+        logger.error(f"Error setting booking.com counter for {input_id}: {e}")
+        return Failure(str(e))
 
 async def goto_properties_page(
     page: Page,
@@ -43,7 +60,9 @@ async def goto_properties_page(
     try:
         # Go to home page
         await page.goto(urls.home, wait_until="networkidle", timeout=60_000)
-        await modal_dismisser(page)
+        dismiss_result = await modal_dismisser(page)
+        if isinstance(dismiss_result, Failure):
+            return Failure(f"Failed to dismiss modal: {dismiss_result.failure()}")
         # 1️⃣ Date picker
         date_button = page.locator('[data-testid="searchbox-dates-container"]')
         await date_button.wait_for(state="visible", timeout=5000)
@@ -89,9 +108,23 @@ async def goto_properties_page(
         await occupancy_btn.wait_for(state="visible", timeout=5000)
         await occupancy_btn.click()
 
-        await set_booking_com_counter(page, "group_adults", adults)
-        await set_booking_com_counter(page, "group_children", 0)
-        await set_booking_com_counter(page, "no_rooms", rooms)
+        adults_counter_result = await set_booking_com_counter(page, "group_adults", adults)
+        if isinstance(adults_counter_result, Failure):
+            return Failure(
+                f"Failed to set adults counter: {adults_counter_result.failure()}"
+            )
+
+        children_counter_result = await set_booking_com_counter(page, "group_children", 0)
+        if isinstance(children_counter_result, Failure):
+            return Failure(
+                f"Failed to set children counter: {children_counter_result.failure()}"
+            )
+
+        rooms_counter_result = await set_booking_com_counter(page, "no_rooms", rooms)
+        if isinstance(rooms_counter_result, Failure):
+            return Failure(
+                f"Failed to set rooms counter: {rooms_counter_result.failure()}"
+            )
 
         done_btn = page.locator('button:has-text("Done")')
         await done_btn.wait_for(state="visible", timeout=5000)

@@ -2,7 +2,9 @@ import asyncio
 
 from returns.result import Failure
 
-from src.scrapers.booking_com import scrape_booking_com_data
+from src.scrapers.booking_com.main_scraper import (
+    scrape_booking_com_data,
+)
 from src.utils.logger import logger
 
 

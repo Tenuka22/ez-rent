@@ -148,3 +148,955 @@ Starting scraper with parameters:
 2026-01-13 23:26:51 | INFO     | __main__:main:36 - ------------------------------
 2026-01-13 23:26:51 | INFO     | src.scrapers.booking_com:scrape_booking_com_data:30 - Using cached data from ./scraped/properties/Unawatuna/2/1/limit_100.csv
 2026-01-13 23:26:51 | SUCCESS  | __main__:main:50 - Scraping successful! Found 100 properties.
+2026-01-13 23:51:29 | INFO     | __main__:main:11 - Please provide the scraping parameters:
+2026-01-13 23:51:30 | WARNING  | __main__:main:15 - Destination cannot be empty.
+2026-01-13 23:51:36 | INFO     | __main__:main:30 - 
+Starting scraper with parameters:
+2026-01-13 23:51:36 | DEBUG    | __main__:main:31 -   Destination: Unawatuna
+2026-01-13 23:51:36 | DEBUG    | __main__:main:32 -   Adults: 2
+2026-01-13 23:51:36 | DEBUG    | __main__:main:33 -   Rooms: 1
+2026-01-13 23:51:36 | DEBUG    | __main__:main:34 -   Limit: 100
+2026-01-13 23:51:36 | DEBUG    | __main__:main:35 -   Force Refetch: False
+2026-01-13 23:51:36 | INFO     | __main__:main:36 - ------------------------------
+2026-01-13 23:51:36 | INFO     | src.scrapers.booking_com:scrape_booking_com_data:89 - Using cached properties data from ./scraped/properties/Unawatuna/2/1/limit_100.csv
+2026-01-13 23:51:36 | SUCCESS  | __main__:main:50 - Scraping successful! Found 100 properties.
+2026-01-13 23:51:54 | INFO     | __main__:main:11 - Please provide the scraping parameters:
+2026-01-13 23:51:57 | INFO     | __main__:main:30 - 
+Starting scraper with parameters:
+2026-01-13 23:51:57 | DEBUG    | __main__:main:31 -   Destination: Unawatuna
+2026-01-13 23:51:57 | DEBUG    | __main__:main:32 -   Adults: 2
+2026-01-13 23:51:57 | DEBUG    | __main__:main:33 -   Rooms: 1
+2026-01-13 23:51:57 | DEBUG    | __main__:main:34 -   Limit: 100
+2026-01-13 23:51:57 | DEBUG    | __main__:main:35 -   Force Refetch: False
+2026-01-13 23:51:57 | INFO     | __main__:main:36 - ------------------------------
+2026-01-13 23:51:58 | INFO     | src.scrapers.booking_com:scrape_booking_com_data:109 - Proceeding with the cached_URL https://www.booking.com/searchresults.en-gb.html?ss=Unawatuna%2C+Galle+District%2C+Sri+Lanka&efdco=1&label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&lang=en-gb&sb=1&src_elem=sb&src=index&dest_id=-2238370&dest_type=city&ac_position=0&ac_click_type=b&ac_langcode=xu&ac_suggestion_list_length=5&search_selected=true&search_pageview_id=6fad7520cf2c085e&ac_meta=GhA2ZmFkNzUyMGNmMmMwODVlIAAoATICeHU6CVVuYXdhdHVuYQ%3D%3D&ltfd=5%3A1%3A1-2026_2-2026_3-2026%3A1%3A&group_adults=1&no_rooms=1&group_children=0
+2026-01-13 23:52:17 | DEBUG    | src.scrapers.booking_com.browser:scrape_properties_data:201 - Found 25 properties on current scroll
+2026-01-13 23:52:17 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Nooit Gedacht Heritage Hotel (Original Dutch Governors House)
+2026-01-13 23:52:17 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Anara Villa
+2026-01-13 23:52:17 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Camellia Unawatuna
+2026-01-13 23:52:17 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Dev House
+2026-01-13 23:52:17 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Epic Unawatuna
+2026-01-13 23:52:17 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Aurora
+2026-01-13 23:52:17 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Lara's place
+2026-01-13 23:52:18 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Nooit Gedacht Holiday Resort Unawatuna
+2026-01-13 23:52:18 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Dunes Unawatuna Hotel
+2026-01-13 23:52:18 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: White Flower Guest
+2026-01-13 23:52:18 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: The Horizon Hill Top Villa
+2026-01-13 23:52:18 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Serenity Boutique - Unawatuna
+2026-01-13 23:52:18 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Villa Ok
+2026-01-13 23:52:18 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Asantha Guest House
+2026-01-13 23:52:18 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Sharta Unawatuna Hostel
+2026-01-13 23:52:19 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Green Villa Unawatuna
+2026-01-13 23:52:19 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Thaproban Beach House
+2026-01-13 23:52:19 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Green Escape Unawatuna
+2026-01-13 23:52:19 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Kapaliya Unawatuna
+2026-01-13 23:52:19 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Villa Rumassala Luxury Chalets Unawatuna
+2026-01-13 23:52:19 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Urchin Unawatuna
+2026-01-13 23:52:19 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Coastal Cloud Surf - Walk To Dewata Beach
+2026-01-13 23:52:19 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Villa Gaetano Unawatuna
+2026-01-13 23:52:19 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: The Emerald Hills Unawatuna
+2026-01-13 23:52:20 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Thaproban Pavilion Waves
+2026-01-13 23:52:22 | DEBUG    | src.scrapers.booking_com.browser:scrape_properties_data:201 - Found 46 properties on current scroll
+2026-01-13 23:52:22 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Nooit Gedacht Heritage Hotel (Original Dutch Governors House)
+2026-01-13 23:52:22 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Anara Villa
+2026-01-13 23:52:22 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Camellia Unawatuna
+2026-01-13 23:52:22 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Dev House
+2026-01-13 23:52:22 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Epic Unawatuna
+2026-01-13 23:52:22 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Aurora
+2026-01-13 23:52:23 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Lara's place
+2026-01-13 23:52:23 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Nooit Gedacht Holiday Resort Unawatuna
+2026-01-13 23:52:23 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Dunes Unawatuna Hotel
+2026-01-13 23:52:23 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: White Flower Guest
+2026-01-13 23:52:23 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: The Horizon Hill Top Villa
+2026-01-13 23:52:23 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Serenity Boutique - Unawatuna
+2026-01-13 23:52:23 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Villa Ok
+2026-01-13 23:52:24 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Asantha Guest House
+2026-01-13 23:52:24 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Sharta Unawatuna Hostel
+2026-01-13 23:52:24 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Green Villa Unawatuna
+2026-01-13 23:52:24 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Thaproban Beach House
+2026-01-13 23:52:24 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Green Escape Unawatuna
+2026-01-13 23:52:24 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Kapaliya Unawatuna
+2026-01-13 23:52:24 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Villa Rumassala Luxury Chalets Unawatuna
+2026-01-13 23:52:24 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Urchin Unawatuna
+2026-01-13 23:52:25 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Coastal Cloud Surf - Walk To Dewata Beach
+2026-01-13 23:52:25 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Villa Gaetano Unawatuna
+2026-01-13 23:52:25 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: The Emerald Hills Unawatuna
+2026-01-13 23:52:25 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Thaproban Pavilion Waves
+2026-01-13 23:52:25 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Happy Beach Resort
+2026-01-13 23:52:25 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: La Veranda Di Serena
+2026-01-13 23:52:25 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: The Regent Villa
+2026-01-13 23:52:25 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: The Waves Unawatuna
+2026-01-13 23:52:26 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Unawatuna Beach Bungalow -
+2026-01-13 23:52:26 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Miss Ceylon
+2026-01-13 23:52:26 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Hotel Flower Garden
+2026-01-13 23:52:26 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: SURF UNA BEACH HOTEL
+2026-01-13 23:52:26 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Nature Villa Unawatuna
+2026-01-13 23:52:26 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Silva Rest
+2026-01-13 23:52:26 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Thambapanni Retreat
+2026-01-13 23:52:26 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Villa 58 Unawatuna
+2026-01-13 23:52:27 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Rockside Cabanas Hotel
+2026-01-13 23:52:27 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Alice in Paradise
+2026-01-13 23:52:27 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: KAJU GREEN eco lodges
+2026-01-13 23:52:27 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: VillaWatuna
+2026-01-13 23:52:27 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Cocobay Unawatuna
+2026-01-13 23:52:27 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Tevins Place - Unawatuna
+2026-01-13 23:52:27 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Tiny Royal Palace
+2026-01-13 23:52:27 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Kingfisher
+2026-01-13 23:52:28 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Hotel Panorama
+2026-01-13 23:52:30 | DEBUG    | src.scrapers.booking_com.browser:scrape_properties_data:201 - Found 66 properties on current scroll
+2026-01-13 23:52:30 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Nooit Gedacht Heritage Hotel (Original Dutch Governors House)
+2026-01-13 23:52:30 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Anara Villa
+2026-01-13 23:52:30 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Camellia Unawatuna
+2026-01-13 23:52:30 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Dev House
+2026-01-13 23:52:30 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Epic Unawatuna
+2026-01-13 23:52:30 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Aurora
+2026-01-13 23:52:31 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Lara's place
+2026-01-13 23:52:31 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Nooit Gedacht Holiday Resort Unawatuna
+2026-01-13 23:52:31 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Dunes Unawatuna Hotel
+2026-01-13 23:52:31 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: White Flower Guest
+2026-01-13 23:52:31 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: The Horizon Hill Top Villa
+2026-01-13 23:52:31 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Serenity Boutique - Unawatuna
+2026-01-13 23:52:31 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Villa Ok
+2026-01-13 23:52:32 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Asantha Guest House
+2026-01-13 23:52:32 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Sharta Unawatuna Hostel
+2026-01-13 23:52:32 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Green Villa Unawatuna
+2026-01-13 23:52:32 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Thaproban Beach House
+2026-01-13 23:52:32 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Green Escape Unawatuna
+2026-01-13 23:52:32 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Kapaliya Unawatuna
+2026-01-13 23:52:32 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Villa Rumassala Luxury Chalets Unawatuna
+2026-01-13 23:52:33 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Urchin Unawatuna
+2026-01-13 23:52:33 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Coastal Cloud Surf - Walk To Dewata Beach
+2026-01-13 23:52:33 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Villa Gaetano Unawatuna
+2026-01-13 23:52:33 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: The Emerald Hills Unawatuna
+2026-01-13 23:52:33 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Thaproban Pavilion Waves
+2026-01-13 23:52:33 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Caliza Unawatuna by Sea Cloud
+2026-01-13 23:52:34 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Apa Villa Thalpe
+2026-01-13 23:52:34 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Unawatuna Nor Lanka Hotel
+2026-01-13 23:52:34 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:406 - Scraped: Lavendish Beach Resort
+2026-01-13 23:52:34 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:409 - Scraped 100 properties, stopping.
+2026-01-13 23:52:34 | INFO     | src.scrapers.booking_com:scrape_booking_com_data:162 - Scraping details for 10 hotels concurrently.
+2026-01-13 23:52:34 | INFO     | src.scrapers.booking_com:scrape_hotel_data_concurrent:58 - Starting concurrent scraping of 10 hotels with max 5 concurrent tasks
+2026-01-13 23:52:34 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:46 - Scraping hotel: https://www.booking.com/hotel/lk/nooit-gedacht-ayurveda-heritage.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-02-13&checkout=2026-02-14&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=popularity&srpvid=af925ded6a34114102bc6d8ee9d9a902&srepoch=1768328529&all_sr_blocks=34241206_265093589_2_1_0&highlighted_blocks=34241206_265093589_2_1_0&matching_block_id=34241206_265093589_2_1_0&sr_pri_blocks=34241206_265093589_2_1_0__3400&from=searchresults
+2026-01-13 23:52:34 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:46 - Scraping hotel: https://www.booking.com/hotel/lk/anara-villa.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-30&checkout=2026-01-31&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=2&hapos=2&sr_order=popularity&srpvid=af925ded6a34114102bc6d8ee9d9a902&srepoch=1768328529&all_sr_blocks=107617201_195287779_1_2_0&highlighted_blocks=107617201_195287779_1_2_0&matching_block_id=107617201_195287779_1_2_0&sr_pri_blocks=107617201_195287779_1_2_0__830&from=searchresults
+2026-01-13 23:52:34 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:46 - Scraping hotel: https://www.booking.com/hotel/lk/camellia-unawatuna.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-03-13&checkout=2026-03-14&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=3&hapos=3&sr_order=popularity&srpvid=af925ded6a34114102bc6d8ee9d9a902&srepoch=1768328529&all_sr_blocks=1357562904_409034021_1_0_0&highlighted_blocks=1357562904_409034021_1_0_0&matching_block_id=1357562904_409034021_1_0_0&sr_pri_blocks=1357562904_409034021_1_0_0__1263&from=searchresults
+2026-01-13 23:52:34 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:46 - Scraping hotel: https://www.booking.com/hotel/lk/dev-house-unawatuna1.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-03-20&checkout=2026-03-21&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=4&hapos=4&sr_order=popularity&srpvid=af925ded6a34114102bc6d8ee9d9a902&srepoch=1768328529&all_sr_blocks=1092080401_399386118_2_0_0&highlighted_blocks=1092080401_399386118_2_0_0&matching_block_id=1092080401_399386118_2_0_0&sr_pri_blocks=1092080401_399386118_2_0_0__1300&from=searchresults
+2026-01-13 23:52:34 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:46 - Scraping hotel: https://www.booking.com/hotel/lk/epic-unawatuna.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-03-13&checkout=2026-03-14&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=5&hapos=5&sr_order=popularity&srpvid=af925ded6a34114102bc6d8ee9d9a902&srepoch=1768328529&all_sr_blocks=252956903_208164138_0_42_0&highlighted_blocks=252956903_208164138_0_42_0&matching_block_id=252956903_208164138_0_42_0&sr_pri_blocks=252956903_208164138_0_42_0__5950&from=searchresults
+2026-01-13 23:52:43 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:178 - Successfully scraped: None
+2026-01-13 23:52:43 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:46 - Scraping hotel: https://www.booking.com/hotel/lk/aurora-unawatuna.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-03-13&checkout=2026-03-14&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=6&hapos=6&sr_order=popularity&srpvid=af925ded6a34114102bc6d8ee9d9a902&srepoch=1768328529&all_sr_blocks=122986801_273506099_1_1_0&highlighted_blocks=122986801_273506099_1_1_0&matching_block_id=122986801_273506099_1_1_0&sr_pri_blocks=122986801_273506099_1_1_0__12420&from=searchresults
+2026-01-13 23:52:46 | ERROR    | src.scrapers.booking_com.browser:scrape_hotel_data:182 - Error scraping https://www.booking.com/hotel/lk/camellia-unawatuna.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-03-13&checkout=2026-03-14&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=3&hapos=3&sr_order=popularity&srpvid=af925ded6a34114102bc6d8ee9d9a902&srepoch=1768328529&all_sr_blocks=1357562904_409034021_1_0_0&highlighted_blocks=1357562904_409034021_1_0_0&matching_block_id=1357562904_409034021_1_0_0&sr_pri_blocks=1357562904_409034021_1_0_0__1263&from=searchresults: Timeout 10000ms exceeded.
+=========================== logs ===========================
+"commit" event fired
+"domcontentloaded" event fired
+"load" event fired
+============================================================
+2026-01-13 23:52:46 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:46 - Scraping hotel: https://www.booking.com/hotel/lk/laras-place.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-03-27&checkout=2026-03-28&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=7&hapos=7&sr_order=popularity&srpvid=af925ded6a34114102bc6d8ee9d9a902&srepoch=1768328529&all_sr_blocks=80132402_390770084_1_1_0&highlighted_blocks=80132402_390770084_1_1_0&matching_block_id=80132402_390770084_1_1_0&sr_pri_blocks=80132402_390770084_1_1_0__5793&from=searchresults
+2026-01-13 23:52:46 | ERROR    | src.scrapers.booking_com.browser:scrape_hotel_data:182 - Error scraping https://www.booking.com/hotel/lk/nooit-gedacht-ayurveda-heritage.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-02-13&checkout=2026-02-14&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=popularity&srpvid=af925ded6a34114102bc6d8ee9d9a902&srepoch=1768328529&all_sr_blocks=34241206_265093589_2_1_0&highlighted_blocks=34241206_265093589_2_1_0&matching_block_id=34241206_265093589_2_1_0&sr_pri_blocks=34241206_265093589_2_1_0__3400&from=searchresults: Timeout 10000ms exceeded.
+=========================== logs ===========================
+"commit" event fired
+"domcontentloaded" event fired
+"load" event fired
+============================================================
+2026-01-13 23:52:46 | ERROR    | src.scrapers.booking_com.browser:scrape_hotel_data:182 - Error scraping https://www.booking.com/hotel/lk/dev-house-unawatuna1.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-03-20&checkout=2026-03-21&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=4&hapos=4&sr_order=popularity&srpvid=af925ded6a34114102bc6d8ee9d9a902&srepoch=1768328529&all_sr_blocks=1092080401_399386118_2_0_0&highlighted_blocks=1092080401_399386118_2_0_0&matching_block_id=1092080401_399386118_2_0_0&sr_pri_blocks=1092080401_399386118_2_0_0__1300&from=searchresults: Timeout 10000ms exceeded.
+=========================== logs ===========================
+"commit" event fired
+"domcontentloaded" event fired
+"load" event fired
+============================================================
+2026-01-13 23:52:46 | ERROR    | src.scrapers.booking_com.browser:scrape_hotel_data:182 - Error scraping https://www.booking.com/hotel/lk/anara-villa.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-30&checkout=2026-01-31&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=2&hapos=2&sr_order=popularity&srpvid=af925ded6a34114102bc6d8ee9d9a902&srepoch=1768328529&all_sr_blocks=107617201_195287779_1_2_0&highlighted_blocks=107617201_195287779_1_2_0&matching_block_id=107617201_195287779_1_2_0&sr_pri_blocks=107617201_195287779_1_2_0__830&from=searchresults: Timeout 10000ms exceeded.
+=========================== logs ===========================
+"commit" event fired
+"domcontentloaded" event fired
+"load" event fired
+============================================================
+2026-01-13 23:52:46 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:46 - Scraping hotel: https://www.booking.com/hotel/lk/dunes-unawatuna.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-23&checkout=2026-01-24&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=9&hapos=9&sr_order=popularity&srpvid=af925ded6a34114102bc6d8ee9d9a902&srepoch=1768328529&all_sr_blocks=63642406_0_1_0_0&highlighted_blocks=63642406_0_1_0_0&matching_block_id=63642406_0_1_0_0&sr_pri_blocks=63642406_0_1_0_0__5922&from=searchresults
+2026-01-13 23:52:46 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:46 - Scraping hotel: https://www.booking.com/hotel/lk/nooit-gedacht-holiday-resort.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-30&checkout=2026-01-31&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=8&hapos=8&sr_order=popularity&srpvid=af925ded6a34114102bc6d8ee9d9a902&srepoch=1768328529&all_sr_blocks=67729801_351410215_1_0_0&highlighted_blocks=67729801_351410215_1_0_0&matching_block_id=67729801_351410215_1_0_0&sr_pri_blocks=67729801_351410215_1_0_0__2705&from=searchresults
+2026-01-13 23:52:46 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:46 - Scraping hotel: https://www.booking.com/hotel/lk/white-flower-guest.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-16&checkout=2026-01-17&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=10&hapos=10&sr_order=popularity&srpvid=af925ded6a34114102bc6d8ee9d9a902&srepoch=1768328529&all_sr_blocks=1540298504_425436452_2_0_0&highlighted_blocks=1540298504_425436452_2_0_0&matching_block_id=1540298504_425436452_2_0_0&sr_pri_blocks=1540298504_425436452_2_0_0__2320&from=searchresults
+2026-01-13 23:52:56 | ERROR    | src.scrapers.booking_com.browser:scrape_hotel_data:182 - Error scraping https://www.booking.com/hotel/lk/aurora-unawatuna.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-03-13&checkout=2026-03-14&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=6&hapos=6&sr_order=popularity&srpvid=af925ded6a34114102bc6d8ee9d9a902&srepoch=1768328529&all_sr_blocks=122986801_273506099_1_1_0&highlighted_blocks=122986801_273506099_1_1_0&matching_block_id=122986801_273506099_1_1_0&sr_pri_blocks=122986801_273506099_1_1_0__12420&from=searchresults: Timeout 10000ms exceeded.
+=========================== logs ===========================
+"commit" event fired
+"domcontentloaded" event fired
+"load" event fired
+============================================================
+2026-01-13 23:52:59 | ERROR    | src.scrapers.booking_com.browser:scrape_hotel_data:182 - Error scraping https://www.booking.com/hotel/lk/laras-place.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-03-27&checkout=2026-03-28&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=7&hapos=7&sr_order=popularity&srpvid=af925ded6a34114102bc6d8ee9d9a902&srepoch=1768328529&all_sr_blocks=80132402_390770084_1_1_0&highlighted_blocks=80132402_390770084_1_1_0&matching_block_id=80132402_390770084_1_1_0&sr_pri_blocks=80132402_390770084_1_1_0__5793&from=searchresults: Timeout 10000ms exceeded.
+=========================== logs ===========================
+"commit" event fired
+"domcontentloaded" event fired
+"load" event fired
+============================================================
+2026-01-13 23:52:59 | ERROR    | src.scrapers.booking_com.browser:scrape_hotel_data:182 - Error scraping https://www.booking.com/hotel/lk/dunes-unawatuna.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-23&checkout=2026-01-24&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=9&hapos=9&sr_order=popularity&srpvid=af925ded6a34114102bc6d8ee9d9a902&srepoch=1768328529&all_sr_blocks=63642406_0_1_0_0&highlighted_blocks=63642406_0_1_0_0&matching_block_id=63642406_0_1_0_0&sr_pri_blocks=63642406_0_1_0_0__5922&from=searchresults: Timeout 10000ms exceeded.
+=========================== logs ===========================
+"commit" event fired
+"domcontentloaded" event fired
+"load" event fired
+============================================================
+2026-01-13 23:52:59 | ERROR    | src.scrapers.booking_com.browser:scrape_hotel_data:182 - Error scraping https://www.booking.com/hotel/lk/white-flower-guest.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-16&checkout=2026-01-17&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=10&hapos=10&sr_order=popularity&srpvid=af925ded6a34114102bc6d8ee9d9a902&srepoch=1768328529&all_sr_blocks=1540298504_425436452_2_0_0&highlighted_blocks=1540298504_425436452_2_0_0&matching_block_id=1540298504_425436452_2_0_0&sr_pri_blocks=1540298504_425436452_2_0_0__2320&from=searchresults: Timeout 10000ms exceeded.
+=========================== logs ===========================
+"commit" event fired
+"domcontentloaded" event fired
+"load" event fired
+============================================================
+2026-01-13 23:52:59 | ERROR    | src.scrapers.booking_com.browser:scrape_hotel_data:182 - Error scraping https://www.booking.com/hotel/lk/nooit-gedacht-holiday-resort.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-30&checkout=2026-01-31&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=8&hapos=8&sr_order=popularity&srpvid=af925ded6a34114102bc6d8ee9d9a902&srepoch=1768328529&all_sr_blocks=67729801_351410215_1_0_0&highlighted_blocks=67729801_351410215_1_0_0&matching_block_id=67729801_351410215_1_0_0&sr_pri_blocks=67729801_351410215_1_0_0__2705&from=searchresults: Timeout 10000ms exceeded.
+=========================== logs ===========================
+"commit" event fired
+"domcontentloaded" event fired
+"load" event fired
+============================================================
+2026-01-13 23:52:59 | INFO     | src.scrapers.booking_com:scrape_hotel_data_concurrent:70 - Completed scraping 1 out of 10 hotels
+2026-01-13 23:53:00 | ERROR    | __main__:main:46 - Scraping failed: 'HotelDetailData' object has no attribute 'model_dump'
+2026-01-13 23:57:21 | INFO     | src.scrapers.booking_com:scrape_hotel_data_concurrent:58 - Starting concurrent scraping of 1 hotels with max 5 concurrent tasks
+2026-01-13 23:57:21 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:46 - Scraping hotel: https://www.booking.com/hotel/lk/green-escape-unawatuna.html?aid=304142&label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEP2AED6AEB-AEBiAIBqAIBuAKXiJrLBsACAdICJDFlYTk5MDg0LWFjNzgtNDBmYi1hYTkwLTc1YjAwOTg2MzA5ZNgCAeACAQ&sid=f66170cb0f916e5bb02069c49d0d1c52&all_sr_blocks=788384906_338414013_0_1_0&checkin=2026-02-13&checkout=2026-02-14&dest_id=-2238370&dest_type=city&dist=0&group_adults=2&group_children=0&hapos=2&highlighted_blocks=788384906_338414013_0_1_0&hpos=2&matching_block_id=788384906_338414013_0_1_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=788384906_338414013_0_1_0__8100&srepoch=1768327341&srpvid=eec8be7ea058010a7122587fc2535226&type=total&ucfs=1&
+2026-01-13 23:57:34 | ERROR    | src.scrapers.booking_com.browser:scrape_hotel_data:182 - Error scraping https://www.booking.com/hotel/lk/green-escape-unawatuna.html?aid=304142&label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEP2AED6AEB-AEBiAIBqAIBuAKXiJrLBsACAdICJDFlYTk5MDg0LWFjNzgtNDBmYi1hYTkwLTc1YjAwOTg2MzA5ZNgCAeACAQ&sid=f66170cb0f916e5bb02069c49d0d1c52&all_sr_blocks=788384906_338414013_0_1_0&checkin=2026-02-13&checkout=2026-02-14&dest_id=-2238370&dest_type=city&dist=0&group_adults=2&group_children=0&hapos=2&highlighted_blocks=788384906_338414013_0_1_0&hpos=2&matching_block_id=788384906_338414013_0_1_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=788384906_338414013_0_1_0__8100&srepoch=1768327341&srpvid=eec8be7ea058010a7122587fc2535226&type=total&ucfs=1&: Timeout 10000ms exceeded.
+=========================== logs ===========================
+"commit" event fired
+"domcontentloaded" event fired
+"load" event fired
+============================================================
+2026-01-13 23:57:34 | INFO     | src.scrapers.booking_com:scrape_hotel_data_concurrent:70 - Completed scraping 0 out of 1 hotels
+2026-01-14 00:06:01 | INFO     | src.scrapers.booking_com:scrape_hotel_data_concurrent:58 - Starting concurrent scraping of 1 hotels with max 5 concurrent tasks
+2026-01-14 00:06:02 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:110 - Navigating to: https://www.booking.com/hotel/lk/green-escape-unawatuna.html?aid=304142&label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEP2AED6AEB-AEBiAIBqAIBuAKXiJrLBsACAdICJDFlYTk5MDg0LWFjNzgtNDBmYi1hYTkwLTc1YjAwOTg2MzA5ZNgCAeACAQ&sid=f66170cb0f916e5bb02069c49d0d1c52&all_sr_blocks=788384906_338414013_0_1_0&checkin=2026-02-13&checkout=2026-02-14&dest_id=-2238370&dest_type=city&dist=0&group_adults=2&group_children=0&hapos=2&highlighted_blocks=788384906_338414013_0_1_0&hpos=2&matching_block_id=788384906_338414013_0_1_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=788384906_338414013_0_1_0__8100&srepoch=1768327341&srpvid=eec8be7ea058010a7122587fc2535226&type=total&ucfs=1&
+2026-01-14 00:06:20 | ERROR    | src.scrapers.booking_com.browser:scrape_hotel_data:383 - ✗ Error scraping https://www.booking.com/hotel/lk/green-escape-unawatuna.html?aid=304142&label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEP2AED6AEB-AEBiAIBqAIBuAKXiJrLBsACAdICJDFlYTk5MDg0LWFjNzgtNDBmYi1hYTkwLTc1YjAwOTg2MzA5ZNgCAeACAQ&sid=f66170cb0f916e5bb02069c49d0d1c52&all_sr_blocks=788384906_338414013_0_1_0&checkin=2026-02-13&checkout=2026-02-14&dest_id=-2238370&dest_type=city&dist=0&group_adults=2&group_children=0&hapos=2&highlighted_blocks=788384906_338414013_0_1_0&hpos=2&matching_block_id=788384906_338414013_0_1_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=788384906_338414013_0_1_0__8100&srepoch=1768327341&srpvid=eec8be7ea058010a7122587fc2535226&type=total&ucfs=1&: Timeout 15000ms exceeded.
+=========================== logs ===========================
+"commit" event fired
+"domcontentloaded" event fired
+"load" event fired
+============================================================
+2026-01-14 00:06:20 | INFO     | src.scrapers.booking_com:scrape_hotel_data_concurrent:70 - Completed scraping 0 out of 1 hotels
+2026-01-14 00:07:51 | INFO     | src.scrapers.booking_com:scrape_hotel_data_concurrent:58 - Starting concurrent scraping of 1 hotels with max 5 concurrent tasks
+2026-01-14 00:07:51 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:110 - Navigating to: https://www.booking.com/hotel/lk/green-escape-unawatuna.html?aid=304142&label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEP2AED6AEB-AEBiAIBqAIBuAKXiJrLBsACAdICJDFlYTk5MDg0LWFjNzgtNDBmYi1hYTkwLTc1YjAwOTg2MzA5ZNgCAeACAQ&sid=f66170cb0f916e5bb02069c49d0d1c52&all_sr_blocks=788384906_338414013_0_1_0&checkin=2026-02-13&checkout=2026-02-14&dest_id=-2238370&dest_type=city&dist=0&group_adults=2&group_children=0&hapos=2&highlighted_blocks=788384906_338414013_0_1_0&hpos=2&matching_block_id=788384906_338414013_0_1_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=788384906_338414013_0_1_0__8100&srepoch=1768327341&srpvid=eec8be7ea058010a7122587fc2535226&type=total&ucfs=1&
+2026-01-14 00:07:54 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:41 - Starting full page scroll to load all content...
+2026-01-14 00:07:55 | ERROR    | src.scrapers.booking_com.browser:scrape_hotel_data:382 - ✗ Error scraping https://www.booking.com/hotel/lk/green-escape-unawatuna.html?aid=304142&label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEP2AED6AEB-AEBiAIBqAIBuAKXiJrLBsACAdICJDFlYTk5MDg0LWFjNzgtNDBmYi1hYTkwLTc1YjAwOTg2MzA5ZNgCAeACAQ&sid=f66170cb0f916e5bb02069c49d0d1c52&all_sr_blocks=788384906_338414013_0_1_0&checkin=2026-02-13&checkout=2026-02-14&dest_id=-2238370&dest_type=city&dist=0&group_adults=2&group_children=0&hapos=2&highlighted_blocks=788384906_338414013_0_1_0&hpos=2&matching_block_id=788384906_338414013_0_1_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=788384906_338414013_0_1_0__8100&srepoch=1768327341&srpvid=eec8be7ea058010a7122587fc2535226&type=total&ucfs=1&: Page.evaluate: Execution context was destroyed, most likely because of a navigation
+2026-01-14 00:07:55 | INFO     | src.scrapers.booking_com:scrape_hotel_data_concurrent:70 - Completed scraping 0 out of 1 hotels
+2026-01-14 00:08:06 | INFO     | src.scrapers.booking_com:scrape_hotel_data_concurrent:58 - Starting concurrent scraping of 1 hotels with max 5 concurrent tasks
+2026-01-14 00:08:06 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:110 - Navigating to: https://www.booking.com/hotel/lk/green-escape-unawatuna.html?aid=304142&label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEP2AED6AEB-AEBiAIBqAIBuAKXiJrLBsACAdICJDFlYTk5MDg0LWFjNzgtNDBmYi1hYTkwLTc1YjAwOTg2MzA5ZNgCAeACAQ&sid=f66170cb0f916e5bb02069c49d0d1c52&all_sr_blocks=788384906_338414013_0_1_0&checkin=2026-02-13&checkout=2026-02-14&dest_id=-2238370&dest_type=city&dist=0&group_adults=2&group_children=0&hapos=2&highlighted_blocks=788384906_338414013_0_1_0&hpos=2&matching_block_id=788384906_338414013_0_1_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=788384906_338414013_0_1_0__8100&srepoch=1768327341&srpvid=eec8be7ea058010a7122587fc2535226&type=total&ucfs=1&
+2026-01-14 00:08:25 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:41 - Starting full page scroll to load all content...
+2026-01-14 00:08:27 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 1/20 - Height: 9799
+2026-01-14 00:08:30 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 2/20 - Height: 10216
+2026-01-14 00:08:32 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 3/20 - Height: 10896
+2026-01-14 00:08:32 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:52 - No new content loaded after 3 scrolls
+2026-01-14 00:08:33 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:70 - Completed full page scroll
+2026-01-14 00:08:33 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:118 - Extracting basic information...
+2026-01-14 00:08:33 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:159 - Extracting location information...
+2026-01-14 00:08:33 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:190 - Extracting description...
+2026-01-14 00:08:33 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:200 - Extracting popular facilities...
+2026-01-14 00:08:33 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:212 - Extracting facility groups...
+2026-01-14 00:08:34 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:227 - Extracting internet and parking info...
+2026-01-14 00:08:34 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:248 - Extracting pool information...
+2026-01-14 00:08:34 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:270 - Extracting languages...
+2026-01-14 00:08:34 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:275 - Extracting room types...
+2026-01-14 00:08:34 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:290 - Extracting pricing...
+2026-01-14 00:08:34 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:296 - Extracting check-in/check-out times...
+2026-01-14 00:08:34 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:321 - Extracting photos count...
+2026-01-14 00:08:34 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:329 - Extracting property highlights...
+2026-01-14 00:08:34 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:379 - ✓ Successfully scraped: None
+2026-01-14 00:08:34 | INFO     | src.scrapers.booking_com:scrape_hotel_data_concurrent:70 - Completed scraping 1 out of 1 hotels
+2026-01-14 00:09:13 | INFO     | src.scrapers.booking_com:scrape_hotel_data_concurrent:58 - Starting concurrent scraping of 1 hotels with max 5 concurrent tasks
+2026-01-14 00:09:13 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:110 - Navigating to: https://www.booking.com/hotel/lk/green-escape-unawatuna.html?aid=304142&label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEP2AED6AEB-AEBiAIBqAIBuAKXiJrLBsACAdICJDFlYTk5MDg0LWFjNzgtNDBmYi1hYTkwLTc1YjAwOTg2MzA5ZNgCAeACAQ&sid=f66170cb0f916e5bb02069c49d0d1c52&all_sr_blocks=788384906_338414013_0_1_0&checkin=2026-02-13&checkout=2026-02-14&dest_id=-2238370&dest_type=city&dist=0&group_adults=2&group_children=0&hapos=2&highlighted_blocks=788384906_338414013_0_1_0&hpos=2&matching_block_id=788384906_338414013_0_1_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=788384906_338414013_0_1_0__8100&srepoch=1768327341&srpvid=eec8be7ea058010a7122587fc2535226&type=total&ucfs=1&
+2026-01-14 00:09:31 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:41 - Starting full page scroll to load all content...
+2026-01-14 00:09:33 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 1/20 - Height: 9739
+2026-01-14 00:09:36 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 2/20 - Height: 10845
+2026-01-14 00:09:38 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 3/20 - Height: 10836
+2026-01-14 00:09:38 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:52 - No new content loaded after 3 scrolls
+2026-01-14 00:09:39 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:70 - Completed full page scroll
+2026-01-14 00:09:39 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:118 - Extracting basic information...
+2026-01-14 00:09:39 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:159 - Extracting location information...
+2026-01-14 00:09:39 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:190 - Extracting description...
+2026-01-14 00:09:39 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:200 - Extracting popular facilities...
+2026-01-14 00:09:40 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:212 - Extracting facility groups...
+2026-01-14 00:09:40 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:227 - Extracting internet and parking info...
+2026-01-14 00:09:40 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:248 - Extracting pool information...
+2026-01-14 00:09:40 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:270 - Extracting languages...
+2026-01-14 00:09:40 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:275 - Extracting room types...
+2026-01-14 00:09:40 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:290 - Extracting pricing...
+2026-01-14 00:09:40 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:296 - Extracting check-in/check-out times...
+2026-01-14 00:09:40 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:321 - Extracting photos count...
+2026-01-14 00:09:40 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:329 - Extracting property highlights...
+2026-01-14 00:09:40 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:379 - ✓ Successfully scraped: None
+2026-01-14 00:09:40 | INFO     | src.scrapers.booking_com:scrape_hotel_data_concurrent:70 - Completed scraping 1 out of 1 hotels
+2026-01-14 00:10:28 | INFO     | __main__:main:13 - Please provide the scraping parameters:
+2026-01-14 00:10:34 | INFO     | __main__:main:32 - 
+Starting scraper with parameters:
+2026-01-14 00:10:34 | DEBUG    | __main__:main:33 -   Destination: Unawatuna
+2026-01-14 00:10:34 | DEBUG    | __main__:main:34 -   Adults: 2
+2026-01-14 00:10:34 | DEBUG    | __main__:main:35 -   Rooms: 1
+2026-01-14 00:10:34 | DEBUG    | __main__:main:36 -   Limit: 100
+2026-01-14 00:10:34 | DEBUG    | __main__:main:37 -   Force Refetch: False
+2026-01-14 00:10:34 | INFO     | __main__:main:38 - ------------------------------
+2026-01-14 00:10:34 | INFO     | src.scrapers.booking_com:scrape_booking_com_data:89 - Using cached properties data from ./scraped/properties/Unawatuna/2/1/limit_100.csv
+2026-01-14 00:10:34 | SUCCESS  | __main__:main:52 - Scraping successful! Found 100 properties.
+2026-01-14 00:10:52 | INFO     | __main__:main:13 - Please provide the scraping parameters:
+2026-01-14 00:11:03 | INFO     | __main__:main:32 - 
+Starting scraper with parameters:
+2026-01-14 00:11:03 | DEBUG    | __main__:main:33 -   Destination: Unawautna
+2026-01-14 00:11:03 | DEBUG    | __main__:main:34 -   Adults: 2
+2026-01-14 00:11:03 | DEBUG    | __main__:main:35 -   Rooms: 1
+2026-01-14 00:11:03 | DEBUG    | __main__:main:36 -   Limit: 100
+2026-01-14 00:11:03 | DEBUG    | __main__:main:37 -   Force Refetch: False
+2026-01-14 00:11:03 | INFO     | __main__:main:38 - ------------------------------
+2026-01-14 00:11:04 | INFO     | src.scrapers.booking_com:scrape_booking_com_data:118 - Proceeding to get the URL
+2026-01-14 00:11:30 | DEBUG    | src.scrapers.booking_com.navigation:goto_properties_page:63 - Flexible modal did not appear, continuing...
+2026-01-14 00:11:59 | DEBUG    | src.scrapers.booking_com.browser:scrape_properties_data:402 - Found 25 properties on current scroll
+2026-01-14 00:11:59 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Mirage Colombo
+2026-01-14 00:11:59 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Granbell Hotel Colombo
+2026-01-14 00:11:59 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Marino Beach Colombo
+2026-01-14 00:11:59 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Alma Boutique Hostel - Colombo
+2026-01-14 00:12:00 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Ez Stay Guesthouse
+2026-01-14 00:12:00 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Galle Face Terrace Hostel by Tourlux
+2026-01-14 00:12:00 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: C 1 Colombo Fort
+2026-01-14 00:12:00 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Cinnamon Life at City of Dreams
+2026-01-14 00:12:00 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Golden Pier City Hotel
+2026-01-14 00:12:00 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Green Palace Colombo
+2026-01-14 00:12:00 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Granny's House
+2026-01-14 00:12:00 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Srilax
+2026-01-14 00:12:01 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Galle Face Hotel
+2026-01-14 00:12:01 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Sofia Colombo City Hotel
+2026-01-14 00:12:01 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Drop Inn Hostels
+2026-01-14 00:12:01 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Cinnamon Lakeside
+2026-01-14 00:12:01 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Taprobane House
+2026-01-14 00:12:01 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Trillium Boutique Express Hotel - Ward Place
+2026-01-14 00:12:01 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Colombo, Trizen Luxury Apartments, Sri Lanka
+2026-01-14 00:12:02 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Hostel Republic at Galle Face
+2026-01-14 00:12:02 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Supun Arcade Residency
+2026-01-14 00:12:02 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: SeSaya Poshtel & Bistro - Colombo's Newest and Finest Poshtel Dorms and Rooms
+2026-01-14 00:12:02 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Fairway Colombo - Sri Lanka's First Hotel With Robot Technology
+2026-01-14 00:12:02 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Cinnamon Grand Colombo
+2026-01-14 00:12:02 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Hilton Colombo Residence
+2026-01-14 00:12:04 | DEBUG    | src.scrapers.booking_com.browser:scrape_properties_data:402 - Found 50 properties on current scroll
+2026-01-14 00:12:05 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Mirage Colombo
+2026-01-14 00:12:05 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Granbell Hotel Colombo
+2026-01-14 00:12:05 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Marino Beach Colombo
+2026-01-14 00:12:05 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Alma Boutique Hostel - Colombo
+2026-01-14 00:12:05 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Ez Stay Guesthouse
+2026-01-14 00:12:05 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Galle Face Terrace Hostel by Tourlux
+2026-01-14 00:12:06 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: C 1 Colombo Fort
+2026-01-14 00:12:06 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Cinnamon Life at City of Dreams
+2026-01-14 00:12:06 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Golden Pier City Hotel
+2026-01-14 00:12:06 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Green Palace Colombo
+2026-01-14 00:12:06 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Granny's House
+2026-01-14 00:12:06 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Srilax
+2026-01-14 00:12:07 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Galle Face Hotel
+2026-01-14 00:12:07 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Sofia Colombo City Hotel
+2026-01-14 00:12:07 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Drop Inn Hostels
+2026-01-14 00:12:07 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Cinnamon Lakeside
+2026-01-14 00:12:07 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Taprobane House
+2026-01-14 00:12:07 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Trillium Boutique Express Hotel - Ward Place
+2026-01-14 00:12:07 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Colombo, Trizen Luxury Apartments, Sri Lanka
+2026-01-14 00:12:08 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Hostel Republic at Galle Face
+2026-01-14 00:12:08 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Supun Arcade Residency
+2026-01-14 00:12:08 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: SeSaya Poshtel & Bistro - Colombo's Newest and Finest Poshtel Dorms and Rooms
+2026-01-14 00:12:08 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Fairway Colombo - Sri Lanka's First Hotel With Robot Technology
+2026-01-14 00:12:08 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Cinnamon Grand Colombo
+2026-01-14 00:12:08 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Hilton Colombo Residence
+2026-01-14 00:12:08 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: City Stay By Sunrise
+2026-01-14 00:12:09 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: ITC Ratnadipa, a Luxury Collection Hotel, Colombo
+2026-01-14 00:12:09 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: De Saram House by Geoffrey Bawa
+2026-01-14 00:12:09 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Urban Deck
+2026-01-14 00:12:09 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: The Auresta Colombo
+2026-01-14 00:12:09 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Motel VIP
+2026-01-14 00:12:09 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: CEYLON STAYZ
+2026-01-14 00:12:09 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: GSH Colombo
+2026-01-14 00:12:09 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Greenscape Colombo
+2026-01-14 00:12:10 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Grand Oriental Hotel
+2026-01-14 00:12:10 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Shangri-La Colombo
+2026-01-14 00:12:10 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Colombo Downtown Monkey Backpackers Hostel
+2026-01-14 00:12:10 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Anugaa in The City
+2026-01-14 00:12:10 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Zest Metropole
+2026-01-14 00:12:10 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Opulence Colombo
+2026-01-14 00:12:11 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Seilan
+2026-01-14 00:12:11 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Cinnamon Red Colombo
+2026-01-14 00:12:11 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Lucky Wave Beach Resort
+2026-01-14 00:12:11 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Venue Colombo
+2026-01-14 00:12:11 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Cinnamon Life Residencies - Luxury 2 Bedroom Apartment 18th Floor
+2026-01-14 00:12:11 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Havelock City Hostel, Colombo
+2026-01-14 00:12:11 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Colombo Trizen J&J future Apart ment
+2026-01-14 00:12:12 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Manaal Palace
+2026-01-14 00:12:12 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Highbury Colombo
+2026-01-14 00:12:12 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Marine Bay Colombo
+2026-01-14 00:12:14 | DEBUG    | src.scrapers.booking_com.browser:scrape_properties_data:402 - Found 75 properties on current scroll
+2026-01-14 00:12:14 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Mirage Colombo
+2026-01-14 00:12:14 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Granbell Hotel Colombo
+2026-01-14 00:12:14 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Marino Beach Colombo
+2026-01-14 00:12:15 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Alma Boutique Hostel - Colombo
+2026-01-14 00:12:15 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Ez Stay Guesthouse
+2026-01-14 00:12:15 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Galle Face Terrace Hostel by Tourlux
+2026-01-14 00:12:15 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: C 1 Colombo Fort
+2026-01-14 00:12:16 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Cinnamon Life at City of Dreams
+2026-01-14 00:12:16 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Golden Pier City Hotel
+2026-01-14 00:12:16 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Green Palace Colombo
+2026-01-14 00:12:16 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Granny's House
+2026-01-14 00:12:16 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Srilax
+2026-01-14 00:12:17 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Galle Face Hotel
+2026-01-14 00:12:17 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Sofia Colombo City Hotel
+2026-01-14 00:12:17 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Drop Inn Hostels
+2026-01-14 00:12:17 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Cinnamon Lakeside
+2026-01-14 00:12:17 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Taprobane House
+2026-01-14 00:12:18 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Trillium Boutique Express Hotel - Ward Place
+2026-01-14 00:12:18 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Colombo, Trizen Luxury Apartments, Sri Lanka
+2026-01-14 00:12:18 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Hostel Republic at Galle Face
+2026-01-14 00:12:18 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Supun Arcade Residency
+2026-01-14 00:12:19 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: SeSaya Poshtel & Bistro - Colombo's Newest and Finest Poshtel Dorms and Rooms
+2026-01-14 00:12:19 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Fairway Colombo - Sri Lanka's First Hotel With Robot Technology
+2026-01-14 00:12:19 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Cinnamon Grand Colombo
+2026-01-14 00:12:19 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Hilton Colombo Residence
+2026-01-14 00:12:19 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:610 - Scraped 100 properties, stopping.
+2026-01-14 00:12:19 | INFO     | src.scrapers.booking_com:scrape_booking_com_data:162 - Scraping details for 5 hotels concurrently.
+2026-01-14 00:12:19 | INFO     | src.scrapers.booking_com:scrape_hotel_data_concurrent:58 - Starting concurrent scraping of 5 hotels with max 5 concurrent tasks
+2026-01-14 00:12:20 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:110 - Navigating to: https://www.booking.com/hotel/lk/mirage-colombo.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALLo5rLBsACAdICJDJhOWQ3ZTJlLWU4ZWMtNDZiNC04YzdiLWQ2MmQ3NzkxOTc1N9gCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-23&checkout=2026-01-24&dest_id=-2214877&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=popularity&srpvid=ed218374137b0598&srepoch=1768329701&all_sr_blocks=79991110_423513328_1_42_0_876102&highlighted_blocks=79991110_423513328_1_42_0_876102&matching_block_id=79991110_423513328_1_42_0_876102&sr_pri_blocks=79991110_423513328_1_42_0_876102_5694&from=searchresults
+2026-01-14 00:12:20 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:110 - Navigating to: https://www.booking.com/hotel/lk/granbell-colombo.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALLo5rLBsACAdICJDJhOWQ3ZTJlLWU4ZWMtNDZiNC04YzdiLWQ2MmQ3NzkxOTc1N9gCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-23&checkout=2026-01-24&dest_id=-2214877&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=2&hapos=2&sr_order=popularity&srpvid=ed218374137b0598&srepoch=1768329701&all_sr_blocks=0_0_1_0_0&highlighted_blocks=0_0_1_0_0&matching_block_id=0_0_1_0_0&sr_pri_blocks=0_0_1_0_0__6959&from=searchresults
+2026-01-14 00:12:20 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:110 - Navigating to: https://www.booking.com/hotel/lk/marino-beach-colombo.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALLo5rLBsACAdICJDJhOWQ3ZTJlLWU4ZWMtNDZiNC04YzdiLWQ2MmQ3NzkxOTc1N9gCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-03-06&checkout=2026-03-07&dest_id=-2214877&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=3&hapos=3&sr_order=popularity&srpvid=ed218374137b0598&srepoch=1768329701&all_sr_blocks=376535115_388521095_0_0_0_238706&highlighted_blocks=376535115_388521095_0_0_0_238706&matching_block_id=376535115_388521095_0_0_0_238706&sr_pri_blocks=376535115_388521095_0_0_0_238706_8500&from=searchresults
+2026-01-14 00:12:20 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:110 - Navigating to: https://www.booking.com/hotel/lk/alma-hostel-and-garden-cafe-colombo.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALLo5rLBsACAdICJDJhOWQ3ZTJlLWU4ZWMtNDZiNC04YzdiLWQ2MmQ3NzkxOTc1N9gCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-23&checkout=2026-01-24&dest_id=-2214877&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=4&hapos=4&sr_order=popularity&srpvid=ed218374137b0598&srepoch=1768329701&all_sr_blocks=1401994306_412035300_1_2_0&highlighted_blocks=1401994306_412035300_1_2_0&matching_block_id=1401994306_412035300_1_2_0&sr_pri_blocks=1401994306_412035300_1_2_0__1300&from=searchresults
+2026-01-14 00:12:20 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:110 - Navigating to: https://www.booking.com/hotel/lk/ez-stay-lodge.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALLo5rLBsACAdICJDJhOWQ3ZTJlLWU4ZWMtNDZiNC04YzdiLWQ2MmQ3NzkxOTc1N9gCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-16&checkout=2026-01-17&dest_id=-2214877&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=5&hapos=5&sr_order=popularity&srpvid=ed218374137b0598&srepoch=1768329701&all_sr_blocks=1257743904_398674175_2_0_0&highlighted_blocks=1257743904_398674175_2_0_0&matching_block_id=1257743904_398674175_2_0_0&sr_pri_blocks=1257743904_398674175_2_0_0__1700&from=searchresults
+2026-01-14 00:12:47 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:41 - Starting full page scroll to load all content...
+2026-01-14 00:12:48 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:41 - Starting full page scroll to load all content...
+2026-01-14 00:12:50 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 1/20 - Height: 6746
+2026-01-14 00:12:50 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 1/20 - Height: 7022
+2026-01-14 00:12:50 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:41 - Starting full page scroll to load all content...
+2026-01-14 00:12:51 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:41 - Starting full page scroll to load all content...
+2026-01-14 00:12:51 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:41 - Starting full page scroll to load all content...
+2026-01-14 00:12:52 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 2/20 - Height: 7375
+2026-01-14 00:12:52 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:52 - No new content loaded after 2 scrolls
+2026-01-14 00:12:53 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 2/20 - Height: 7628
+2026-01-14 00:12:53 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 1/20 - Height: 9311
+2026-01-14 00:12:53 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:70 - Completed full page scroll
+2026-01-14 00:12:53 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:118 - Extracting basic information...
+2026-01-14 00:12:53 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:159 - Extracting location information...
+2026-01-14 00:12:54 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:190 - Extracting description...
+2026-01-14 00:12:54 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:200 - Extracting popular facilities...
+2026-01-14 00:12:54 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:212 - Extracting facility groups...
+2026-01-14 00:12:54 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 1/20 - Height: 9031
+2026-01-14 00:12:54 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:227 - Extracting internet and parking info...
+2026-01-14 00:12:54 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:248 - Extracting pool information...
+2026-01-14 00:12:54 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:270 - Extracting languages...
+2026-01-14 00:12:54 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:275 - Extracting room types...
+2026-01-14 00:12:54 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:290 - Extracting pricing...
+2026-01-14 00:12:54 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:296 - Extracting check-in/check-out times...
+2026-01-14 00:12:54 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:321 - Extracting photos count...
+2026-01-14 00:12:54 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:329 - Extracting property highlights...
+2026-01-14 00:12:54 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:379 - ✓ Successfully scraped: None
+2026-01-14 00:12:54 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 1/20 - Height: 11548
+2026-01-14 00:12:55 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 3/20 - Height: 7626
+2026-01-14 00:12:55 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 2/20 - Height: 11124
+2026-01-14 00:12:56 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 2/20 - Height: 9890
+2026-01-14 00:12:56 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 2/20 - Height: 13009
+2026-01-14 00:12:58 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 4/20 - Height: 7717
+2026-01-14 00:12:58 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:52 - No new content loaded after 4 scrolls
+2026-01-14 00:12:58 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 3/20 - Height: 11117
+2026-01-14 00:12:58 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:52 - No new content loaded after 3 scrolls
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 3/20 - Height: 9887
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:70 - Completed full page scroll
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:118 - Extracting basic information...
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:52 - No new content loaded after 3 scrolls
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:159 - Extracting location information...
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:190 - Extracting description...
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:200 - Extracting popular facilities...
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:212 - Extracting facility groups...
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:70 - Completed full page scroll
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:118 - Extracting basic information...
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:159 - Extracting location information...
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:190 - Extracting description...
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:200 - Extracting popular facilities...
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:227 - Extracting internet and parking info...
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:248 - Extracting pool information...
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:270 - Extracting languages...
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:275 - Extracting room types...
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:290 - Extracting pricing...
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:296 - Extracting check-in/check-out times...
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:321 - Extracting photos count...
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:329 - Extracting property highlights...
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:379 - ✓ Successfully scraped: None
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 3/20 - Height: 13003
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:52 - No new content loaded after 3 scrolls
+2026-01-14 00:12:59 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:212 - Extracting facility groups...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:227 - Extracting internet and parking info...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:248 - Extracting pool information...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:270 - Extracting languages...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:275 - Extracting room types...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:70 - Completed full page scroll
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:118 - Extracting basic information...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:290 - Extracting pricing...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:296 - Extracting check-in/check-out times...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:321 - Extracting photos count...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:329 - Extracting property highlights...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:379 - ✓ Successfully scraped: None
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:159 - Extracting location information...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:190 - Extracting description...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:200 - Extracting popular facilities...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:212 - Extracting facility groups...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:70 - Completed full page scroll
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:118 - Extracting basic information...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:159 - Extracting location information...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:190 - Extracting description...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:200 - Extracting popular facilities...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:227 - Extracting internet and parking info...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:248 - Extracting pool information...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:270 - Extracting languages...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:275 - Extracting room types...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:212 - Extracting facility groups...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:290 - Extracting pricing...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:296 - Extracting check-in/check-out times...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:321 - Extracting photos count...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:329 - Extracting property highlights...
+2026-01-14 00:13:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:379 - ✓ Successfully scraped: None
+2026-01-14 00:13:01 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:227 - Extracting internet and parking info...
+2026-01-14 00:13:01 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:248 - Extracting pool information...
+2026-01-14 00:13:01 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:270 - Extracting languages...
+2026-01-14 00:13:01 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:275 - Extracting room types...
+2026-01-14 00:13:01 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:290 - Extracting pricing...
+2026-01-14 00:13:01 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:296 - Extracting check-in/check-out times...
+2026-01-14 00:13:01 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:321 - Extracting photos count...
+2026-01-14 00:13:01 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:329 - Extracting property highlights...
+2026-01-14 00:13:01 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:379 - ✓ Successfully scraped: None
+2026-01-14 00:13:01 | INFO     | src.scrapers.booking_com:scrape_hotel_data_concurrent:70 - Completed scraping 5 out of 5 hotels
+2026-01-14 00:13:01 | ERROR    | __main__:main:48 - Scraping failed: 'HotelDetailData' object has no attribute 'model_dump'
+2026-01-14 00:15:19 | INFO     | __main__:main:13 - Please provide the scraping parameters:
+2026-01-14 00:15:47 | INFO     | __main__:main:32 - 
+Starting scraper with parameters:
+2026-01-14 00:15:47 | DEBUG    | __main__:main:33 -   Destination: Unawatuna
+2026-01-14 00:15:47 | DEBUG    | __main__:main:34 -   Adults: 2
+2026-01-14 00:15:47 | DEBUG    | __main__:main:35 -   Rooms: 1
+2026-01-14 00:15:47 | DEBUG    | __main__:main:36 -   Limit: 100
+2026-01-14 00:15:47 | DEBUG    | __main__:main:37 -   Force Refetch: False
+2026-01-14 00:15:47 | INFO     | __main__:main:38 - ------------------------------
+2026-01-14 00:15:47 | INFO     | src.scrapers.booking_com:scrape_booking_com_data:109 - Proceeding with the cached_URL https://www.booking.com/searchresults.en-gb.html?ss=Unawatuna%2C+Galle+District%2C+Sri+Lanka&efdco=1&label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&lang=en-gb&sb=1&src_elem=sb&src=index&dest_id=-2238370&dest_type=city&ac_position=0&ac_click_type=b&ac_langcode=xu&ac_suggestion_list_length=5&search_selected=true&search_pageview_id=6fad7520cf2c085e&ac_meta=GhA2ZmFkNzUyMGNmMmMwODVlIAAoATICeHU6CVVuYXdhdHVuYQ%3D%3D&ltfd=5%3A1%3A1-2026_2-2026_3-2026%3A1%3A&group_adults=1&no_rooms=1&group_children=0
+2026-01-14 00:16:14 | DEBUG    | src.scrapers.booking_com.browser:scrape_properties_data:402 - Found 25 properties on current scroll
+2026-01-14 00:16:14 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Aurora
+2026-01-14 00:16:14 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Agnus Unawatuna
+2026-01-14 00:16:14 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Araliya Beach Resort & Spa Unawatuna- Where you meet the sea all year
+2026-01-14 00:16:15 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Angel Beach Unawatuna
+2026-01-14 00:16:15 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Selenya Talpe - Boutique Villa
+2026-01-14 00:16:15 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Sooriya villa
+2026-01-14 00:16:15 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Oura Spirit
+2026-01-14 00:16:15 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Galawatta Beach Resort
+2026-01-14 00:16:15 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Villa Rumassala Luxury Chalets Unawatuna
+2026-01-14 00:16:15 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Lara's place
+2026-01-14 00:16:16 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Sayura Beach Hotel
+2026-01-14 00:16:16 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Dunes Unawatuna Hotel
+2026-01-14 00:16:16 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Peacock Beach Hotel Unawatuna
+2026-01-14 00:16:16 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Green Escape Unawatuna
+2026-01-14 00:16:16 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: KAJU GREEN eco lodges
+2026-01-14 00:16:16 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: The Sea Sun villa
+2026-01-14 00:16:17 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: fantasea villa
+2026-01-14 00:16:17 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Tartaruga Beach Unawatuna
+2026-01-14 00:16:17 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Amanda Beach Villas
+2026-01-14 00:16:17 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Nooit Gedacht Heritage Hotel (Original Dutch Governors House)
+2026-01-14 00:16:17 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Villa Gaetano Unawatuna
+2026-01-14 00:16:17 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Villa 73 Unawatuna
+2026-01-14 00:16:18 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Sielen Diva
+2026-01-14 00:16:18 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Royal Indigo Villa
+2026-01-14 00:16:18 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Serenity Boutique - Unawatuna
+2026-01-14 00:16:20 | DEBUG    | src.scrapers.booking_com.browser:scrape_properties_data:402 - Found 50 properties on current scroll
+2026-01-14 00:16:20 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Aurora
+2026-01-14 00:16:21 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Agnus Unawatuna
+2026-01-14 00:16:21 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Araliya Beach Resort & Spa Unawatuna- Where you meet the sea all year
+2026-01-14 00:16:21 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Angel Beach Unawatuna
+2026-01-14 00:16:21 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Selenya Talpe - Boutique Villa
+2026-01-14 00:16:22 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Sooriya villa
+2026-01-14 00:16:22 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Oura Spirit
+2026-01-14 00:16:22 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Galawatta Beach Resort
+2026-01-14 00:16:22 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Villa Rumassala Luxury Chalets Unawatuna
+2026-01-14 00:16:22 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Lara's place
+2026-01-14 00:16:23 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Sayura Beach Hotel
+2026-01-14 00:16:23 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Dunes Unawatuna Hotel
+2026-01-14 00:16:23 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Peacock Beach Hotel Unawatuna
+2026-01-14 00:16:23 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Green Escape Unawatuna
+2026-01-14 00:16:23 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: KAJU GREEN eco lodges
+2026-01-14 00:16:24 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: The Sea Sun villa
+2026-01-14 00:16:24 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: fantasea villa
+2026-01-14 00:16:24 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Tartaruga Beach Unawatuna
+2026-01-14 00:16:24 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Amanda Beach Villas
+2026-01-14 00:16:24 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Nooit Gedacht Heritage Hotel (Original Dutch Governors House)
+2026-01-14 00:16:25 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Villa Gaetano Unawatuna
+2026-01-14 00:16:25 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Villa 73 Unawatuna
+2026-01-14 00:16:25 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Sielen Diva
+2026-01-14 00:16:25 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Royal Indigo Villa
+2026-01-14 00:16:26 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Serenity Boutique - Unawatuna
+2026-01-14 00:16:26 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Nooit Gedacht Holiday Resort Unawatuna
+2026-01-14 00:16:26 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Sun N Sea Hotel
+2026-01-14 00:16:26 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Happy Beach Resort
+2026-01-14 00:16:27 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: La Veranda Di Serena
+2026-01-14 00:16:27 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Green Villa Unawatuna
+2026-01-14 00:16:27 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: The Regent Villa
+2026-01-14 00:16:27 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: The Waves Unawatuna
+2026-01-14 00:16:28 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Unawatuna Beach Bungalow -
+2026-01-14 00:16:28 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Miss Ceylon
+2026-01-14 00:16:28 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Hotel Flower Garden
+2026-01-14 00:16:28 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Thaproban Pavilion Waves
+2026-01-14 00:16:28 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: SURF UNA BEACH HOTEL
+2026-01-14 00:16:29 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Nature Villa Unawatuna
+2026-01-14 00:16:29 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Silva Rest
+2026-01-14 00:16:29 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Thambapanni Retreat
+2026-01-14 00:16:29 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Villa 58 Unawatuna
+2026-01-14 00:16:30 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Urchin Unawatuna
+2026-01-14 00:16:30 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Rockside Cabanas Hotel
+2026-01-14 00:16:30 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Epic Unawatuna
+2026-01-14 00:16:30 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Alice in Paradise
+2026-01-14 00:16:30 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: VillaWatuna
+2026-01-14 00:16:31 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Cocobay Unawatuna
+2026-01-14 00:16:31 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Tevins Place - Unawatuna
+2026-01-14 00:16:31 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Tiny Royal Palace
+2026-01-14 00:16:31 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Kingfisher
+2026-01-14 00:16:34 | DEBUG    | src.scrapers.booking_com.browser:scrape_properties_data:402 - Found 75 properties on current scroll
+2026-01-14 00:16:34 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Aurora
+2026-01-14 00:16:35 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Agnus Unawatuna
+2026-01-14 00:16:35 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Araliya Beach Resort & Spa Unawatuna- Where you meet the sea all year
+2026-01-14 00:16:35 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Angel Beach Unawatuna
+2026-01-14 00:16:35 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Selenya Talpe - Boutique Villa
+2026-01-14 00:16:36 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Sooriya villa
+2026-01-14 00:16:36 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Oura Spirit
+2026-01-14 00:16:36 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Galawatta Beach Resort
+2026-01-14 00:16:36 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Villa Rumassala Luxury Chalets Unawatuna
+2026-01-14 00:16:37 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Lara's place
+2026-01-14 00:16:37 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Sayura Beach Hotel
+2026-01-14 00:16:37 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Dunes Unawatuna Hotel
+2026-01-14 00:16:37 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Peacock Beach Hotel Unawatuna
+2026-01-14 00:16:38 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Green Escape Unawatuna
+2026-01-14 00:16:38 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: KAJU GREEN eco lodges
+2026-01-14 00:16:38 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: The Sea Sun villa
+2026-01-14 00:16:38 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: fantasea villa
+2026-01-14 00:16:39 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Tartaruga Beach Unawatuna
+2026-01-14 00:16:39 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Amanda Beach Villas
+2026-01-14 00:16:39 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Nooit Gedacht Heritage Hotel (Original Dutch Governors House)
+2026-01-14 00:16:39 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Villa Gaetano Unawatuna
+2026-01-14 00:16:40 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Villa 73 Unawatuna
+2026-01-14 00:16:40 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Sielen Diva
+2026-01-14 00:16:40 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Royal Indigo Villa
+2026-01-14 00:16:41 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:607 - Scraped: Serenity Boutique - Unawatuna
+2026-01-14 00:16:41 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:610 - Scraped 100 properties, stopping.
+2026-01-14 00:16:41 | INFO     | src.scrapers.booking_com:scrape_booking_com_data:162 - Scraping details for 5 hotels concurrently.
+2026-01-14 00:16:41 | INFO     | src.scrapers.booking_com:scrape_hotel_data_concurrent:58 - Starting concurrent scraping of 5 hotels with max 5 concurrent tasks
+2026-01-14 00:16:41 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:110 - Navigating to: https://www.booking.com/hotel/lk/aurora-unawatuna.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-03-13&checkout=2026-03-14&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=popularity&srpvid=82e683f3c5450295&srepoch=1768329954&all_sr_blocks=122986801_273506099_1_1_0&highlighted_blocks=122986801_273506099_1_1_0&matching_block_id=122986801_273506099_1_1_0&sr_pri_blocks=122986801_273506099_1_1_0__12420&from=searchresults
+2026-01-14 00:16:41 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:110 - Navigating to: https://www.booking.com/hotel/lk/agnus-rumassala-resort.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-02-06&checkout=2026-02-07&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=2&hapos=2&sr_order=popularity&srpvid=82e683f3c5450295&srepoch=1768329954&all_sr_blocks=398015903_216124075_2_41_0_277481&highlighted_blocks=398015903_216124075_2_41_0_277481&matching_block_id=398015903_216124075_2_41_0_277481&sr_pri_blocks=398015903_216124075_2_41_0_277481_15989&from=searchresults
+2026-01-14 00:16:41 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:110 - Navigating to: https://www.booking.com/hotel/lk/angel-beach-unawatuna.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-16&checkout=2026-01-17&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=4&hapos=4&sr_order=popularity&srpvid=82e683f3c5450295&srepoch=1768329954&all_sr_blocks=523913503_410592987_2_41_0_240387&highlighted_blocks=523913503_410592987_2_41_0_240387&matching_block_id=523913503_410592987_2_41_0_240387&sr_pri_blocks=523913503_410592987_2_41_0_240387_16200&from=searchresults
+2026-01-14 00:16:41 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:110 - Navigating to: https://www.booking.com/hotel/lk/araliya-beach-resort-amp-spa-unawatuna.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-16&checkout=2026-01-17&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=3&hapos=3&sr_order=popularity&srpvid=82e683f3c5450295&srepoch=1768329954&all_sr_blocks=718641010_421967838_2_42_0_379720&highlighted_blocks=718641010_421967838_2_42_0_379720&matching_block_id=718641010_421967838_2_42_0_379720&sr_pri_blocks=718641010_421967838_2_42_0_379720_22050&from=searchresults
+2026-01-14 00:16:41 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:110 - Navigating to: https://www.booking.com/hotel/lk/selenya.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALA6pnLBsACAdICJDMwNDFhMWYwLTc3ZWEtNDAyMy1iYWRjLWI5MWY1YmJmYTZmNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-03-13&checkout=2026-03-14&dest_id=-2238370&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=5&hapos=5&sr_order=popularity&srpvid=82e683f3c5450295&srepoch=1768329954&all_sr_blocks=854877611_390344395_1_1_0_886046&highlighted_blocks=854877611_390344395_1_1_0_886046&matching_block_id=854877611_390344395_1_1_0_886046&sr_pri_blocks=854877611_390344395_1_1_0_886046_15750&from=searchresults
+2026-01-14 00:17:06 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:41 - Starting full page scroll to load all content...
+2026-01-14 00:17:09 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 1/20 - Height: 8345
+2026-01-14 00:17:09 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:41 - Starting full page scroll to load all content...
+2026-01-14 00:17:09 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:41 - Starting full page scroll to load all content...
+2026-01-14 00:17:11 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:41 - Starting full page scroll to load all content...
+2026-01-14 00:17:11 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 1/20 - Height: 8260
+2026-01-14 00:17:11 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:52 - No new content loaded after 1 scrolls
+2026-01-14 00:17:11 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 2/20 - Height: 9829
+2026-01-14 00:17:12 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 1/20 - Height: 9613
+2026-01-14 00:17:12 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:70 - Completed full page scroll
+2026-01-14 00:17:12 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:118 - Extracting basic information...
+2026-01-14 00:17:12 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:159 - Extracting location information...
+2026-01-14 00:17:12 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:190 - Extracting description...
+2026-01-14 00:17:12 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:200 - Extracting popular facilities...
+2026-01-14 00:17:12 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:212 - Extracting facility groups...
+2026-01-14 00:17:13 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:227 - Extracting internet and parking info...
+2026-01-14 00:17:13 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:248 - Extracting pool information...
+2026-01-14 00:17:13 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:270 - Extracting languages...
+2026-01-14 00:17:13 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:275 - Extracting room types...
+2026-01-14 00:17:13 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:290 - Extracting pricing...
+2026-01-14 00:17:13 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:296 - Extracting check-in/check-out times...
+2026-01-14 00:17:13 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:321 - Extracting photos count...
+2026-01-14 00:17:13 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:329 - Extracting property highlights...
+2026-01-14 00:17:13 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:379 - ✓ Successfully scraped: None
+2026-01-14 00:17:14 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 1/20 - Height: 8764
+2026-01-14 00:17:14 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 3/20 - Height: 9826
+2026-01-14 00:17:14 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:52 - No new content loaded after 3 scrolls
+2026-01-14 00:17:14 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:41 - Starting full page scroll to load all content...
+2026-01-14 00:17:14 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 2/20 - Height: 11809
+2026-01-14 00:17:15 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:70 - Completed full page scroll
+2026-01-14 00:17:15 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:118 - Extracting basic information...
+2026-01-14 00:17:15 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:159 - Extracting location information...
+2026-01-14 00:17:15 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:190 - Extracting description...
+2026-01-14 00:17:15 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:200 - Extracting popular facilities...
+2026-01-14 00:17:15 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:212 - Extracting facility groups...
+2026-01-14 00:17:15 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:227 - Extracting internet and parking info...
+2026-01-14 00:17:15 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:248 - Extracting pool information...
+2026-01-14 00:17:15 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:270 - Extracting languages...
+2026-01-14 00:17:15 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:275 - Extracting room types...
+2026-01-14 00:17:15 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:290 - Extracting pricing...
+2026-01-14 00:17:15 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:296 - Extracting check-in/check-out times...
+2026-01-14 00:17:15 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:321 - Extracting photos count...
+2026-01-14 00:17:15 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:329 - Extracting property highlights...
+2026-01-14 00:17:15 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:379 - ✓ Successfully scraped: None
+2026-01-14 00:17:16 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 2/20 - Height: 9181
+2026-01-14 00:17:16 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 1/20 - Height: 8354
+2026-01-14 00:17:17 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 3/20 - Height: 11797
+2026-01-14 00:17:17 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:52 - No new content loaded after 3 scrolls
+2026-01-14 00:17:18 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:70 - Completed full page scroll
+2026-01-14 00:17:18 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:118 - Extracting basic information...
+2026-01-14 00:17:18 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:159 - Extracting location information...
+2026-01-14 00:17:18 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:190 - Extracting description...
+2026-01-14 00:17:18 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:200 - Extracting popular facilities...
+2026-01-14 00:17:18 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:212 - Extracting facility groups...
+2026-01-14 00:17:19 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 3/20 - Height: 9968
+2026-01-14 00:17:19 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:52 - No new content loaded after 3 scrolls
+2026-01-14 00:17:19 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:227 - Extracting internet and parking info...
+2026-01-14 00:17:19 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:248 - Extracting pool information...
+2026-01-14 00:17:19 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:270 - Extracting languages...
+2026-01-14 00:17:19 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:275 - Extracting room types...
+2026-01-14 00:17:19 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:290 - Extracting pricing...
+2026-01-14 00:17:19 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:296 - Extracting check-in/check-out times...
+2026-01-14 00:17:19 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:321 - Extracting photos count...
+2026-01-14 00:17:19 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:329 - Extracting property highlights...
+2026-01-14 00:17:19 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:379 - ✓ Successfully scraped: None
+2026-01-14 00:17:19 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 2/20 - Height: 8771
+2026-01-14 00:17:20 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:70 - Completed full page scroll
+2026-01-14 00:17:20 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:118 - Extracting basic information...
+2026-01-14 00:17:20 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:159 - Extracting location information...
+2026-01-14 00:17:20 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:190 - Extracting description...
+2026-01-14 00:17:20 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:200 - Extracting popular facilities...
+2026-01-14 00:17:20 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:212 - Extracting facility groups...
+2026-01-14 00:17:20 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:227 - Extracting internet and parking info...
+2026-01-14 00:17:20 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:248 - Extracting pool information...
+2026-01-14 00:17:20 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:270 - Extracting languages...
+2026-01-14 00:17:20 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:275 - Extracting room types...
+2026-01-14 00:17:20 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:290 - Extracting pricing...
+2026-01-14 00:17:20 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:296 - Extracting check-in/check-out times...
+2026-01-14 00:17:20 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:321 - Extracting photos count...
+2026-01-14 00:17:20 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:329 - Extracting property highlights...
+2026-01-14 00:17:20 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:379 - ✓ Successfully scraped: None
+2026-01-14 00:17:21 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:65 - Scroll 3/20 - Height: 9595
+2026-01-14 00:17:21 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:52 - No new content loaded after 3 scrolls
+2026-01-14 00:17:22 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:70 - Completed full page scroll
+2026-01-14 00:17:22 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:118 - Extracting basic information...
+2026-01-14 00:17:23 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:159 - Extracting location information...
+2026-01-14 00:17:23 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:190 - Extracting description...
+2026-01-14 00:17:23 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:200 - Extracting popular facilities...
+2026-01-14 00:17:23 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:212 - Extracting facility groups...
+2026-01-14 00:17:23 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:227 - Extracting internet and parking info...
+2026-01-14 00:17:23 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:248 - Extracting pool information...
+2026-01-14 00:17:23 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:270 - Extracting languages...
+2026-01-14 00:17:23 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:275 - Extracting room types...
+2026-01-14 00:17:23 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:290 - Extracting pricing...
+2026-01-14 00:17:23 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:296 - Extracting check-in/check-out times...
+2026-01-14 00:17:23 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:321 - Extracting photos count...
+2026-01-14 00:17:23 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:329 - Extracting property highlights...
+2026-01-14 00:17:23 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:379 - ✓ Successfully scraped: None
+2026-01-14 00:17:23 | INFO     | src.scrapers.booking_com:scrape_hotel_data_concurrent:70 - Completed scraping 5 out of 5 hotels
+2026-01-14 00:17:23 | SUCCESS  | __main__:main:52 - Scraping successful! Found 100 properties.
+2026-01-14 00:24:20 | INFO     | __main__:main:13 - Please provide the scraping parameters:
+2026-01-14 00:24:26 | INFO     | __main__:main:32 - 
+Starting scraper with parameters:
+2026-01-14 00:24:26 | DEBUG    | __main__:main:33 -   Destination: Colombo
+2026-01-14 00:24:26 | DEBUG    | __main__:main:34 -   Adults: 2
+2026-01-14 00:24:26 | DEBUG    | __main__:main:35 -   Rooms: 1
+2026-01-14 00:24:26 | DEBUG    | __main__:main:36 -   Limit: 100
+2026-01-14 00:24:26 | DEBUG    | __main__:main:37 -   Force Refetch: False
+2026-01-14 00:24:26 | INFO     | __main__:main:38 - ------------------------------
+2026-01-14 00:24:26 | INFO     | src.scrapers.booking_com.main_scraper:scrape_booking_com_data:136 - Proceeding to get the URL
+2026-01-14 00:24:52 | DEBUG    | src.scrapers.booking_com.navigation:goto_properties_page:82 - Flexible modal did not appear, continuing...
+2026-01-14 00:25:21 | DEBUG    | src.scrapers.booking_com.browser:scrape_properties_data:498 - Found 25 properties on current scroll
+2026-01-14 00:25:21 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Zylan Colombo
+2026-01-14 00:25:21 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Granbell Hotel Colombo
+2026-01-14 00:25:21 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Marino Beach Colombo
+2026-01-14 00:25:22 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Alma Boutique Hostel - Colombo
+2026-01-14 00:25:22 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Ez Stay Guesthouse
+2026-01-14 00:25:22 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Galle Face Terrace Hostel by Tourlux
+2026-01-14 00:25:22 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: C 1 Colombo Fort
+2026-01-14 00:25:22 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Cinnamon Life at City of Dreams
+2026-01-14 00:25:23 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Golden Pier City Hotel
+2026-01-14 00:25:23 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Green Palace Colombo
+2026-01-14 00:25:23 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Granny's House
+2026-01-14 00:25:23 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Srilax
+2026-01-14 00:25:24 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Galle Face Hotel
+2026-01-14 00:25:24 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Sofia Colombo City Hotel
+2026-01-14 00:25:24 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Drop Inn Hostels
+2026-01-14 00:25:24 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Taprobane House
+2026-01-14 00:25:24 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Trillium Boutique Express Hotel - Ward Place
+2026-01-14 00:25:25 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Colombo, Trizen Luxury Apartments, Sri Lanka
+2026-01-14 00:25:25 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Hostel Republic at Galle Face
+2026-01-14 00:25:25 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Supun Arcade Residency
+2026-01-14 00:25:25 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: SeSaya Poshtel & Bistro - Colombo's Newest and Finest Poshtel Dorms and Rooms
+2026-01-14 00:25:25 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Fairway Colombo - Sri Lanka's First Hotel With Robot Technology
+2026-01-14 00:25:25 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Cinnamon Grand Colombo
+2026-01-14 00:25:26 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: City Stay By Sunrise
+2026-01-14 00:25:26 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: ITC Ratnadipa, a Luxury Collection Hotel, Colombo
+2026-01-14 00:25:28 | DEBUG    | src.scrapers.booking_com.browser:scrape_properties_data:498 - Found 50 properties on current scroll
+2026-01-14 00:25:28 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Zylan Colombo
+2026-01-14 00:25:28 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Granbell Hotel Colombo
+2026-01-14 00:25:28 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Marino Beach Colombo
+2026-01-14 00:25:29 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Alma Boutique Hostel - Colombo
+2026-01-14 00:25:29 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Ez Stay Guesthouse
+2026-01-14 00:25:29 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Galle Face Terrace Hostel by Tourlux
+2026-01-14 00:25:29 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: C 1 Colombo Fort
+2026-01-14 00:25:30 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Cinnamon Life at City of Dreams
+2026-01-14 00:25:30 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Golden Pier City Hotel
+2026-01-14 00:25:30 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Green Palace Colombo
+2026-01-14 00:25:30 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Granny's House
+2026-01-14 00:25:30 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Srilax
+2026-01-14 00:25:30 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Galle Face Hotel
+2026-01-14 00:25:31 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Sofia Colombo City Hotel
+2026-01-14 00:25:31 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Drop Inn Hostels
+2026-01-14 00:25:31 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Taprobane House
+2026-01-14 00:25:31 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Trillium Boutique Express Hotel - Ward Place
+2026-01-14 00:25:31 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Colombo, Trizen Luxury Apartments, Sri Lanka
+2026-01-14 00:25:32 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Hostel Republic at Galle Face
+2026-01-14 00:25:32 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Supun Arcade Residency
+2026-01-14 00:25:32 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: SeSaya Poshtel & Bistro - Colombo's Newest and Finest Poshtel Dorms and Rooms
+2026-01-14 00:25:32 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Fairway Colombo - Sri Lanka's First Hotel With Robot Technology
+2026-01-14 00:25:32 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Cinnamon Grand Colombo
+2026-01-14 00:25:32 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: City Stay By Sunrise
+2026-01-14 00:25:33 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: ITC Ratnadipa, a Luxury Collection Hotel, Colombo
+2026-01-14 00:25:33 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: De Saram House by Geoffrey Bawa
+2026-01-14 00:25:33 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Urban Deck
+2026-01-14 00:25:33 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: The Auresta Colombo
+2026-01-14 00:25:33 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Motel VIP
+2026-01-14 00:25:34 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: CEYLON STAYZ
+2026-01-14 00:25:34 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Greenscape Colombo
+2026-01-14 00:25:34 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Grand Oriental Hotel
+2026-01-14 00:25:34 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Shangri-La Colombo
+2026-01-14 00:25:34 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Colombo Downtown Monkey Backpackers Hostel
+2026-01-14 00:25:35 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Anugaa in The City
+2026-01-14 00:25:35 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Zest Metropole
+2026-01-14 00:25:35 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Opulence Colombo
+2026-01-14 00:25:35 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Seilan
+2026-01-14 00:25:35 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Cinnamon Red Colombo
+2026-01-14 00:25:36 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Lucky Wave Beach Resort
+2026-01-14 00:25:36 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Venue Colombo
+2026-01-14 00:25:36 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Havelock City Hostel, Colombo
+2026-01-14 00:25:36 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Colombo Trizen J&J future Apart ment
+2026-01-14 00:25:36 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Manaal Palace
+2026-01-14 00:25:36 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Highbury Colombo
+2026-01-14 00:25:37 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Marine Bay Colombo
+2026-01-14 00:25:37 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Urban Girl Hostel
+2026-01-14 00:25:37 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: MercuryFM 103 Guest House - Colombo 3
+2026-01-14 00:25:37 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: The Kingsbury Colombo
+2026-01-14 00:25:37 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Nyne Hotels Lake Lodge - Colombo
+2026-01-14 00:25:39 | DEBUG    | src.scrapers.booking_com.browser:scrape_properties_data:498 - Found 50 properties on current scroll
+2026-01-14 00:25:40 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Zylan Colombo
+2026-01-14 00:25:40 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Granbell Hotel Colombo
+2026-01-14 00:25:40 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Marino Beach Colombo
+2026-01-14 00:25:40 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Alma Boutique Hostel - Colombo
+2026-01-14 00:25:41 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Ez Stay Guesthouse
+2026-01-14 00:25:41 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Galle Face Terrace Hostel by Tourlux
+2026-01-14 00:25:41 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: C 1 Colombo Fort
+2026-01-14 00:25:41 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Cinnamon Life at City of Dreams
+2026-01-14 00:25:41 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Golden Pier City Hotel
+2026-01-14 00:25:42 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Green Palace Colombo
+2026-01-14 00:25:42 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Granny's House
+2026-01-14 00:25:42 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Srilax
+2026-01-14 00:25:42 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Galle Face Hotel
+2026-01-14 00:25:42 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Sofia Colombo City Hotel
+2026-01-14 00:25:43 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Drop Inn Hostels
+2026-01-14 00:25:43 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Taprobane House
+2026-01-14 00:25:43 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Trillium Boutique Express Hotel - Ward Place
+2026-01-14 00:25:43 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Colombo, Trizen Luxury Apartments, Sri Lanka
+2026-01-14 00:25:43 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Hostel Republic at Galle Face
+2026-01-14 00:25:44 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Supun Arcade Residency
+2026-01-14 00:25:44 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: SeSaya Poshtel & Bistro - Colombo's Newest and Finest Poshtel Dorms and Rooms
+2026-01-14 00:25:44 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Fairway Colombo - Sri Lanka's First Hotel With Robot Technology
+2026-01-14 00:25:44 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: Cinnamon Grand Colombo
+2026-01-14 00:25:45 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: City Stay By Sunrise
+2026-01-14 00:25:45 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:703 - Scraped: ITC Ratnadipa, a Luxury Collection Hotel, Colombo
+2026-01-14 00:25:45 | INFO     | src.scrapers.booking_com.browser:scrape_properties_data:706 - Scraped 100 properties, stopping.
+2026-01-14 00:25:45 | INFO     | src.scrapers.booking_com.main_scraper:scrape_booking_com_data:186 - Scraping details for 5 hotels concurrently.
+2026-01-14 00:25:45 | INFO     | src.scrapers.booking_com.main_scraper:scrape_hotel_data_concurrent:58 - Starting concurrent scraping of 5 hotels with max 5 concurrent tasks
+2026-01-14 00:25:45 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:139 - Navigating to: https://www.booking.com/hotel/lk/granbell-colombo.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALuqZrLBsACAdICJGVjMjY2NDhhLTQ5MjMtNGNhNS05M2EzLTEwOTljN2JkYzIzNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-23&checkout=2026-01-24&dest_id=-2214877&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=2&hapos=2&sr_order=popularity&srpvid=42cc8505956f051d&srepoch=1768330503&all_sr_blocks=826831715_0_1_0_0&highlighted_blocks=826831715_0_1_0_0&matching_block_id=826831715_0_1_0_0&sr_pri_blocks=826831715_0_1_0_0__6233&from=searchresults
+2026-01-14 00:25:45 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:139 - Navigating to: https://www.booking.com/hotel/lk/marino-beach-colombo.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALuqZrLBsACAdICJGVjMjY2NDhhLTQ5MjMtNGNhNS05M2EzLTEwOTljN2JkYzIzNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-03-06&checkout=2026-03-07&dest_id=-2214877&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=3&hapos=3&sr_order=popularity&srpvid=42cc8505956f051d&srepoch=1768330503&all_sr_blocks=376535115_388521095_0_0_0_238706&highlighted_blocks=376535115_388521095_0_0_0_238706&matching_block_id=376535115_388521095_0_0_0_238706&sr_pri_blocks=376535115_388521095_0_0_0_238706_8500&from=searchresults
+2026-01-14 00:25:45 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:139 - Navigating to: https://www.booking.com/hotel/lk/zylan-luxury-villa.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALuqZrLBsACAdICJGVjMjY2NDhhLTQ5MjMtNGNhNS05M2EzLTEwOTljN2JkYzIzNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-23&checkout=2026-01-24&dest_id=-2214877&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=popularity&srpvid=42cc8505956f051d&srepoch=1768330503&all_sr_blocks=37982701_374394355_2_2_0&highlighted_blocks=37982701_374394355_2_2_0&matching_block_id=37982701_374394355_2_2_0&sr_pri_blocks=37982701_374394355_2_2_0__7425&from=searchresults
+2026-01-14 00:25:45 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:139 - Navigating to: https://www.booking.com/hotel/lk/alma-hostel-and-garden-cafe-colombo.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALuqZrLBsACAdICJGVjMjY2NDhhLTQ5MjMtNGNhNS05M2EzLTEwOTljN2JkYzIzNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-23&checkout=2026-01-24&dest_id=-2214877&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=4&hapos=4&sr_order=popularity&srpvid=42cc8505956f051d&srepoch=1768330503&all_sr_blocks=1401994306_412035300_1_2_0&highlighted_blocks=1401994306_412035300_1_2_0&matching_block_id=1401994306_412035300_1_2_0&sr_pri_blocks=1401994306_412035300_1_2_0__1300&from=searchresults
+2026-01-14 00:25:45 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:139 - Navigating to: https://www.booking.com/hotel/lk/ez-stay-lodge.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALuqZrLBsACAdICJGVjMjY2NDhhLTQ5MjMtNGNhNS05M2EzLTEwOTljN2JkYzIzNdgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-16&checkout=2026-01-17&dest_id=-2214877&dest_type=city&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=5&hapos=5&sr_order=popularity&srpvid=42cc8505956f051d&srepoch=1768330503&all_sr_blocks=1257743904_398674175_2_0_0&highlighted_blocks=1257743904_398674175_2_0_0&matching_block_id=1257743904_398674175_2_0_0&sr_pri_blocks=1257743904_398674175_2_0_0__1700&from=searchresults
+2026-01-14 00:25:53 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:60 - Starting full page scroll to load all content...
+2026-01-14 00:25:56 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:84 - Scroll 1/20 - Height: 7654
+2026-01-14 00:25:59 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:84 - Scroll 2/20 - Height: 10787
+2026-01-14 00:25:59 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:71 - No new content loaded after 2 scrolls
+2026-01-14 00:26:00 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:91 - Completed full page scroll
+2026-01-14 00:26:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:149 - Extracting basic information...
+2026-01-14 00:26:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:190 - Extracting location information...
+2026-01-14 00:26:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:221 - Extracting description...
+2026-01-14 00:26:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:231 - Extracting popular facilities...
+2026-01-14 00:26:00 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:243 - Extracting facility groups...
+2026-01-14 00:26:01 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:323 - Extracting internet and parking info...
+2026-01-14 00:26:01 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:344 - Extracting pool information...
+2026-01-14 00:26:01 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:366 - Extracting languages...
+2026-01-14 00:26:01 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:371 - Extracting room types...
+2026-01-14 00:26:01 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:386 - Extracting pricing...
+2026-01-14 00:26:01 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:392 - Extracting check-in/check-out times...
+2026-01-14 00:26:01 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:417 - Extracting photos count...
+2026-01-14 00:26:01 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:425 - Extracting property highlights...
+2026-01-14 00:26:01 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:475 - ✓ Successfully scraped: None
+2026-01-14 00:26:10 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:60 - Starting full page scroll to load all content...
+2026-01-14 00:26:12 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:84 - Scroll 1/20 - Height: 9015
+2026-01-14 00:26:12 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:71 - No new content loaded after 1 scrolls
+2026-01-14 00:26:13 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:91 - Completed full page scroll
+2026-01-14 00:26:13 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:149 - Extracting basic information...
+2026-01-14 00:26:13 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:190 - Extracting location information...
+2026-01-14 00:26:13 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:221 - Extracting description...
+2026-01-14 00:26:13 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:231 - Extracting popular facilities...
+2026-01-14 00:26:13 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:243 - Extracting facility groups...
+2026-01-14 00:26:14 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:323 - Extracting internet and parking info...
+2026-01-14 00:26:14 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:344 - Extracting pool information...
+2026-01-14 00:26:14 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:366 - Extracting languages...
+2026-01-14 00:26:14 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:371 - Extracting room types...
+2026-01-14 00:26:14 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:386 - Extracting pricing...
+2026-01-14 00:26:14 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:392 - Extracting check-in/check-out times...
+2026-01-14 00:26:14 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:417 - Extracting photos count...
+2026-01-14 00:26:14 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:425 - Extracting property highlights...
+2026-01-14 00:26:14 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:475 - ✓ Successfully scraped: None
+2026-01-14 00:26:15 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:60 - Starting full page scroll to load all content...
+2026-01-14 00:26:16 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:60 - Starting full page scroll to load all content...
+2026-01-14 00:26:16 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:60 - Starting full page scroll to load all content...
+2026-01-14 00:26:18 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:84 - Scroll 1/20 - Height: 11418
+2026-01-14 00:26:18 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:84 - Scroll 1/20 - Height: 7022
+2026-01-14 00:26:19 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:84 - Scroll 1/20 - Height: 6712
+2026-01-14 00:26:20 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:84 - Scroll 2/20 - Height: 11799
+2026-01-14 00:26:21 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:84 - Scroll 2/20 - Height: 7628
+2026-01-14 00:26:22 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:84 - Scroll 2/20 - Height: 7066
+2026-01-14 00:26:23 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:84 - Scroll 3/20 - Height: 12873
+2026-01-14 00:26:23 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:71 - No new content loaded after 3 scrolls
+2026-01-14 00:26:23 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:84 - Scroll 3/20 - Height: 7626
+2026-01-14 00:26:23 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:71 - No new content loaded after 3 scrolls
+2026-01-14 00:26:24 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:91 - Completed full page scroll
+2026-01-14 00:26:24 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:149 - Extracting basic information...
+2026-01-14 00:26:24 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:190 - Extracting location information...
+2026-01-14 00:26:24 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:221 - Extracting description...
+2026-01-14 00:26:24 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:231 - Extracting popular facilities...
+2026-01-14 00:26:24 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:84 - Scroll 3/20 - Height: 7285
+2026-01-14 00:26:24 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:71 - No new content loaded after 3 scrolls
+2026-01-14 00:26:24 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:243 - Extracting facility groups...
+2026-01-14 00:26:24 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:91 - Completed full page scroll
+2026-01-14 00:26:24 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:149 - Extracting basic information...
+2026-01-14 00:26:24 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:190 - Extracting location information...
+2026-01-14 00:26:24 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:221 - Extracting description...
+2026-01-14 00:26:24 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:231 - Extracting popular facilities...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:243 - Extracting facility groups...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:323 - Extracting internet and parking info...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:344 - Extracting pool information...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:366 - Extracting languages...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:323 - Extracting internet and parking info...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:371 - Extracting room types...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:344 - Extracting pool information...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:386 - Extracting pricing...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:392 - Extracting check-in/check-out times...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:417 - Extracting photos count...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:425 - Extracting property highlights...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:475 - ✓ Successfully scraped: None
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:366 - Extracting languages...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:371 - Extracting room types...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:386 - Extracting pricing...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:392 - Extracting check-in/check-out times...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scroll_page_fully:91 - Completed full page scroll
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:149 - Extracting basic information...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:417 - Extracting photos count...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:425 - Extracting property highlights...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:475 - ✓ Successfully scraped: None
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:190 - Extracting location information...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:221 - Extracting description...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:231 - Extracting popular facilities...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:243 - Extracting facility groups...
+2026-01-14 00:26:25 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:323 - Extracting internet and parking info...
+2026-01-14 00:26:26 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:344 - Extracting pool information...
+2026-01-14 00:26:26 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:366 - Extracting languages...
+2026-01-14 00:26:26 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:371 - Extracting room types...
+2026-01-14 00:26:26 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:386 - Extracting pricing...
+2026-01-14 00:26:26 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:392 - Extracting check-in/check-out times...
+2026-01-14 00:26:26 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:417 - Extracting photos count...
+2026-01-14 00:26:26 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:425 - Extracting property highlights...
+2026-01-14 00:26:26 | INFO     | src.scrapers.booking_com.browser:scrape_hotel_data:475 - ✓ Successfully scraped: None
+2026-01-14 00:26:26 | INFO     | src.scrapers.booking_com.main_scraper:scrape_hotel_data_concurrent:73 - Completed scraping 5 out of 5 hotels
+2026-01-14 00:26:26 | ERROR    | __main__:main:48 - Scraping failed: 
+2026-01-14 00:28:48 | INFO     | __main__:main:13 - Please provide the scraping parameters:
+2026-01-14 00:28:56 | INFO     | __main__:main:32 - 
+Starting scraper with parameters:
+2026-01-14 00:28:56 | DEBUG    | __main__:main:33 -   Destination: Colombo
+2026-01-14 00:28:56 | DEBUG    | __main__:main:34 -   Adults: 2
+2026-01-14 00:28:56 | DEBUG    | __main__:main:35 -   Rooms: 1
+2026-01-14 00:28:56 | DEBUG    | __main__:main:36 -   Limit: 100
+2026-01-14 00:28:56 | DEBUG    | __main__:main:37 -   Force Refetch: False
+2026-01-14 00:28:56 | INFO     | __main__:main:38 - ------------------------------
+2026-01-14 00:28:56 | INFO     | src.scrapers.booking_com.main_scraper:scrape_booking_com_data:94 - Using cached properties data from ./scraped/properties/Colombo/2/1/limit_100.csv
+2026-01-14 00:28:56 | SUCCESS  | __main__:main:52 - Scraping successful! Found 100 properties.
