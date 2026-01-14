@@ -5,17 +5,17 @@ from typing_extensions import List
 
 
 @dataclass
-class ScrapedData:
+class PropertyListing:
     """Dataclass to hold scraped hotel data."""
 
     name: str
     link: Optional[str] = None
     hotel_link: Optional[str] = None  # Added hotel_link
     address: Optional[str] = None
-    star_rating: Optional[str] = None
-    guest_rating_score: Optional[str] = None
+    star_rating: Optional[float] = None
+    guest_rating_score: Optional[float] = None
     reviews: Optional[str] = None
-    distance_from_downtown: Optional[str] = None
+    distance_from_downtown: Optional[float] = None
     distance_from_beach: Optional[str] = None
     preferred_badge: Optional[str] = None
     deal_badge: Optional[str] = None
@@ -27,12 +27,18 @@ class ScrapedData:
     stay_dates: Optional[str] = None
     nights_and_guests: Optional[str] = None
     original_price: Optional[str] = None
+    original_price_value: Optional[float] = None
+    original_price_currency: Optional[str] = None
     discounted_price: Optional[str] = None
+    discounted_price_value: Optional[float] = None
+    discounted_price_currency: Optional[str] = None
     taxes_and_fees: Optional[str] = None
+    taxes_and_fees_value: Optional[float] = None
+    taxes_and_fees_currency: Optional[str] = None
 
 
 @dataclass
-class HotelDetailData:
+class HotelDetails:
     """Complete hotel information data structure"""
 
     # Basic Information

@@ -1,34 +1,22 @@
 import asyncio
 
-from returns.result import Failure
+import pandas as pd
 
-from src.scrapers.booking_com.main_scraper import (
+from app.prediction.price_model import train_price_prediction_model
+from app.scrapers.booking_com.main_scraper import (
     scrape_booking_com_data,
 )
-from src.utils.logger import logger
+from app.utils.logger import logger
 
 
 async def main():
     """Main function to run the scraper with user-provided values."""
-    logger.info("Please provide the scraping parameters:")
-
-    destination = input("Enter destination (e.g., Unawatuna): ")
-    while not destination:
-        logger.warning("Destination cannot be empty.")
-        destination = input("Enter destination (e.g., Unawatuna): ")
-
-    adults_str = input("Enter number of adults (default: 2): ")
-    adults = int(adults_str) if adults_str.isdigit() else 2
-
-    rooms_str = input("Enter number of rooms (default: 1): ")
-    rooms = int(rooms_str) if rooms_str.isdigit() else 1
-
-    limit_str = input("Enter limit of properties to scrape (default: 100): ")
-    limit = int(limit_str) if limit_str.isdigit() else 100
-
-    force_refetch_str = input("Force refetch? (y/N, default: N): ").lower()
-    force_refetch = force_refetch_str == "y"
-
+    destination = "Unawatuna"
+    adults = 2
+    rooms = 1
+    limit = 100
+    hotel_details_limit = 10
+    force_refetch = False
     logger.info("\nStarting scraper with parameters:")
     logger.debug(f"  Destination: {destination}")
     logger.debug(f"  Adults: {adults}")
@@ -37,19 +25,31 @@ async def main():
     logger.debug(f"  Force Refetch: {force_refetch}")
     logger.info("-" * 30)
 
-    data_result = await scrape_booking_com_data(
-        destination=destination,
-        adults=adults,
-        rooms=rooms,
-        limit=limit,
-        force_refetch=force_refetch,
-    )
-    if isinstance(data_result, Failure):
-        logger.error(f"Scraping failed: {data_result.failure()}")
-        return
+    try:
+        (property_data, property_details_data) = await scrape_booking_com_data(
+            destination=destination,
+            adults=adults,
+            rooms=rooms,
+            limit=limit,
+            hotel_details_limit=hotel_details_limit,
+            force_refetch=force_refetch,
+        )
+        logger.success(f"Scraping successful! Found {len(property_data)} properties.")
 
-    data = data_result.unwrap()
-    logger.success(f"Scraping successful! Found {len(data)} properties.")
+        df = pd.DataFrame(
+            property_data
+        )  # Convert list of ScrapedData objects to DataFrame
+
+        await train_price_prediction_model(
+            df,
+            destination=destination,
+            adults=adults,
+            rooms=rooms,
+            limit=limit,
+        )
+    except Exception as e:
+        logger.error(f"An error occurred during scraping: {e}")
+        return
 
 
 if __name__ == "__main__":
