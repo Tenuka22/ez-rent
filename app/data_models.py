@@ -23,15 +23,11 @@ class PropertyListing:
     cancellation_policy: str = ""
     prepayment_policy: str = ""
     availability_message: str = ""
-    stay_dates: str = ""
     nights_and_guests: str = ""
-    original_price: Optional[float] = None
     original_price_value: Optional[float] = None
     original_price_currency: str = ""
-    discounted_price: Optional[float] = None
     discounted_price_value: Optional[float] = None
     discounted_price_currency: str = ""
-    taxes_and_fees: Optional[float] = None
     taxes_and_fees_value: Optional[float] = None
     taxes_and_fees_currency: str = ""
 
@@ -43,9 +39,9 @@ class HotelDetails:
     # Basic Information
     url: str
     name: Optional[str] = None
-    star_rating: Optional[str] = None
-    guest_rating: Optional[str] = None
-    review_count: Optional[str] = None
+    star_rating: Optional[int] = None
+    guest_rating: Optional[float] = None
+    review_count: Optional[int] = None
     review_score_text: Optional[str] = None  # e.g., "Wonderful"
 
     # Location
@@ -74,20 +70,3 @@ class HotelDetails:
     pool_info: Optional[Dict[str, Any]] = None
     spa_wellness: Optional[List[str]] = None
     languages_spoken: Optional[List[str]] = None
-
-    # Rooms
-    room_types: Optional[List[str]] = None
-
-    # Pricing
-
-    discounted_price_value: Optional[float] = None
-    discounted_price_currency: Optional[str] = None
-    taxes_and_fees_value: Optional[float] = None
-    taxes_and_fees_currency: Optional[str] = None
-
-    # House Rules
-    check_in_time: Optional[str] = None
-    check_out_time: Optional[str] = None
-
-    # Media
-    photos_count: Optional[str] = None

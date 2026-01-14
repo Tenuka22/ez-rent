@@ -10,13 +10,13 @@ from app.utils.logger import logger
 
 def extract_price_components(
     price_string: str | None,
-) -> tuple[float | None, str]: # Changed return type for currency to str
+) -> tuple[float | None, str]:  # Changed return type for currency to str
     logger.debug(f"extract_price_components: Input price_string: {price_string}")
     if not isinstance(price_string, str):
         logger.debug(
             "extract_price_components: Input is not a string, returning None, ''."
         )
-        return None, "" # Changed to empty string
+        return None, ""  # Changed to empty string
 
     # Normalize spaces (e.g., non-breaking space)
     price_string = price_string.replace("\u202f", " ").strip()
@@ -35,7 +35,7 @@ def extract_price_components(
         logger.debug(
             "extract_price_components: 'Includes taxes and charges' found, returning 0.0, ''."
         )
-        return 0.0, "" # Changed to empty string
+        return 0.0, ""  # Changed to empty string
 
     if not match:
         num_only_match = re.search(number_pattern, price_string)
@@ -43,16 +43,18 @@ def extract_price_components(
             logger.debug(
                 "extract_price_components: No number found, returning None, ''."
             )
-            return None, "" # Changed to empty string
+            return None, ""  # Changed to empty string
         found_number_str = num_only_match.group(0)
-        currency_symbol = "" # Default currency_symbol to empty string
+        currency_symbol = ""  # Default currency_symbol to empty string
         logger.debug(
             f"extract_price_components: No currency match, found_number_str: {found_number_str}"
         )
     else:
         currency_symbol_found = match.group(1) or match.group(3)
         currency_symbol = (
-            currency_symbol_found.upper() if currency_symbol_found else "" # Default to empty string
+            currency_symbol_found.upper()
+            if currency_symbol_found
+            else ""  # Default to empty string
         )
         # Normalize Rs to LKR
         if currency_symbol and currency_symbol.startswith("RS"):
@@ -66,7 +68,7 @@ def extract_price_components(
         logger.debug(
             f"extract_price_components: found_number_str is empty, returning 0.0, '{currency_symbol}'."
         )
-        return 0.0, currency_symbol # Changed to 0.0
+        return 0.0, currency_symbol  # Changed to 0.0
 
     # Clean the number string
     cleaned_number_str = found_number_str.replace(" ", "")
@@ -107,7 +109,7 @@ def extract_price_components(
         logger.debug(
             f"extract_price_components: ValueError for {processed_number}, returning 0.0, '{currency_symbol}'."
         )
-        return 0.0, currency_symbol # Changed to 0.0
+        return 0.0, currency_symbol  # Changed to 0.0
 
 
 def extract_float_value(value_string: str | None) -> float | None:
@@ -165,6 +167,32 @@ def extract_float_value(value_string: str | None) -> float | None:
             f"extract_float_value: ValueError for {processed_number}, returning None."
         )
         return None
+
+
+def parse_distance_km(value_string: str | None) -> float | None:
+    """
+    Parses a distance string and returns distance in kilometers.
+    Supports:
+      - '2.8 km from downtown' → 2.8
+      - '350 m from beach' → 0.35
+      - 'Beachfront' → 0.0
+    """
+    if not value_string:
+        return None
+
+    text = value_string.lower().strip()
+
+    if "beachfront" in text:
+        return 0.0
+
+    value = extract_float_value(text)
+    if value is None:
+        return None
+
+    if " m" in text or " meters" in text:
+        return value / 1000
+
+    return value
 
 
 async def modal_dismisser(page: Page) -> None:
@@ -321,68 +349,47 @@ async def scrape_hotel_data(page: Page, url: str) -> HotelDetails:
             logger.error(f"Hotel name could not be extracted for URL: {url}")
             raise Exception(f"Hotel name could not be extracted for URL: {url}")
 
-        # Star rating
-        star_rating = None
-        star_selectors = [
-            '[data-testid="rating-stars"]',
-            ".bui-rating__stars",
-            '[aria-label*="star"]',
-        ]
-        for selector in star_selectors:
-            try:
-                star_elem = page.locator(selector).first
-                if await star_elem.count() > 0:
-                    star_rating = await star_elem.get_attribute("aria-label")
-                    if star_rating:
-                        break
-            except:
-                continue
+        rating_container = page.locator('[data-testid="rating-squares"]')
+
+        squares = rating_container.locator(".e03979cfad")
+
+        filled_squares = squares.locator(
+            "span.fc70cba028.bdc459fcb4.f24706dc71:not(.e2cec97860)"
+        )
+
+        star_rating = await filled_squares.count()
 
         # Guest rating
         guest_rating = None
-        rating_selectors = [
-            '[data-testid="review-score-right-component"] .f63b14ab7a.dff2e52086',
-            ".bui-review-score__badge",
-            '[data-testid="review-score-badge"]',
-        ]
-        for selector in rating_selectors:
-            try:
-                rating_elem = page.locator(selector).first
-                if await rating_elem.count() > 0:
-                    guest_rating = await rating_elem.inner_text()
-                    if guest_rating:
-                        break
-            except:
-                continue
 
-        # Review score text
+        rating_elem = page.locator("div.f63b14ab7a.dff2e52086")
+
+        if await rating_elem.count() > 0:
+            guest_rating = float((await rating_elem.first.inner_text()).strip())
+
         review_score_text = None
-        score_text_selectors = [
-            '[data-testid="review-score-right-component"] .f63b14ab7a.f546354b44',
-            ".bui-review-score__text",
-        ]
-        for selector in score_text_selectors:
-            try:
-                score_text_elem = page.locator(selector).first
-                if await score_text_elem.count() > 0:
-                    review_score_text = await score_text_elem.inner_text()
-                    if review_score_text:
-                        break
-            except:
-                continue
+
+        score_text_elem = page.locator("div.f63b14ab7a.f546354b44")
+
+        if await score_text_elem.count() > 0:
+            review_score_text = (await score_text_elem.first.inner_text()).strip()
 
         # Review count
         review_count = None
+
         review_selectors = [
-            '[data-testid="review-score-right-component"] .fff1944c52',
+            'div.fff1944c52:has-text("reviews")',
             ".bui-review-score__review-count",
         ]
+
         for selector in review_selectors:
             try:
                 review_elem = page.locator(selector).first
                 if await review_elem.count() > 0:
-                    review_count = await review_elem.inner_text()
-                    if review_count:
+                    text = (await review_elem.inner_text()).strip()
+                    if text:
+                        # "285 reviews" → 285
+                        review_count = int(text.split()[0].replace(",", ""))
                         break
             except:
                 continue
@@ -559,146 +566,33 @@ async def scrape_hotel_data(page: Page, url: str) -> HotelDetails:
         # ===== ROOM TYPES =====
         logger.info("Extracting room types...")
 
-        room_types = []
-        room_selectors = [
-            '[data-testid="recommended-units"] h3',
-            ".hprt-roomtype-icon-link",
-        ]
-        for selector in room_selectors:
-            try:
-                room_elems = await page.locator(selector).all()
-                for elem in room_elems[:10]:
-                    text = await elem.inner_text()
-                    if text:
-                        room_types.append(text.strip())
-                if room_types:
-                    break
-            except:
-                continue
-
         # ===== PRICING =====
         logger.info("Extracting pricing...")
-
-        # Initialize price components
-        discounted_price_value: Optional[float] = 0.0
-        discounted_price_currency: Optional[str] = ""
-        taxes_and_fees_value: Optional[float] = 0.0
-        taxes_and_fees_currency: Optional[str] = ""
-        
-        main_price_text: Optional[str] = None
-        price_selectors = [
-            '[data-testid="price-and-discounted-price"]',
-            ".prco-valign-middle-helper",
-            ".bui-price-display__value",
-        ]
-        for selector in price_selectors:
-            try:
-                price_elem = page.locator(selector).first
-                if await price_elem.count() > 0:
-                    main_price_text = await price_elem.inner_text()
-                    if main_price_text:
-                        break
-            except:
-                continue
-
-        if main_price_text:
-            logger.debug(f"Main price text extracted: {main_price_text}")
-            discounted_price_value, discounted_price_currency = extract_price_components(main_price_text)
-            logger.debug(f"Parsed discounted price: {discounted_price_value} {discounted_price_currency}")
-        else:
-            logger.warning(f"Main price could not be extracted for URL: {url}")
-
-        # Attempt to extract taxes and fees explicitly
-        logger.info("Extracting taxes and fees...")
-        taxes_el_text: Optional[str] = None
-        taxes_selectors = [
-            'div.css-1dbjc4n:has-text("taxes and charges")',
-            'span:has-text("Includes taxes and fees")',
-            '[data-testid="taxes-and-charges"]',
-            '.prco-style-pricing-meta',
-            '.hprt-price-tax-deposit', # Another common element for taxes/deposit
-        ]
-        for selector in taxes_selectors:
-            try:
-                taxes_elem = page.locator(selector).first
-                if await taxes_elem.count() > 0:
-                    taxes_el_text = await taxes_elem.inner_text()
-                    if taxes_el_text:
-                        break
-            except:
-                continue
-
-        if taxes_el_text:
-            logger.debug(f"Taxes and fees text extracted: {taxes_el_text}")
-            taxes_and_fees_value, taxes_and_fees_currency = extract_price_components(taxes_el_text)
-            logger.debug(f"Parsed taxes and fees: {taxes_and_fees_value} {taxes_and_fees_currency}")
-        else:
-            logger.debug("No explicit taxes and fees element found.")
-
-        # ===== CHECK-IN/CHECK-OUT =====
-        logger.info("Extracting check-in/check-out times...")
-
-        check_in_time = None
-        try:
-            checkin_elem = (
-                page.locator('div.db29ecfbe2:has-text("Check-in")')
-                .locator("xpath=following-sibling::div")
-                .first
-            )
-            if await checkin_elem.count() > 0:
-                check_in_time = await checkin_elem.inner_text()
-        except:
-            pass
-
-        check_out_time = None
-        try:
-            checkout_elem = (
-                page.locator('div.db29ecfbe2:has-text("Check-out")')
-                .locator("xpath=following-sibling::div")
-                .first
-            )
-            if await checkout_elem.count() > 0:
-                check_out_time = await checkout_elem.inner_text()
-        except:
-            pass
-
-        # ===== PHOTOS COUNT =====
-        logger.info("Extracting photos count...")
-
-        photos_count = None
-        photos_selectors = [
-            '[data-testid="gallery-image-count"]',
-            ".bh-photo-grid-thumb-count",
-        ]
-        for selector in photos_selectors:
-            try:
-                photos_elem = page.locator(selector).first
-                if await photos_elem.count() > 0:
-                    photos_count = await photos_elem.inner_text()
-                    if photos_count:
-                        break
-            except:
-                continue
 
         # ===== PROPERTY HIGHLIGHTS =====
         logger.info("Extracting property highlights...")
 
         highlights = []
-        highlights_selectors = [
-            '[data-testid="property-highlights"] div.e6208ee469',
-            '[data-testid="property-highlights"] li',
-        ]
-        for selector in highlights_selectors:
-            try:
-                highlight_elems = await page.locator(selector).all()
-                for elem in highlight_elems[:15]:
-                    text = await elem.inner_text()
-                    if text:
-                        highlights.append(text.strip())
-                if highlights:
-                    break
-            except:
-                continue
+
+        # Locate all sections under property highlights
+        sections = await page.locator("div.ph-sections div.ph-section").all()
+
+        for section in sections[:15]:  # limit to first 15
+            # First try <p> text
+            p_elem = section.locator("p.ph-item span.ph-item-copy > span")
+            if await p_elem.count():
+                text = (await p_elem.inner_text()).strip()
+                if text:
+                    highlights.append(text)
+                    continue
+
+            # Then try <li> items inside the section (for lists like "Rooms with")
+            li_elems = section.locator("ul li p.ph-item span.ph-item-copy > span").all()
+            if await li_elems.count():
+                for li in await li_elems:
+                    li_text = (await li.inner_text()).strip()
+                    if li_text:
+                        highlights.append(li_text)
 
         # ===== CREATE DATA OBJECT =====
         hotel_data = HotelDetails(
@@ -728,14 +622,6 @@ async def scrape_hotel_data(page: Page, url: str) -> HotelDetails:
             pool_info=pool_info,
             spa_wellness=spa_wellness,
             languages_spoken=languages,
-            room_types=room_types if room_types else None,
-            discounted_price_value=discounted_price_value,
-            discounted_price_currency=discounted_price_currency,
-            taxes_and_fees_value=taxes_and_fees_value,
-            taxes_and_fees_currency=taxes_and_fees_currency,
-            check_in_time=check_in_time,
-            check_out_time=check_out_time,
-            photos_count=photos_count,
             property_highlights=highlights if highlights else None,
         )
 
@@ -791,75 +677,93 @@ async def scrape_properties_data(page: Page, limit: int) -> List[PropertyListing
                     address = (await address_el.inner_text()).strip()
 
                 # ---------- STAR RATING ----------
-                star_rating = 0.0 # Default value
+                star_rating = 0.0  # Default value
                 star_el = card.locator('[aria-label*="star"]')
                 if await star_el.count():
-                    extracted_star_rating_text = await star_el.get_attribute("aria-label")
+                    extracted_star_rating_text = await star_el.get_attribute(
+                        "aria-label"
+                    )
                     if extracted_star_rating_text:
                         # Extract number from "X-star hotel"
-                        match = re.search(r'(\d+)-star', extracted_star_rating_text)
+                        match = re.search(r"(\d+)-star", extracted_star_rating_text)
                         if match:
                             star_rating = float(match.group(1))
-                        else: # Fallback if no match or just extract the float value directly
-                            extracted_star_rating_value = extract_float_value(extracted_star_rating_text)
+                        else:  # Fallback if no match or just extract the float value directly
+                            extracted_star_rating_value = extract_float_value(
+                                extracted_star_rating_text
+                            )
                             if extracted_star_rating_value is not None:
                                 star_rating = extracted_star_rating_value
 
                 # ---------- GUEST RATING ----------
-                guest_rating_score = 0.0 # Default value
+                guest_rating_score = 0.0  # Default value
                 rating_el = card.locator('[data-testid="review-score"] .bc946a29db')
                 if await rating_el.count():
-                    extracted_score = extract_float_value(
-                        await rating_el.inner_text()
-                    )
+                    extracted_score = extract_float_value(await rating_el.inner_text())
                     if extracted_score is not None:
                         guest_rating_score = extracted_score
 
                 # ---------- REVIEW COUNT ----------
-                reviews = 0.0 # Default value
-                reviews_el = card.locator('[data-testid="review-score"] .fff1944c52.fb14de7f14.eaa8455879')
+                reviews = 0.0  # Default value
+                reviews_el = card.locator(
+                    '[data-testid="review-score"] .fff1944c52.fb14de7f14.eaa8455879'
+                )
                 if await reviews_el.count():
                     reviews_text = (await reviews_el.inner_text()).strip()
                     extracted_reviews_value = extract_float_value(reviews_text)
                     if extracted_reviews_value is not None:
                         reviews = extracted_reviews_value
 
-                # ---------- DISTANCE ----------
-                distance_from_downtown = 0.0 # Default value
-                distance_from_beach = 0.0 # Default value
+                distance_from_downtown = None
+                distance_from_beach = None
 
-                dist_el = card.locator('[data-testid="distance"]')
-                if await dist_el.count():
-                    full_distance_string = await dist_el.inner_text()
-                    
-                    # Extract the numerical part for both distance_from_downtown and distance_from_beach
-                    extracted_distance_value = extract_float_value(full_distance_string)
-                    if extracted_distance_value is not None:
-                        distance_from_downtown = extracted_distance_value
-                        distance_from_beach = extracted_distance_value
+                # ---------- DISTANCE ----------
+                downtown_el = card.locator('[data-testid="distance"]')
+
+                if await downtown_el.count():
+                    text = (await downtown_el.first.inner_text()).lower()
+                    value = parse_distance_km(text)
+                    if value is not None:
+                        distance_from_downtown = value
+
+                beach_el = card.locator("span.fff1944c52.d4d73793a3")
+
+                if await beach_el.count():
+                    beach_text = (await beach_el.first.inner_text()).lower()
+
+                    if "beachfront" in beach_text:
+                        distance_from_beach = 0.0
+                    else:
+                        value = parse_distance_km(beach_text)
+                        if value is not None:
+                            distance_from_beach = value
 
                 # ---------- PREFERRED BADGE ----------
-                preferred_badge = 0 # Default value
-                preferred_badge_el = card.locator('[data-testid="badge-tag"]:has-text("Preferred")')
+                preferred_badge = 0  # Default value
+                preferred_badge_el = card.locator('[data-testid="preferred-badge"]')
                 if await preferred_badge_el.count():
                     preferred_badge = 1
 
                 # ---------- DEAL BADGE ----------
-                deal_badge = 0 # Default value
-                deal_badge_el = card.locator('[data-testid="badge-tag"]:has-text("Deal")')
+                deal_badge = 0  # Default value
+
+                # Use the correct data-testid for the deal badge
+                deal_badge_el = card.locator('[data-testid="property-card-deal"]')
                 if await deal_badge_el.count():
                     deal_badge = 1
 
                 # ---------- PRICE (Values Only) ----------
                 original_price_value = None
-                original_price_currency = "" # Default to empty string
+                original_price_currency = ""  # Default to empty string
                 discounted_price_value = None
-                discounted_price_currency = "" # Default to empty string
+                discounted_price_currency = ""  # Default to empty string
 
-                price_el_container = card.locator('[data-testid="price-and-discounted-price"]') 
+                price_el_container = card.locator(
+                    '[data-testid="price-and-discounted-price"]'
+                )
                 if await price_el_container.count():
                     full_price_text = await price_el_container.inner_text()
-                    
+
                     # First, extract discounted price
                     (
                         extracted_discounted_value,
@@ -877,7 +781,9 @@ async def scrape_properties_data(page: Page, limit: int) -> List[PropertyListing
                         '[data-testid="price-and-discounted-price"] span.e2e-original-price'
                     )
                     if await original_price_el_explicit.count():
-                        original_price_text = (await original_price_el_explicit.inner_text()).strip()
+                        original_price_text = (
+                            await original_price_el_explicit.inner_text()
+                        ).strip()
                         (
                             extracted_original_value,
                             extracted_original_currency,
@@ -886,16 +792,18 @@ async def scrape_properties_data(page: Page, limit: int) -> List[PropertyListing
                             original_price_value = extracted_original_value
                         if extracted_original_currency is not None:
                             original_price_currency = extracted_original_currency
-                    
+
                     # Fallback: If no explicit original price is found but discounted price is, assume original is same as discounted
-                    if original_price_value is None and discounted_price_value is not None:
+                    if (
+                        original_price_value is None
+                        and discounted_price_value is not None
+                    ):
                         original_price_value = discounted_price_value
                         original_price_currency = discounted_price_currency
 
-
                 # ---------- TAXES (Values Only) ----------
                 taxes_value = None
-                taxes_currency = "" # Default to empty string
+                taxes_currency = ""  # Default to empty string
 
                 tax_el = card.locator('[data-testid="taxes-and-charges"]')
                 if await tax_el.count():
@@ -908,34 +816,55 @@ async def scrape_properties_data(page: Page, limit: int) -> List[PropertyListing
                         taxes_value = extracted_taxes_value
                     if extracted_taxes_currency is not None:
                         taxes_currency = extracted_taxes_currency
-                
+
                 # ---------- ROOM TYPE ----------
-                room_type = "" # Default value
-                room_type_el = card.locator('[data-testid="room-type"]')
+                room_type = ""  # Default value
+                room_type_el = card.locator('h4[role="link"]')
                 if await room_type_el.count():
                     room_type = (await room_type_el.inner_text()).strip()
 
                 # ---------- BED DETAILS ----------
-                bed_details = "" # Default value
-                bed_details_el = card.locator('[data-testid="bed-details"]')
+                bed_details = ""  # Default value
+                bed_details_el = card.locator(
+                    "ul.d1e8dce286 li:first-child div.fff1944c52"
+                )
                 if await bed_details_el.count():
                     bed_details = (await bed_details_el.inner_text()).strip()
 
                 # ---------- CANCELLATION POLICY ----------
-                cancellation_policy = "" # Default value (not extracted from card)
+                cancellation_policy = ""  # Default value
+                cancellation_el = card.locator(
+                    '[data-testid="cancellation-policy-icon"] + div div.fff1944c52'
+                )
+                if await cancellation_el.count():
+                    cancellation_policy = (await cancellation_el.inner_text()).strip()
 
                 # ---------- PREPAYMENT POLICY ----------
-                prepayment_policy = "" # Default value (not extracted from card)
+                prepayment_policy = ""  # Default value
+                prepayment_el = card.locator(
+                    '[data-testid="prepayment-policy-icon"] + div div.fff1944c52'
+                )
+                if await prepayment_el.count():
+                    prepayment_policy = (await prepayment_el.inner_text()).strip()
 
                 # ---------- AVAILABILITY MESSAGE ----------
-                availability_message = "" # Default value (not extracted from card)
-
-                # ---------- STAY DATES ----------
-                stay_dates = "" # Default value (not extracted from card)
+                availability_message = ""  # Default value
+                availability_el = card.locator(
+                    "ul.d1e8dce286 li:last-child div.b7d3eb6716"
+                )
+                if await availability_el.count():
+                    availability_message = (await availability_el.inner_text()).strip()
 
                 # ---------- NIGHTS AND GUESTS ----------
-                nights_and_guests = "" # Default value (not extracted from card)
-                
+                nights_and_guests = ""  # Default value
+                nights_and_guests_el = card.locator(
+                    '[data-testid="price-for-x-nights"]'
+                )
+                if await nights_and_guests_el.count():
+                    nights_and_guests = (
+                        await nights_and_guests_el.inner_text()
+                    ).strip()
+
                 hotels.append(
                     PropertyListing(
                         name=name.strip(),
@@ -950,12 +879,11 @@ async def scrape_properties_data(page: Page, limit: int) -> List[PropertyListing
                         deal_badge=deal_badge,
                         room_type=room_type,
                         bed_details=bed_details,
-                        cancellation_policy=cancellation_policy, 
+                        cancellation_policy=cancellation_policy,
                         prepayment_policy=prepayment_policy,
                         availability_message=availability_message,
-                        stay_dates=stay_dates,
                         nights_and_guests=nights_and_guests,
-                        original_price_value=original_price_value, # Now only value
+                        original_price_value=original_price_value,  # Now only value
                         original_price_currency=original_price_currency,
                         discounted_price_value=discounted_price_value,
                         discounted_price_currency=discounted_price_currency,
