@@ -2,7 +2,9 @@ import asyncio
 
 import pandas as pd
 
-from app.prediction.price_model import train_price_prediction_model
+from app.prediction.price_model import (
+    train_price_prediction_model_without_high_level_data,
+)
 from app.scrapers.booking_com.main_scraper import (
     scrape_booking_com_data,
 )
@@ -14,8 +16,8 @@ async def main():
     destination = "Unawatuna"
     adults = 2
     rooms = 1
-    limit = 100
-    hotel_details_limit = 10
+    limit = 20
+    hotel_details_limit = 5
     force_refetch = False
     logger.info("\nStarting scraper with parameters:")
     logger.debug(f"  Destination: {destination}")
@@ -40,7 +42,7 @@ async def main():
             property_data
         )  # Convert list of ScrapedData objects to DataFrame
 
-        await train_price_prediction_model(
+        await train_price_prediction_model_without_high_level_data(
             df,
             destination=destination,
             adults=adults,

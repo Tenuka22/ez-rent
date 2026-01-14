@@ -4,6 +4,7 @@ import re
 import time
 from typing import List, Optional, cast
 
+import pandas as pd
 from playwright.async_api import Browser, async_playwright
 
 from app.data_models import HotelDetails, PropertyListing
@@ -111,15 +112,15 @@ async def scrape_booking_com_data(
     rooms: int = 1,
     limit: int = 100,
     force_refetch: bool = False,
-) -> tuple[List[PropertyListing], List[HotelDetails]]:
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     logger.debug(f"hotel_details_limit received: {hotel_details_limit}")
     properties_file_path = (
         f"./scraped/properties/{destination}/{adults}/{rooms}/limit_{limit}.csv"
     )
     hotel_details_file_path = f"./scraped/hotel_details/{destination}/{adults}/{rooms}/limit_{hotel_details_limit}.csv"
 
-    scraped_properties: List[PropertyListing] = []
-    hotel_details_data: List[HotelDetails] = []
+    scraped_properties: pd.DataFrame | None = None
+    hotel_details_data: pd.DataFrame | None = None
 
     properties_from_cache = False
     if not force_refetch and os.path.exists(properties_file_path):
@@ -138,7 +139,6 @@ async def scrape_booking_com_data(
                     f"Failed to read cached properties data: {e}. Will attempt to scrape."
                 )
 
-    # --- Attempt to load hotel details from cache ---
     hotel_details_from_cache = False
     if not force_refetch and os.path.exists(hotel_details_file_path):
         if (
@@ -184,6 +184,7 @@ async def scrape_booking_com_data(
                     except Exception as e:
                         logger.error(f"Error checking cache for URL: {e}")
 
+
                     if (
                         cached_url and not force_refetch
                     ):  # Only use cached URL if not force refetch
@@ -223,7 +224,9 @@ async def scrape_booking_com_data(
                         except Exception as e:
                             logger.error(f"Failed to cache URL: {e}")
 
-                    scraped_properties = await scrape_properties_data(page, limit)
+                    scraped_properties = pd.DataFrame(
+                        await scrape_properties_data(page, limit)
+                    )
                     try:
                         save_scraped_data_to_csv(
                             scraped_properties, destination, adults, rooms, limit
@@ -233,7 +236,7 @@ async def scrape_booking_com_data(
 
                 # --- Scrape hotel details if not cached or forced refetch ---
                 if not hotel_details_from_cache or force_refetch:
-                    if not scraped_properties:
+                    if scraped_properties.empty:
                         logger.warning(
                             "No properties available to scrape hotel details for."
                         )
@@ -242,9 +245,8 @@ async def scrape_booking_com_data(
                             f"Length of scraped_properties: {len(scraped_properties)}"
                         )
                         hotel_urls_to_scrape: list[str] = [
-                            prop.hotel_link
-                            for prop in scraped_properties[:hotel_details_limit]
-                            if prop.hotel_link is not None
+                            link
+                            for link in scraped_properties["hotel_link"].head(hotel_details_limit).dropna().tolist()
                         ]
                         logger.debug(
                             f"Length of hotel_urls_to_scrape: {len(hotel_urls_to_scrape)}"
@@ -253,9 +255,31 @@ async def scrape_booking_com_data(
                         logger.info(
                             f"Scraping details for {len(hotel_urls_to_scrape)} hotels concurrently."
                         )
-                        hotel_details_data = await scrape_hotel_data_concurrent(
-                            browser, hotel_urls_to_scrape
+                        hotel_details_data = pd.DataFrame(
+                            await scrape_hotel_data_concurrent(browser, hotel_urls_to_scrape)
                         )
+                        # Rename columns to match price_model expectations
+                        if "discounted_price_value" in hotel_details_data.columns:
+                            hotel_details_data.rename(
+                                columns={"discounted_price_value": "discounted_price"},
+                                inplace=True,
+                            )
+                        if "taxes_and_fees_value" in hotel_details_data.columns:
+                            hotel_details_data.rename(
+                                columns={"taxes_and_fees_value": "taxes_and_fees"},
+                                inplace=True,
+                            )
+                        # Rename columns to match price_model expectations
+                        if "discounted_price_value" in hotel_details_data.columns:
+                            hotel_details_data.rename(
+                                columns={"discounted_price_value": "discounted_price"},
+                                inplace=True,
+                            )
+                        if "taxes_and_fees_value" in hotel_details_data.columns:
+                            hotel_details_data.rename(
+                                columns={"taxes_and_fees_value": "taxes_and_fees"},
+                                inplace=True,
+                            )
 
                         try:
                             save_hotel_detail_data_to_csv(
@@ -273,7 +297,7 @@ async def scrape_booking_com_data(
             finally:
                 await browser.close()
 
-    if not scraped_properties:
+    if scraped_properties.empty:
         raise Exception("Failed to retrive data from booking_com.")
 
     return (scraped_properties, hotel_details_data)

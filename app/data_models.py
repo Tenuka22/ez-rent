@@ -9,32 +9,31 @@ class PropertyListing:
     """Dataclass to hold scraped hotel data."""
 
     name: str
-    link: Optional[str] = None
     hotel_link: Optional[str] = None  # Added hotel_link
     address: Optional[str] = None
     star_rating: Optional[float] = None
     guest_rating_score: Optional[float] = None
-    reviews: Optional[str] = None
+    reviews: Optional[float] = None
     distance_from_downtown: Optional[float] = None
-    distance_from_beach: Optional[str] = None
-    preferred_badge: Optional[str] = None
-    deal_badge: Optional[str] = None
-    room_type: Optional[str] = None
-    bed_details: Optional[str] = None
-    cancellation_policy: Optional[str] = None
-    prepayment_policy: Optional[str] = None
-    availability_message: Optional[str] = None
-    stay_dates: Optional[str] = None
-    nights_and_guests: Optional[str] = None
-    original_price: Optional[str] = None
+    distance_from_beach: Optional[float] = None
+    preferred_badge: Optional[int] = None
+    deal_badge: Optional[int] = None
+    room_type: str = ""
+    bed_details: str = ""
+    cancellation_policy: str = ""
+    prepayment_policy: str = ""
+    availability_message: str = ""
+    stay_dates: str = ""
+    nights_and_guests: str = ""
+    original_price: Optional[float] = None
     original_price_value: Optional[float] = None
-    original_price_currency: Optional[str] = None
-    discounted_price: Optional[str] = None
+    original_price_currency: str = ""
+    discounted_price: Optional[float] = None
     discounted_price_value: Optional[float] = None
-    discounted_price_currency: Optional[str] = None
-    taxes_and_fees: Optional[str] = None
+    discounted_price_currency: str = ""
+    taxes_and_fees: Optional[float] = None
     taxes_and_fees_value: Optional[float] = None
-    taxes_and_fees_currency: Optional[str] = None
+    taxes_and_fees_currency: str = ""
 
 
 @dataclass
@@ -80,7 +79,11 @@ class HotelDetails:
     room_types: Optional[List[str]] = None
 
     # Pricing
-    price: Optional[str] = None
+
+    discounted_price_value: Optional[float] = None
+    discounted_price_currency: Optional[str] = None
+    taxes_and_fees_value: Optional[float] = None
+    taxes_and_fees_currency: Optional[str] = None
 
     # House Rules
     check_in_time: Optional[str] = None

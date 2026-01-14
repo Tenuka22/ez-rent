@@ -4,18 +4,19 @@ from typing import List, Optional
 
 from playwright.async_api import Page
 
-
 from app.data_models import HotelDetails, PropertyListing
 from app.utils.logger import logger
 
 
 def extract_price_components(
     price_string: str | None,
-) -> tuple[float | None, str | None]:
+) -> tuple[float | None, str]: # Changed return type for currency to str
     logger.debug(f"extract_price_components: Input price_string: {price_string}")
     if not isinstance(price_string, str):
-        logger.debug("extract_price_components: Input is not a string, returning None, None.")
-        return None, None
+        logger.debug(
+            "extract_price_components: Input is not a string, returning None, ''."
+        )
+        return None, "" # Changed to empty string
 
     # Normalize spaces (e.g., non-breaking space)
     price_string = price_string.replace("\u202f", " ").strip()
@@ -29,29 +30,43 @@ def extract_price_components(
     )
     match = re.search(full_pattern, price_string, re.IGNORECASE)
 
+    # Handle cases like "Includes taxes and charges" where no numerical value is present
+    if "includes taxes and charges" in price_string.lower() and not match:
+        logger.debug(
+            "extract_price_components: 'Includes taxes and charges' found, returning 0.0, ''."
+        )
+        return 0.0, "" # Changed to empty string
+
     if not match:
         num_only_match = re.search(number_pattern, price_string)
         if not num_only_match:
-            logger.debug("extract_price_components: No number found, returning None, None.")
-            return None, None
+            logger.debug(
+                "extract_price_components: No number found, returning None, ''."
+            )
+            return None, "" # Changed to empty string
         found_number_str = num_only_match.group(0)
-        currency_symbol = None
-        logger.debug(f"extract_price_components: No currency match, found_number_str: {found_number_str}")
+        currency_symbol = "" # Default currency_symbol to empty string
+        logger.debug(
+            f"extract_price_components: No currency match, found_number_str: {found_number_str}"
+        )
     else:
         currency_symbol_found = match.group(1) or match.group(3)
         currency_symbol = (
-            currency_symbol_found.upper() if currency_symbol_found else None
+            currency_symbol_found.upper() if currency_symbol_found else "" # Default to empty string
         )
         # Normalize Rs to LKR
         if currency_symbol and currency_symbol.startswith("RS"):
             currency_symbol = "LKR"
         found_number_str = match.group(2)
-        logger.debug(f"extract_price_components: Matched currency: {currency_symbol}, found_number_str: {found_number_str}")
-
+        logger.debug(
+            f"extract_price_components: Matched currency: {currency_symbol}, found_number_str: {found_number_str}"
+        )
 
     if not found_number_str:
-        logger.debug("extract_price_components: found_number_str is empty, returning None, currency_symbol.")
-        return None, currency_symbol
+        logger.debug(
+            f"extract_price_components: found_number_str is empty, returning 0.0, '{currency_symbol}'."
+        )
+        return 0.0, currency_symbol # Changed to 0.0
 
     # Clean the number string
     cleaned_number_str = found_number_str.replace(" ", "")
@@ -78,15 +93,21 @@ def extract_price_components(
             processed_number = cleaned_number_str.replace(",", ".")
         else:
             processed_number = cleaned_number_str.replace(",", "")
-    logger.debug(f"extract_price_components: processed_number before float conversion: {processed_number}")
+    logger.debug(
+        f"extract_price_components: processed_number before float conversion: {processed_number}"
+    )
 
     try:
         result_value = float(processed_number)
-        logger.debug(f"extract_price_components: Successfully parsed value: {result_value}, currency: {currency_symbol}")
+        logger.debug(
+            f"extract_price_components: Successfully parsed value: {result_value}, currency: {currency_symbol}"
+        )
         return result_value, currency_symbol
     except ValueError:
-        logger.debug(f"extract_price_components: ValueError for {processed_number}, returning None, currency_symbol.")
-        return None, currency_symbol
+        logger.debug(
+            f"extract_price_components: ValueError for {processed_number}, returning 0.0, '{currency_symbol}'."
+        )
+        return 0.0, currency_symbol # Changed to 0.0
 
 
 def extract_float_value(value_string: str | None) -> float | None:
@@ -103,7 +124,9 @@ def extract_float_value(value_string: str | None) -> float | None:
 
     found_number_str = match.group(1)
     if not found_number_str:
-        logger.debug("extract_float_value: found_number_str is empty after match, returning None.")
+        logger.debug(
+            "extract_float_value: found_number_str is empty after match, returning None."
+        )
         return None
     logger.debug(f"extract_float_value: found_number_str: {found_number_str}")
 
@@ -129,14 +152,18 @@ def extract_float_value(value_string: str | None) -> float | None:
             processed_number = cleaned_number_str.replace(",", ".")
         else:
             processed_number = cleaned_number_str.replace(",", "")
-    logger.debug(f"extract_float_value: processed_number before float conversion: {processed_number}")
+    logger.debug(
+        f"extract_float_value: processed_number before float conversion: {processed_number}"
+    )
 
     try:
         result_value = float(processed_number)
         logger.debug(f"extract_float_value: Successfully parsed value: {result_value}")
         return result_value
     except ValueError:
-        logger.debug(f"extract_float_value: ValueError for {processed_number}, returning None.")
+        logger.debug(
+            f"extract_float_value: ValueError for {processed_number}, returning None."
+        )
         return None
 
 
@@ -154,14 +181,18 @@ async def modal_dismisser(page: Page) -> None:
         logger.debug(f"Trying selector: {selector}")
         try:
             dismiss = page.locator(selector).first
-            if await dismiss.is_visible(timeout=1000): # Reduced timeout to quickly check visibility
+            if await dismiss.is_visible(
+                timeout=1000
+            ):  # Reduced timeout to quickly check visibility
                 logger.info(f"Dismissing modal with selector: {selector}")
                 await dismiss.scroll_into_view_if_needed()
                 await dismiss.click(force=True)
                 await asyncio.sleep(0.5)
                 break
-        except Exception: # Catch specific exceptions if known, otherwise general
-            logger.debug(f"Selector {selector} did not find a visible modal or failed to click.")
+        except Exception:  # Catch specific exceptions if known, otherwise general
+            logger.debug(
+                f"Selector {selector} did not find a visible modal or failed to click."
+            )
             continue
 
     # Wait for any modal to disappear
@@ -219,9 +250,7 @@ async def scroll_page_fully(page: Page, max_scrolls: int = 25) -> None:
         raise
 
 
-async def extract_facility_group(
-    page: Page, group_name: str
-) -> Optional[List[str]]:
+async def extract_facility_group(page: Page, group_name: str) -> Optional[List[str]]:
     """Extract facilities from a specific facility group"""
     logger.info(f"Attempting to extract facility group: {group_name}")
     facilities = []
@@ -240,7 +269,9 @@ async def extract_facility_group(
                     facilities.append(text.strip())
                     logger.debug(f"Extracted facility: {text.strip()}")
         if facilities:
-            logger.info(f"Successfully extracted {len(facilities)} facilities for group: {group_name}")
+            logger.info(
+                f"Successfully extracted {len(facilities)} facilities for group: {group_name}"
+            )
         else:
             logger.info(f"No facilities found for group: {group_name}")
         return facilities if facilities else None
@@ -548,7 +579,13 @@ async def scrape_hotel_data(page: Page, url: str) -> HotelDetails:
         # ===== PRICING =====
         logger.info("Extracting pricing...")
 
-        price = None
+        # Initialize price components
+        discounted_price_value: Optional[float] = 0.0
+        discounted_price_currency: Optional[str] = ""
+        taxes_and_fees_value: Optional[float] = 0.0
+        taxes_and_fees_currency: Optional[str] = ""
+        
+        main_price_text: Optional[str] = None
         price_selectors = [
             '[data-testid="price-and-discounted-price"]',
             ".prco-valign-middle-helper",
@@ -558,14 +595,45 @@ async def scrape_hotel_data(page: Page, url: str) -> HotelDetails:
             try:
                 price_elem = page.locator(selector).first
                 if await price_elem.count() > 0:
-                    price = await price_elem.inner_text()
-                    if price:
+                    main_price_text = await price_elem.inner_text()
+                    if main_price_text:
                         break
             except:
                 continue
 
-        if not price:
-            logger.warning(f"Price could not be extracted for URL: {url}")
+        if main_price_text:
+            logger.debug(f"Main price text extracted: {main_price_text}")
+            discounted_price_value, discounted_price_currency = extract_price_components(main_price_text)
+            logger.debug(f"Parsed discounted price: {discounted_price_value} {discounted_price_currency}")
+        else:
+            logger.warning(f"Main price could not be extracted for URL: {url}")
+
+        # Attempt to extract taxes and fees explicitly
+        logger.info("Extracting taxes and fees...")
+        taxes_el_text: Optional[str] = None
+        taxes_selectors = [
+            'div.css-1dbjc4n:has-text("taxes and charges")',
+            'span:has-text("Includes taxes and fees")',
+            '[data-testid="taxes-and-charges"]',
+            '.prco-style-pricing-meta',
+            '.hprt-price-tax-deposit', # Another common element for taxes/deposit
+        ]
+        for selector in taxes_selectors:
+            try:
+                taxes_elem = page.locator(selector).first
+                if await taxes_elem.count() > 0:
+                    taxes_el_text = await taxes_elem.inner_text()
+                    if taxes_el_text:
+                        break
+            except:
+                continue
+
+        if taxes_el_text:
+            logger.debug(f"Taxes and fees text extracted: {taxes_el_text}")
+            taxes_and_fees_value, taxes_and_fees_currency = extract_price_components(taxes_el_text)
+            logger.debug(f"Parsed taxes and fees: {taxes_and_fees_value} {taxes_and_fees_currency}")
+        else:
+            logger.debug("No explicit taxes and fees element found.")
 
         # ===== CHECK-IN/CHECK-OUT =====
         logger.info("Extracting check-in/check-out times...")
@@ -661,7 +729,10 @@ async def scrape_hotel_data(page: Page, url: str) -> HotelDetails:
             spa_wellness=spa_wellness,
             languages_spoken=languages,
             room_types=room_types if room_types else None,
-            price=price,
+            discounted_price_value=discounted_price_value,
+            discounted_price_currency=discounted_price_currency,
+            taxes_and_fees_value=taxes_and_fees_value,
+            taxes_and_fees_currency=taxes_and_fees_currency,
             check_in_time=check_in_time,
             check_out_time=check_out_time,
             photos_count=photos_count,
@@ -676,215 +747,198 @@ async def scrape_hotel_data(page: Page, url: str) -> HotelDetails:
         raise Exception(f"Error scraping {url}: {e}")
 
 
-async def scrape_properties_data(
-    page: Page, limit: int
-) -> List[PropertyListing]:
-    try:
-        hotels: List[PropertyListing] = []
-        seen_links = set()
+async def scrape_properties_data(page: Page, limit: int) -> List[PropertyListing]:
+    hotels: List[PropertyListing] = []
+    seen_links: set[str] = set()
 
-        last_height = 0
-        same_count = 0
+    last_height = 0
+    same_count = 0
 
-        while True:
-            await page.wait_for_load_state("networkidle")
+    while len(hotels) < limit:
+        await page.wait_for_load_state("networkidle")
 
-            property_cards = await page.locator('[data-testid="property-card"]').all()
-            logger.debug(f"Found {len(property_cards)} properties on current scroll")
+        cards = page.locator('[data-testid="property-card"]')
+        count = await cards.count()
+        logger.info(f"Found {count} property cards")
 
-            for idx, card in enumerate(property_cards):
-                try:
-                    link_elem = card.locator('a[data-testid="title-link"]').first
-                    link = (
-                        await link_elem.get_attribute("href")
-                        if await link_elem.count() > 0
-                        else None
+        for i in range(count):
+            if len(hotels) >= limit:
+                break
+
+            card = cards.nth(i)
+
+            try:
+                # ---------- LINK ----------
+                link = await card.locator('a[data-testid="title-link"]').get_attribute(
+                    "href"
+                )
+
+                if not link or link in seen_links:
+                    continue
+
+                seen_links.add(link)
+
+                if link.startswith("/"):
+                    link = f"https://www.booking.com{link}"
+
+                # ---------- NAME ----------
+                name = await card.locator('[data-testid="title"]').inner_text()
+
+                # ---------- ADDRESS ----------
+                address = None
+                address_el = card.locator('[data-testid="address"]')
+                if await address_el.count():
+                    address = (await address_el.inner_text()).strip()
+
+                # ---------- STAR RATING ----------
+                star_rating = 0.0 # Default value
+                star_el = card.locator('[aria-label*="star"]')
+                if await star_el.count():
+                    extracted_star_rating_text = await star_el.get_attribute("aria-label")
+                    if extracted_star_rating_text:
+                        # Extract number from "X-star hotel"
+                        match = re.search(r'(\d+)-star', extracted_star_rating_text)
+                        if match:
+                            star_rating = float(match.group(1))
+                        else: # Fallback if no match or just extract the float value directly
+                            extracted_star_rating_value = extract_float_value(extracted_star_rating_text)
+                            if extracted_star_rating_value is not None:
+                                star_rating = extracted_star_rating_value
+
+                # ---------- GUEST RATING ----------
+                guest_rating_score = 0.0 # Default value
+                rating_el = card.locator('[data-testid="review-score"] .bc946a29db')
+                if await rating_el.count():
+                    extracted_score = extract_float_value(
+                        await rating_el.inner_text()
                     )
+                    if extracted_score is not None:
+                        guest_rating_score = extracted_score
 
-                    if not link or link in seen_links:
-                        continue
-                    seen_links.add(link)
+                # ---------- REVIEW COUNT ----------
+                reviews = 0.0 # Default value
+                reviews_el = card.locator('[data-testid="review-score"] .fff1944c52.fb14de7f14.eaa8455879')
+                if await reviews_el.count():
+                    reviews_text = (await reviews_el.inner_text()).strip()
+                    extracted_reviews_value = extract_float_value(reviews_text)
+                    if extracted_reviews_value is not None:
+                        reviews = extracted_reviews_value
 
-                    name_elem = card.locator('[data-testid="title"]').first
-                    name = (
-                        await name_elem.inner_text()
-                        if await name_elem.count() > 0
-                        else "N/A"
-                    )
+                # ---------- DISTANCE ----------
+                distance_from_downtown = 0.0 # Default value
+                distance_from_beach = 0.0 # Default value
 
-                    address_elem = card.locator('[data-testid="address"]').first
-                    address = (
-                        await address_elem.inner_text()
-                        if await address_elem.count() > 0
-                        else None
-                    )
+                dist_el = card.locator('[data-testid="distance"]')
+                if await dist_el.count():
+                    full_distance_string = await dist_el.inner_text()
+                    
+                    # Extract the numerical part for both distance_from_downtown and distance_from_beach
+                    extracted_distance_value = extract_float_value(full_distance_string)
+                    if extracted_distance_value is not None:
+                        distance_from_downtown = extracted_distance_value
+                        distance_from_beach = extracted_distance_value
 
-                    star_rating_elem = card.locator(
-                        'div.ebc566407a[tabindex="0"]'
-                    ).first
-                    raw_star_rating = (
-                        await star_rating_elem.get_attribute("aria-label")
-                        if await star_rating_elem.count() > 0
-                        else None
-                    )
-                    star_rating = extract_float_value(raw_star_rating)
+                # ---------- PREFERRED BADGE ----------
+                preferred_badge = 0 # Default value
+                preferred_badge_el = card.locator('[data-testid="badge-tag"]:has-text("Preferred")')
+                if await preferred_badge_el.count():
+                    preferred_badge = 1
 
-                    guest_rating_score_elem = card.locator(
-                        '[data-testid="review-score"] > div:first-child'
-                    ).first
-                    raw_guest_rating_score = (
-                        await guest_rating_score_elem.inner_text()
-                        if await guest_rating_score_elem.count() > 0
-                        else None
-                    )
-                    guest_rating_score = extract_float_value(raw_guest_rating_score)
+                # ---------- DEAL BADGE ----------
+                deal_badge = 0 # Default value
+                deal_badge_el = card.locator('[data-testid="badge-tag"]:has-text("Deal")')
+                if await deal_badge_el.count():
+                    deal_badge = 1
 
-                    reviews_elem = card.locator(
-                        '[data-testid="review-score"] div:nth-child(2)'
-                    ).first
-                    reviews = (
-                        await reviews_elem.inner_text()
-                        if await reviews_elem.count() > 0
-                        else None
-                    )
+                # ---------- PRICE (Values Only) ----------
+                original_price_value = None
+                original_price_currency = "" # Default to empty string
+                discounted_price_value = None
+                discounted_price_currency = "" # Default to empty string
 
-                    distance_from_downtown_elem = card.locator(
-                        '[data-testid="distance"]'
-                    ).first
-                    raw_distance_from_downtown = (
-                        await distance_from_downtown_elem.inner_text()
-                        if await distance_from_downtown_elem.count() > 0
-                        else None
-                    )
-                    distance_from_downtown = extract_float_value(
-                        raw_distance_from_downtown
-                    )
+                price_el_container = card.locator('[data-testid="price-and-discounted-price"]') 
+                if await price_el_container.count():
+                    full_price_text = await price_el_container.inner_text()
+                    
+                    # First, extract discounted price
+                    (
+                        extracted_discounted_value,
+                        extracted_discounted_currency,
+                    ) = extract_price_components(full_price_text)
+                    if extracted_discounted_value is not None:
+                        discounted_price_value = extracted_discounted_value
+                    if extracted_discounted_currency is not None:
+                        discounted_price_currency = extracted_discounted_currency
 
-                    distance_from_beach_elem = card.locator(
-                        "span.fff1944c52.d4d73793a3"
-                    ).first
-                    distance_from_beach = None
-                    if await distance_from_beach_elem.count() > 0:
-                        beach_text = await distance_from_beach_elem.inner_text()
-                        if beach_text and "from beach" in beach_text.lower():
-                            distance_from_beach = beach_text
+                    # Now, try to find an explicit original price (e.g., strikethrough)
+                    original_price_el_explicit = card.locator(
+                        '[data-testid="price-and-discounted-price"] span[style*="line-through"], '
+                        '[data-testid="price-and-discounted-price"] span.prco-old-price, '
+                        '[data-testid="price-and-discounted-price"] span.e2e-original-price'
+                    )
+                    if await original_price_el_explicit.count():
+                        original_price_text = (await original_price_el_explicit.inner_text()).strip()
+                        (
+                            extracted_original_value,
+                            extracted_original_currency,
+                        ) = extract_price_components(original_price_text)
+                        if extracted_original_value is not None:
+                            original_price_value = extracted_original_value
+                        if extracted_original_currency is not None:
+                            original_price_currency = extracted_original_currency
+                    
+                    # Fallback: If no explicit original price is found but discounted price is, assume original is same as discounted
+                    if original_price_value is None and discounted_price_value is not None:
+                        original_price_value = discounted_price_value
+                        original_price_currency = discounted_price_currency
 
-                    preferred_badge = (
-                        "True"
-                        if await card.locator('[data-testid="preferred-badge"]').count()
-                        > 0
-                        else None
-                    )
 
-                    deal_badge_elem = card.locator(
-                        '[data-testid="property-card-deal"]'
-                    ).first
-                    deal_badge = (
-                        await deal_badge_elem.inner_text()
-                        if await deal_badge_elem.count() > 0
-                        else None
-                    )
+                # ---------- TAXES (Values Only) ----------
+                taxes_value = None
+                taxes_currency = "" # Default to empty string
 
-                    room_type_elem = card.locator(
-                        'div.dc7b6a60a4 h4[role="link"]'
-                    ).first
-                    room_type = (
-                        await room_type_elem.inner_text()
-                        if await room_type_elem.count() > 0
-                        else None
-                    )
+                tax_el = card.locator('[data-testid="taxes-and-charges"]')
+                if await tax_el.count():
+                    taxes_and_fees_text = (await tax_el.inner_text()).strip()
+                    (
+                        extracted_taxes_value,
+                        extracted_taxes_currency,
+                    ) = extract_price_components(taxes_and_fees_text)
+                    if extracted_taxes_value is not None:
+                        taxes_value = extracted_taxes_value
+                    if extracted_taxes_currency is not None:
+                        taxes_currency = extracted_taxes_currency
+                
+                # ---------- ROOM TYPE ----------
+                room_type = "" # Default value
+                room_type_el = card.locator('[data-testid="room-type"]')
+                if await room_type_el.count():
+                    room_type = (await room_type_el.inner_text()).strip()
 
-                    bed_details_elem = card.locator(
-                        "div.ba43cae375 div.fff1944c52"
-                    ).first
-                    bed_details = (
-                        await bed_details_elem.inner_text()
-                        if await bed_details_elem.count() > 0
-                        else None
-                    )
+                # ---------- BED DETAILS ----------
+                bed_details = "" # Default value
+                bed_details_el = card.locator('[data-testid="bed-details"]')
+                if await bed_details_el.count():
+                    bed_details = (await bed_details_el.inner_text()).strip()
 
-                    cancellation_policy_elem = card.locator(
-                        'div[data-testid="cancellation-policy-icon"] ~ div.ca9d921c46 div.fff1944c52'
-                    ).first
-                    cancellation_policy = (
-                        await cancellation_policy_elem.inner_text()
-                        if await cancellation_policy_elem.count() > 0
-                        else None
-                    )
+                # ---------- CANCELLATION POLICY ----------
+                cancellation_policy = "" # Default value (not extracted from card)
 
-                    prepayment_policy_elem = card.locator(
-                        'div[data-testid="prepayment-policy-icon"] ~ div.ca9d921c46 div.fff1944c52'
-                    ).first
-                    prepayment_policy = (
-                        await prepayment_policy_elem.inner_text()
-                        if await prepayment_policy_elem.count() > 0
-                        else None
-                    )
+                # ---------- PREPAYMENT POLICY ----------
+                prepayment_policy = "" # Default value (not extracted from card)
 
-                    availability_message_elem = card.locator("div.b7d3eb6716").first
-                    availability_message = (
-                        await availability_message_elem.inner_text()
-                        if await availability_message_elem.count() > 0
-                        else None
-                    )
+                # ---------- AVAILABILITY MESSAGE ----------
+                availability_message = "" # Default value (not extracted from card)
 
-                    stay_dates_elem = card.locator(
-                        'div[data-testid="flexible-dates"] span.f323fd7e96'
-                    ).first
-                    stay_dates = (
-                        await stay_dates_elem.inner_text()
-                        if await stay_dates_elem.count() > 0
-                        else None
-                    )
+                # ---------- STAY DATES ----------
+                stay_dates = "" # Default value (not extracted from card)
 
-                    nights_and_guests_elem = card.locator(
-                        'div[data-testid="price-for-x-nights"]'
-                    ).first
-                    nights_and_guests = (
-                        await nights_and_guests_elem.inner_text()
-                        if await nights_and_guests_elem.count() > 0
-                        else None
-                    )
-
-                    original_price_elem = card.locator(
-                        "span.d68334ea31.ab607752a2"
-                    ).first
-                    original_price_str = (
-                        await original_price_elem.inner_text()
-                        if await original_price_elem.count() > 0
-                        else None
-                    )
-                    original_price_value, original_price_currency = (
-                        extract_price_components(original_price_str)
-                    )
-
-                    discounted_price_elem = card.locator(
-                        '[data-testid="price-and-discounted-price"]'
-                    ).first
-                    discounted_price_str = (
-                        await discounted_price_elem.inner_text()
-                        if await discounted_price_elem.count() > 0
-                        else None
-                    )
-                    discounted_price_value, discounted_price_currency = (
-                        extract_price_components(discounted_price_str)
-                    )
-
-                    taxes_and_fees_elem = card.locator(
-                        'div[data-testid="taxes-and-charges"]'
-                    ).first
-                    taxes_and_fees_str = (
-                        await taxes_and_fees_elem.inner_text()
-                        if await taxes_and_fees_elem.count() > 0
-                        else None
-                    )
-                    taxes_and_fees_value, taxes_and_fees_currency = (
-                        extract_price_components(taxes_and_fees_str)
-                    )
-
-                    hotel_data = PropertyListing(
-                        name=name,
-                        link=None,
+                # ---------- NIGHTS AND GUESTS ----------
+                nights_and_guests = "" # Default value (not extracted from card)
+                
+                hotels.append(
+                    PropertyListing(
+                        name=name.strip(),
                         hotel_link=link,
                         address=address,
                         star_rating=star_rating,
@@ -896,59 +950,43 @@ async def scrape_properties_data(
                         deal_badge=deal_badge,
                         room_type=room_type,
                         bed_details=bed_details,
-                        cancellation_policy=cancellation_policy,
+                        cancellation_policy=cancellation_policy, 
                         prepayment_policy=prepayment_policy,
                         availability_message=availability_message,
                         stay_dates=stay_dates,
                         nights_and_guests=nights_and_guests,
-                        original_price=original_price_str,
-                        original_price_value=original_price_value,
+                        original_price_value=original_price_value, # Now only value
                         original_price_currency=original_price_currency,
-                        discounted_price=discounted_price_str,
                         discounted_price_value=discounted_price_value,
                         discounted_price_currency=discounted_price_currency,
-                        taxes_and_fees=taxes_and_fees_str,
-                        taxes_and_fees_value=taxes_and_fees_value,
-                        taxes_and_fees_currency=taxes_and_fees_currency,
+                        taxes_and_fees_value=taxes_value,
+                        taxes_and_fees_currency=taxes_currency,
                     )
-                    hotels.append(hotel_data)
-                    logger.info(f"Scraped: {name}")
+                )
 
-                    if len(hotels) >= limit:
-                        logger.info(f"Scraped {limit} properties, stopping.")
-                        return hotels[:limit]
+                logger.info(f"✓ Listing scraped: {name}")
 
-                except Exception as e:
-                    logger.error(f"Error extracting hotel {idx}: {e}")
-                    continue
+            except Exception as e:
+                logger.warning(f"Failed to parse listing card: {e}")
+                continue
 
-            # Check if "Load more results" button exists
-            load_more_btn = page.locator('button:has-text("Load more results")').first
-            if await load_more_btn.count() > 0 and await load_more_btn.is_visible():
-                logger.info("Clicking 'Load more results'...")
-                await load_more_btn.click()
-                await asyncio.sleep(3)  # wait for more results to load
-                last_height = await page.evaluate(
-                    "document.body.scrollHeight"
-                )  # reset height tracking
-                same_count = 0
-                continue  # go back to top of loop to scrape newly loaded cards
+        # ---------- LOAD MORE ----------
+        load_more = page.locator('button:has-text("Load more results")')
+        if await load_more.count() and await load_more.is_visible():
+            await load_more.click()
+            await asyncio.sleep(3)
+            continue
 
-            # Scroll to bottom if no load more button
-            new_height = await page.evaluate("document.body.scrollHeight")
-            if new_height == last_height:
-                same_count += 1
-                if same_count >= 2:  # bottom reached
-                    logger.info("Reached bottom, finished scraping.")
-                    break
-            else:
-                same_count = 0
-                await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-                await asyncio.sleep(2)
-                last_height = new_height
+        # ---------- SCROLL ----------
+        new_height = await page.evaluate("document.body.scrollHeight")
+        if new_height == last_height:
+            same_count += 1
+            if same_count >= 2:
+                break
+        else:
+            same_count = 0
+            await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+            await asyncio.sleep(2)
+            last_height = new_height
 
-        return hotels
-
-    except Exception as e:
-        logger.error(f"Error during scraping: {e}")
-        raise Exception(f"Error during scraping: {e}")
+    return hotels[:limit]

@@ -8,7 +8,7 @@ logger.remove()
 # Configure console logger
 logger.add(
     sys.stderr,
-    level="INFO",
+    level="DEBUG",
     format="<level>{message}</level>",
     colorize=True,
 )
