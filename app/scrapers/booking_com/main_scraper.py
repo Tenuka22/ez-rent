@@ -3,6 +3,7 @@ import os
 import re
 import time
 from typing import List, Optional, cast
+from dataclasses import asdict # Import asdict
 
 import pandas as pd
 from playwright.async_api import Browser, async_playwright
@@ -11,9 +12,9 @@ from app.data_models import HotelDetails, PropertyListing
 from app.scrapers.booking_com.browser import (
     extract_float_value,  # Import extract_float_value
     extract_price_components,  # Import extract_price_components
-    modal_dismisser,
     scrape_hotel_data,
     scrape_properties_data,
+    scrape_specific_property_data, # NEW IMPORT
 )
 from app.scrapers.booking_com.navigation import goto_properties_page
 from app.scrapers.booking_com.playwright_urls import BookingComUrls
@@ -112,6 +113,7 @@ async def scrape_booking_com_data(
     rooms: int = 1,
     limit: int = 100,
     force_refetch: bool = False,
+    target_hotel_name: Optional[str] = None, # NEW PARAMETER
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     logger.debug(f"hotel_details_limit received: {hotel_details_limit}")
     properties_file_path = (
@@ -174,7 +176,29 @@ async def scrape_booking_com_data(
                 )
                 page = await context.new_page()
 
-                # --- Scrape properties if not cached or forced refetch ---
+                # --- Handle specific hotel scraping first if requested ---
+                specific_property: Optional[PropertyListing] = None
+                specific_hotel_detail: Optional[HotelDetails] = None
+                if target_hotel_name:
+                    logger.info(f"Attempting to scrape specific hotel: {target_hotel_name}")
+                    specific_property, specific_hotel_detail = await scrape_specific_property_data(
+                        page, destination, adults, rooms, target_hotel_name
+                    )
+                    if specific_property:
+                        logger.success(f"Successfully scraped specific property: {target_hotel_name}")
+                        # Add to the list of properties to be included in the DataFrame
+                        # For now, we will prepend it. Need to convert to DataFrame to concat later
+                        temp_df_specific_property = pd.DataFrame([asdict(specific_property)])
+                        scraped_properties = pd.concat([temp_df_specific_property, scraped_properties], ignore_index=True)
+                    else:
+                        logger.warning(f"Could not find specific property: {target_hotel_name}. Proceeding with general scrape.")
+                    
+                    if specific_hotel_detail:
+                        temp_df_specific_hotel_detail = pd.DataFrame([asdict(specific_hotel_detail)])
+                        hotel_details_data = pd.concat([temp_df_specific_hotel_detail, hotel_details_data], ignore_index=True)
+
+
+                # --- Scrape general properties if not cached or forced refetch ---
                 if not properties_from_cache or force_refetch:
                     cached_url = None
                     try:
@@ -224,9 +248,14 @@ async def scrape_booking_com_data(
                         except Exception as e:
                             logger.error(f"Failed to cache URL: {e}")
 
-                    scraped_properties = pd.DataFrame(
-                        await scrape_properties_data(page, limit)
-                    )
+                    # Scrape general properties, excluding the specific one if it was already scraped
+                    general_properties = await scrape_properties_data(page, limit)
+                    # Filter out the specific property from general_properties to avoid duplicates, if it was already found
+                    if specific_property:
+                        general_properties = [p for p in general_properties if p.name != specific_property.name]
+                    
+                    scraped_properties = pd.concat([scraped_properties, pd.DataFrame([asdict(p) for p in general_properties])], ignore_index=True)
+
                     try:
                         save_scraped_data_to_csv(
                             scraped_properties, destination, adults, rooms, limit
@@ -255,9 +284,15 @@ async def scrape_booking_com_data(
                         logger.info(
                             f"Scraping details for {len(hotel_urls_to_scrape)} hotels concurrently."
                         )
-                        hotel_details_data = pd.DataFrame(
-                            await scrape_hotel_data_concurrent(browser, hotel_urls_to_scrape)
-                        )
+                        general_hotel_details = await scrape_hotel_data_concurrent(browser, hotel_urls_to_scrape)
+                        
+                        # Filter out the specific hotel detail from general_hotel_details to avoid duplicates
+                        if specific_hotel_detail:
+                            general_hotel_details = [h for h in general_hotel_details if h.name != specific_hotel_detail.name]
+                        
+                        hotel_details_data = pd.concat([hotel_details_data, pd.DataFrame([asdict(h) for h in general_hotel_details])], ignore_index=True)
+
+
                         # Rename columns to match price_model expectations
                         if "discounted_price_value" in hotel_details_data.columns:
                             hotel_details_data.rename(

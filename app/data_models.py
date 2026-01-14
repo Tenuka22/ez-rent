@@ -1,7 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, Dict, Optional
-
-from typing_extensions import List
+from typing import Any, Dict, Optional, List # Added List for typing_extensions compatibility
 
 
 @dataclass
@@ -70,3 +68,44 @@ class HotelDetails:
     pool_info: Optional[Dict[str, Any]] = None
     spa_wellness: Optional[List[str]] = None
     languages_spoken: Optional[List[str]] = None
+
+
+@dataclass
+class ManualHotelData:
+    """Dataclass for manually entering hotel data for price prediction."""
+    # New fields for identification and compatibility
+    name: str = "Manual Entry Hotel"  # Default name for manual entries
+    hotel_link: str = "http://manual.entry.com" # Placeholder link
+
+    # From PropertyListing (base features)
+    star_rating: float = 0.0
+    guest_rating_score: float = 0.0
+    reviews: float = 0.0
+    distance_from_downtown: float = 0.0
+    distance_from_beach: float = 0.0
+    preferred_badge: int = 0 # 0 or 1
+
+    # From HotelDetails (advanced features) - directly as used by the model
+    has_pool: int = 0 # 0 or 1
+    has_free_wifi: int = 0 # 0 or 1
+    has_free_parking: int = 0 # 0 or 1
+    has_spa: int = 0 # 0 or 1
+    description_length: int = 0
+    num_popular_facilities: int = 0
+    num_languages_spoken: int = 0
+    has_restaurant: int = 0 # 0 or 1
+    has_bar: int = 0 # 0 or 1
+    has_breakfast: int = 0 # 0 or 1
+    has_room_service: int = 0 # 0 or 1
+    has_24hr_front_desk: int = 0 # 0 or 1
+    has_airport_shuttle: int = 0 # 0 or 1
+    has_family_rooms: int = 0 # 0 or 1
+    has_air_conditioning_detail: int = 0 # 0 or 1
+    has_non_smoking_rooms: int = 0 # 0 or 1
+    has_private_bathroom: int = 0 # 0 or 1
+    has_kitchenette: int = 0 # 0 or 1
+    has_balcony: int = 0 # 0 or 1
+    has_terrace: int = 0 # 0 or 1
+
+    # To be compatible with the prediction logic that expects a DataFrame with 'discounted_price_currency'
+    discounted_price_currency: str = "LKR" # Default or specify actual currency

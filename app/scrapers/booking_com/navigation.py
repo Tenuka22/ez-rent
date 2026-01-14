@@ -3,9 +3,9 @@ import time
 
 from playwright.async_api import Page
 
-from app.scrapers.booking_com.browser import modal_dismisser
 from app.scrapers.booking_com.playwright_urls import BookingComUrls
 from app.utils.logger import logger
+from app.scrapers.booking_com.utils import modal_dismisser # Import from new utils file
 
 
 async def set_booking_com_counter(
