@@ -16,8 +16,8 @@ async def main():
     destination = "Unawatuna"
     adults = 2
     rooms = 1
-    limit = 30
-    hotel_details_limit = 10
+    limit = 5
+    hotel_details_limit = 2
     force_refetch = True
     logger.info("\nStarting scraper with parameters:")
     logger.debug(f"  Destination: {destination}")

@@ -205,37 +205,46 @@ async def modal_dismisser(page: Page) -> None:
         'button[aria-label="Close"]',
         'button:has-text("Close")',
     ]
+    clicked_selectors = []  # Keep track of selectors that were clicked
     for selector in dismiss_selectors:
         logger.debug(f"Trying selector: {selector}")
         try:
+            # Quickly check if the element is attached to the DOM first
+            await page.wait_for_selector(selector, state='attached', timeout=500)
             dismiss = page.locator(selector).first
             if await dismiss.is_visible(
-                timeout=1000
-            ):  # Reduced timeout to quickly check visibility
+                timeout=3000
+            ):  # Increased timeout for visibility check
                 logger.info(f"Dismissing modal with selector: {selector}")
                 await dismiss.scroll_into_view_if_needed()
                 await dismiss.click(force=True)
-                await asyncio.sleep(0.5)
-                break
-        except Exception:  # Catch specific exceptions if known, otherwise general
+                clicked_selectors.append(selector)  # Add to clicked list
+                # Don't break here, some pages might have multiple modals to dismiss
+        except Exception:
             logger.debug(
-                f"Selector {selector} did not find a visible modal or failed to click."
+                f"Selector {selector} did not find a visible modal, attached element or failed to click."
             )
             continue
 
-    # Wait for any modal to disappear
-    modal = page.locator("div.a5c71b0007")
-    try:
-        logger.debug("Waiting for modal to disappear...")
-        await modal.wait_for(state="hidden", timeout=3000)
-        logger.info("Modal successfully disappeared.")
-    except Exception:
-        logger.debug("No modal detected or modal did not disappear within timeout.")
-        return
+    # Wait for all clicked modals to disappear
+    for selector in clicked_selectors:
+        try:
+            logger.debug(f"Waiting for modal with selector '{selector}' to disappear...")
+            # Use wait_for on the specific locator that was clicked
+            await page.locator(selector).wait_for(state="hidden", timeout=5000)
+            logger.info(f"Modal with selector '{selector}' successfully disappeared.")
+        except Exception:
+            logger.debug(f"Modal with selector '{selector}' did not disappear within timeout.")
 
 
-async def scroll_page_fully(page: Page, max_scrolls: int = 25) -> None:
-    """Scroll the page multiple times until no new content loads"""
+async def scroll_page_fully(page: Page, max_scroll_attempts: int = 10, scroll_timeout: int = 200) -> None:
+    """
+    Scroll the page multiple times until no new content loads.
+    Args:
+        page: Playwright page object.
+        max_scroll_attempts: Maximum number of scroll attempts.
+        scroll_timeout: Time in milliseconds to wait after each scroll for content to load.
+    """
     try:
         logger.info("Starting full page scroll to load all content...")
 
@@ -243,34 +252,31 @@ async def scroll_page_fully(page: Page, max_scrolls: int = 25) -> None:
         scroll_count = 0
         no_change_count = 0
 
-        while scroll_count < max_scrolls:
+        while scroll_count < max_scroll_attempts:
+            # Scroll to bottom
+            await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+            # Wait for content to potentially load after scroll
+            await page.wait_for_timeout(scroll_timeout) # Replaced asyncio.sleep
+
             current_height = await page.evaluate("document.body.scrollHeight")
 
             if current_height == previous_height:
                 no_change_count += 1
-                if no_change_count >= 3:
+                if no_change_count >= 3: # Increased tolerance for no change
                     logger.info(f"No new content loaded after {scroll_count} scrolls")
                     break
             else:
                 no_change_count = 0
 
-            # Scroll to bottom
-            await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-            await asyncio.sleep(2)
-
-            # Scroll to middle
-            await page.evaluate("window.scrollTo(0, document.body.scrollHeight / 2)")
-            await asyncio.sleep(1)
-
             previous_height = current_height
             scroll_count += 1
             logger.info(
-                f"Scroll {scroll_count}/{max_scrolls} - Height: {current_height}"
+                f"Scroll {scroll_count}/{max_scroll_attempts} - Height: {current_height}"
             )
 
         # Final scroll to top
         await page.evaluate("window.scrollTo(0, 0)")
-        await asyncio.sleep(1)
+        await page.wait_for_timeout(scroll_timeout) # Replaced asyncio.sleep
         logger.info("Completed full page scroll")
         return
     except Exception as e:
@@ -317,7 +323,6 @@ async def scrape_hotel_data(page: Page, url: str) -> HotelDetails:
 
         # Dismiss modal first
         await modal_dismisser(page)
-        await asyncio.sleep(1)
 
         # Scroll to load all lazy content
         await scroll_page_fully(page)
@@ -578,19 +583,19 @@ async def scrape_hotel_data(page: Page, url: str) -> HotelDetails:
         sections = await page.locator("div.ph-sections div.ph-section").all()
 
         for section in sections[:15]:  # limit to first 15
-            # First try <p> text
-            p_elem = section.locator("p.ph-item span.ph-item-copy > span")
-            if await p_elem.count():
-                text = (await p_elem.inner_text()).strip()
-                if text:
-                    highlights.append(text)
-                    continue
+            # First try <p> text - handle multiple matches if they occur
+            p_elems = section.locator("p.ph-item span.ph-item-copy > span")
+            if await p_elems.count() > 0:
+                for p_elem_single in await p_elems.all(): # Iterate through all found elements
+                    text = (await p_elem_single.inner_text()).strip()
+                    if text:
+                        highlights.append(text)
 
             # Then try <li> items inside the section (for lists like "Rooms with")
-            li_elems = section.locator("ul li p.ph-item span.ph-item-copy > span").all()
-            if await li_elems.count():
-                for li in await li_elems:
-                    li_text = (await li.inner_text()).strip()
+            li_elems = section.locator("ul li p.ph-item span.ph-item-copy > span") # Corrected to locator for consistency
+            if await li_elems.count() > 0: # Check count before trying to get all
+                for li_elem_single in await li_elems.all(): # Iterate through all found elements
+                    li_text = (await li_elem_single.inner_text()).strip()
                     if li_text:
                         highlights.append(li_text)
 
@@ -636,18 +641,19 @@ async def scrape_hotel_data(page: Page, url: str) -> HotelDetails:
 async def scrape_properties_data(page: Page, limit: int) -> List[PropertyListing]:
     hotels: List[PropertyListing] = []
     seen_links: set[str] = set()
-
-    last_height = 0
+    last_card_count = 0
     same_count = 0
+    max_no_change_scrolls = 3 # How many times to scroll with no new cards before stopping
 
     while len(hotels) < limit:
         await page.wait_for_load_state("networkidle")
 
         cards = page.locator('[data-testid="property-card"]')
-        count = await cards.count()
-        logger.info(f"Found {count} property cards")
+        current_card_count = await cards.count()
+        logger.info(f"Found {current_card_count} property cards")
 
-        for i in range(count):
+        # Process new cards since last scroll
+        for i in range(last_card_count, current_card_count):
             if len(hotels) >= limit:
                 break
 
@@ -897,24 +903,33 @@ async def scrape_properties_data(page: Page, limit: int) -> List[PropertyListing
             except Exception as e:
                 logger.warning(f"Failed to parse listing card: {e}")
                 continue
+        
+        last_card_count = current_card_count
 
         # ---------- LOAD MORE ----------
         load_more = page.locator('button:has-text("Load more results")')
         if await load_more.count() and await load_more.is_visible():
             await load_more.click()
-            await asyncio.sleep(3)
+            await page.wait_for_load_state("networkidle")
+            # After clicking load more, reset same_count as new content is expected
+            same_count = 0
             continue
 
-        # ---------- SCROLL ----------
-        new_height = await page.evaluate("document.body.scrollHeight")
-        if new_height == last_height:
+        # ---------- SCROLL AND WAIT FOR MORE CARDS ----------
+        # Scroll to load more if no "Load more results" button was found or clicked
+        await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+        
+        # Instead of fixed sleep, wait for cards to increase
+        await page.wait_for_timeout(200) # Give a small moment for scroll to take effect and new content to initiate loading
+
+        new_card_count = await cards.count()
+
+        if new_card_count == current_card_count:
             same_count += 1
-            if same_count >= 2:
+            if same_count >= max_no_change_scrolls:
+                logger.info(f"No new cards appeared after {max_no_change_scrolls} scrolls, stopping.")
                 break
         else:
-            same_count = 0
-            await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-            await asyncio.sleep(2)
-            last_height = new_height
+            same_count = 0 # Reset if new cards are found
 
     return hotels[:limit]

@@ -119,8 +119,8 @@ async def scrape_booking_com_data(
     )
     hotel_details_file_path = f"./scraped/hotel_details/{destination}/{adults}/{rooms}/limit_{hotel_details_limit}.csv"
 
-    scraped_properties: pd.DataFrame | None = None
-    hotel_details_data: pd.DataFrame | None = None
+    scraped_properties: pd.DataFrame = pd.DataFrame()
+    hotel_details_data: pd.DataFrame = pd.DataFrame()
 
     properties_from_cache = False
     if not force_refetch and os.path.exists(properties_file_path):
@@ -163,7 +163,7 @@ async def scrape_booking_com_data(
     # --- If properties or hotel details are missing, or force_refetch is True, proceed with Playwright ---
     if not properties_from_cache or not hotel_details_from_cache or force_refetch:
         async with async_playwright() as p:
-            browser = await p.chromium.launch(headless=True, slow_mo=500)
+            browser = await p.chromium.launch(headless=True)
             try:
                 context = await browser.new_context(
                     user_agent=(
