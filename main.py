@@ -199,8 +199,8 @@ async def main():
     destination = "Unawatuna"
     adults = 2
     rooms = 1
-    limit = 10
-    hotel_details_limit = 10
+    limit = 100
+    hotel_details_limit = 100
     force_refetch = False
 
     # New configuration variables
