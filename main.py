@@ -7,7 +7,7 @@ from app.data_models import HotelDetails, PropertyListing
 from app.prediction.model_loader import load_model_artifacts  # To check if model exists
 from app.prediction.model_predictor import predict_price
 from app.prediction.training.advanced_trainer import train_advanced_model
-from app.prediction.training.basic_trainer import train_basic_model
+from app.prediction.training.basic_trainer import train_model
 from app.scrapers.booking_com.orchestrator import scrape_booking_com_data
 from app.utils.logger import logger
 
@@ -106,6 +106,7 @@ async def main():
             general_df_hotel_details,
         ) = await scrape_booking_com_data(
             destination=destination,
+            model_type=PREDICTION_MODEL_TYPE,
             adults=adults,
             rooms=rooms,
             limit=limit,
@@ -161,6 +162,7 @@ async def main():
             general_df_hotel_details,
         ) = await scrape_booking_com_data(
             destination=destination,
+            model_type=PREDICTION_MODEL_TYPE,
             adults=adults,
             rooms=rooms,
             limit=limit,
@@ -169,55 +171,6 @@ async def main():
             target_hotel_name=None,  # Ensure no specific hotel is targeted for general scrape
         )
         logger.info("General data scraping complete.")
-
-    # --- Model Training (if needed) ---
-    model_needs_training = False
-    try:
-        # Attempt to load the model artifacts. If this fails, the model needs training.
-        load_model_artifacts(PREDICTION_MODEL_TYPE, destination, adults, rooms, limit)
-        logger.info(f"Model '{PREDICTION_MODEL_TYPE}' for '{destination}' found.")
-        if force_refetch:
-            logger.info("force_refetch is True, forcing model retraining.")
-            model_needs_training = True
-    except FileNotFoundError:
-        logger.info(
-            f"Model '{PREDICTION_MODEL_TYPE}' for '{destination}' not found. Training new model."
-        )
-        model_needs_training = True
-    except Exception as e:
-        logger.error(f"Error checking for existing model: {e}", exc_info=True)
-        model_needs_training = True  # Assume training is needed if check fails
-
-    if model_needs_training:
-        if general_df_properties.empty:
-            logger.error("Cannot train model: No general data available for training.")
-        else:
-            logger.info("Initiating model training...")
-            try:
-                if PREDICTION_MODEL_TYPE == "basic":
-                    await train_basic_model(
-                        df=general_df_properties,
-                        destination=destination,
-                        adults=adults,
-                        rooms=rooms,
-                        limit=limit,
-                    )
-                elif PREDICTION_MODEL_TYPE == "advanced":
-                    await train_advanced_model(
-                        df_properties=general_df_properties,
-                        df_hotel_details=general_df_hotel_details,
-                        destination=destination,
-                        adults=adults,
-                        rooms=rooms,
-                        limit=limit,
-                    )
-                logger.info("Model training completed successfully.")
-            except Exception as e:
-                logger.error(
-                    f"An error occurred during model training: {e}", exc_info=True
-                )
-                # If training fails, we can't proceed with prediction, so return.
-                return
 
     # --- Price Prediction ---
     if not user_df_properties.empty:
@@ -231,6 +184,7 @@ async def main():
                 adults=adults,
                 rooms=rooms,
                 limit=limit,
+                hotel_details_limit=hotel_details_limit, # New parameter
             )
             logger.info("Price prediction successful!")
             logger.info("\n--- Predicted Prices ---")

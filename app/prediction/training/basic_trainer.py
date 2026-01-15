@@ -8,28 +8,72 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 from app.utils.logger import logger
+from app.utils.constants import ML_MODEL_DIR # Import ML_MODEL_DIR
 
 
-async def train_basic_model(
-    df: pd.DataFrame,
+async def train_model(
+    properties_df: pd.DataFrame,
+    hotel_details_df: pd.DataFrame,
     destination: str,
     adults: int,
     rooms: int,
-    limit: int,
-) -> None:
+    limit: int, # This is properties_limit
+    hotel_details_limit: int,
+    model_filename: str, # New parameter for the full model filename
+) -> str: # Return model_filename
     logger.info(
-        f"Starting basic price predictor creation for destination='{destination}', "
-        f"adults={adults}, rooms={rooms}, limit={limit}."
+        f"Starting price predictor training for model: '{model_filename}' for destination='{destination}', "
+        f"adults={adults}, rooms={rooms}, properties_limit={limit}, hotel_details_limit={hotel_details_limit}."
     )
 
     try:
-        # Validate minimum data requirement
-        if len(df) < 10:
+        # Merge properties and hotel details for comprehensive training data
+        initial_properties_count = len(properties_df)
+        initial_hotel_details_count = len(hotel_details_df)
+
+        # Normalize URLs for consistent merging
+        def normalize_booking_url(url: str) -> str:
+            if not isinstance(url, str):
+                return "" # Return empty string for non-string types to avoid errors
+            return url.split('?')[0].strip()
+
+        properties_df['hotel_link_normalized'] = properties_df['hotel_link'].apply(normalize_booking_url)
+        hotel_details_df['url_normalized'] = hotel_details_df['url'].apply(normalize_booking_url)
+
+        # Debugging logs before merge
+        logger.debug(f"Properties DF count before merge: {len(properties_df)}")
+        logger.debug(f"Hotel Details DF count before merge: {len(hotel_details_df)}")
+
+        if not properties_df.empty:
+            logger.debug(f"Properties DF 'hotel_link_normalized' sample (first 5): {properties_df['hotel_link_normalized'].head().tolist()}")
+        if not hotel_details_df.empty:
+            logger.debug(f"Hotel Details DF 'url_normalized' sample (first 5): {hotel_details_df['url_normalized'].head().tolist()}")
+
+        if not properties_df.empty and not hotel_details_df.empty:
+            properties_links = set(properties_df['hotel_link_normalized'].dropna().unique())
+            hotel_details_urls = set(hotel_details_df['url_normalized'].dropna().unique())
+
+            missing_in_hotel_details = properties_links - hotel_details_urls
+            missing_in_properties = hotel_details_urls - properties_links
+
+            if missing_in_hotel_details:
+                logger.warning(f"Hotel links in properties_df not found in hotel_details_df (normalized): {len(missing_in_hotel_details)} items. Sample: {list(missing_in_hotel_details)[:5]}")
+            if missing_in_properties:
+                logger.warning(f"Hotel URLs in hotel_details_df not found in properties_df (normalized): {len(missing_in_properties)} items. Sample: {list(missing_in_properties)[:5]}")
+        
+        df = pd.merge(properties_df, hotel_details_df, left_on='hotel_link_normalized', right_on='url_normalized', how='inner')
+
+        logger.info(
+            f"Merged {initial_properties_count} properties and {initial_hotel_details_count} hotel details. "
+            f"Resulting training dataset has {len(df)} entries after inner join."
+        )
+
+        if len(df) < 10: # Minimum data requirement after merge
             logger.warning(
-                f"Insufficient data: only {len(df)} properties found. Need at least 10 for training."
+                f"Insufficient data after merge: only {len(df)} properties found. Need at least 10 for training."
             )
             raise Exception(
-                f"Insufficient data: only {len(df)} properties found. Need at least 10 for training."
+                f"Insufficient data after merge: only {len(df)} properties found. Need at least 10 for training."
             )
 
         print(df.head())
@@ -40,7 +84,7 @@ async def train_basic_model(
             pd.DataFrame,
             df[
                 [
-                    "star_rating",
+                    "star_rating_x", # Changed from "star_rating"
                     "guest_rating_score",
                     "reviews",
                     "distance_from_downtown",
@@ -62,7 +106,7 @@ async def train_basic_model(
 
         # Fixed: Updated required_cols to match actual columns
         required_cols = [
-            "star_rating",
+                    "star_rating_x", # Changed from "star_rating"
             "guest_rating_score",
             "reviews",
             "distance_from_downtown",
@@ -90,7 +134,7 @@ async def train_basic_model(
         # Fixed: Updated feature selection to include distance_from_beach
         X = df[
             [
-                "star_rating",
+                    "star_rating_x", # Changed from "star_rating"
                 "guest_rating_score",
                 "reviews",
                 "distance_from_downtown",
@@ -220,24 +264,23 @@ async def train_basic_model(
         logger.info(f"Final training loss: {history.history['loss'][-1]:.4f}")
         logger.info(f"Final validation loss: {history.history['val_loss'][-1]:.4f}")
 
-        model_name = "price_predictor"
-        base_path = f"./ml_files/{destination}_{adults}_{rooms}_{limit}_{model_name}"
-        os.makedirs(base_path, exist_ok=True)
-        logger.info(f"Saving model artifacts to: {base_path}")
+        model_path = os.path.join(ML_MODEL_DIR, model_filename)
+        os.makedirs(model_path, exist_ok=True)
+        logger.info(f"Saving model artifacts to: {model_path}")
 
-        model.save(os.path.join(base_path, "tf_model.keras"))
+        model.save(os.path.join(model_path, "tf_model.keras"))
         logger.debug("TensorFlow model saved.")
 
         # Save BOTH scalers
-        joblib.dump(scaler_X, os.path.join(base_path, f"{model_name}_scaler_X.joblib"))
-        joblib.dump(scaler_y, os.path.join(base_path, f"{model_name}_scaler_y.joblib"))
+        joblib.dump(scaler_X, os.path.join(model_path, f"{model_filename}_scaler_X.joblib"))
+        joblib.dump(scaler_y, os.path.join(model_path, f"{model_filename}_scaler_y.joblib"))
         logger.debug("Scalers saved.")
 
         # Fixed: Updated metadata to include all 6 features
         joblib.dump(
             {
                 "features": [
-                    "star_rating",
+                    "star_rating_x",
                     "guest_rating_score",
                     "reviews",
                     "distance_from_downtown",
@@ -247,12 +290,12 @@ async def train_basic_model(
                 "target": "discounted_price_value",
                 "currency": currency,
             },
-            os.path.join(base_path, f"{model_name}_meta.joblib"),
+            os.path.join(model_path, f"{model_filename}_meta.joblib"),
         )
         logger.debug("Metadata saved.")
 
         logger.info("Basic price predictor created and saved successfully.")
-        return None
+        return model_filename
 
     except Exception as e:
         logger.error(

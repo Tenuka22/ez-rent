@@ -5,40 +5,29 @@ import joblib
 import tensorflow as tf
 
 from app.utils.logger import logger
+from app.utils.constants import ML_MODEL_DIR # Import ML_MODEL_DIR
 
 
 def load_model_artifacts(
-    model_type: str, destination: str, adults: int, rooms: int, limit: int
+    model_filename: str, model_type: str
 ) -> Dict[str, Any]:
     """
     Loads a trained model, its scalers, and metadata.
 
     Args:
-        model_type (str): Type of model to use ('basic' or 'advanced').
-        destination (str): Destination used to save/load the model.
-        adults (int): Number of adults used to save/load the model.
-        rooms (int): Number of rooms used to save/load the model.
-        limit (int): Limit used to save/load the model.
+        model_filename (str): The full filename of the model (e.g., "Unawatuna_2_1_100_10_price_predictor").
 
     Returns:
         Dict[str, Any]: A dictionary containing the loaded model, scaler_X, scaler_y, and metadata.
 
     Raises:
-        ValueError: If an unknown model_type is provided.
         FileNotFoundError: If any required model artifact is not found.
     """
-    if model_type.lower() in ["basic", "low"]:
-        model_name = "price_predictor"
-    elif model_type.lower() in ["advanced", "high"]:
-        model_name = "advanced_price_predictor"
-    else:
-        raise ValueError(f"Unknown model_type: {model_type}")
-
-    base_path = f"./ml_files/{destination}_{adults}_{rooms}_{limit}_{model_name}"
+    base_path = os.path.join(ML_MODEL_DIR, model_filename)
     model_path = os.path.join(base_path, "tf_model.keras")
-    scaler_x_path = os.path.join(base_path, f"{model_name}_scaler_X.joblib")
-    scaler_y_path = os.path.join(base_path, f"{model_name}_scaler_y.joblib")
-    meta_path = os.path.join(base_path, f"{model_name}_meta.joblib")
+    scaler_x_path = os.path.join(base_path, f"{model_filename}_scaler_X.joblib")
+    scaler_y_path = os.path.join(base_path, f"{model_filename}_scaler_y.joblib")
+    meta_path = os.path.join(base_path, f"{model_filename}_meta.joblib")
 
     # Check if all model artifacts exist
     if not all(

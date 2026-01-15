@@ -2,6 +2,7 @@ import asyncio
 import os
 import time
 from dataclasses import asdict
+from datetime import datetime
 from typing import Optional, Tuple
 
 import pandas as pd
@@ -34,7 +35,12 @@ from app.utils.file_io import (
     save_scraped_data_to_csv,
 )
 from app.utils.logger import logger
-
+from app.prediction.model_utils import (
+    should_retrain_model,
+    load_model_metadata,
+    save_model_metadata,
+)
+from app.prediction.training.basic_trainer import train_model
 
 def _get_scraped_data_filepath(
     data_type: str, destination: str, adults: int, rooms: int, limit: int
@@ -53,6 +59,19 @@ def _get_scraped_data_filepath(
         )
     else:
         raise ValueError(f"Unknown data_type: {data_type}")
+
+def _get_model_filename(
+    destination: str,
+    adults: int,
+    rooms: int,
+    properties_limit: int,
+    hotel_details_limit: int,
+    model_name: str = "price_predictor",
+) -> str:
+    """
+    Generates a consistent filename for the trained model.
+    """
+    return f"{destination}_{adults}_{rooms}_{properties_limit}_{hotel_details_limit}_{model_name}"
 
 
 async def _scrape_general_data(
@@ -203,10 +222,12 @@ async def _scrape_general_data(
                     hotel_urls_to_scrape: list[str] = [
                         link
                         for link in scraped_properties["hotel_link"]
-                        .head(hotel_details_limit)
                         .dropna()
                         .tolist()
                     ]
+                    if hotel_details_limit > 0:
+                        hotel_urls_to_scrape = hotel_urls_to_scrape[:hotel_details_limit]
+                    
                     logger.info(
                         f"Scraping details for {len(hotel_urls_to_scrape)} general hotels concurrently."
                     )
@@ -259,6 +280,7 @@ async def _scrape_general_data(
 
 async def scrape_booking_com_data(
     destination: str,
+    model_type: str = "basic",
     hotel_details_limit: int = 10,
     adults: int = 2,
     rooms: int = 1,
@@ -324,6 +346,68 @@ async def scrape_booking_com_data(
                 force_refetch,
                 specific_property_to_exclude=specific_property,  # Pass the specific_property object
             )
+
+            # --- Dynamic Model Training ---
+            model_filename = _get_model_filename(
+                destination, adults, rooms, limit, hotel_details_limit,
+                model_name=f"{model_type}_price_predictor"
+            )
+            
+            # Use the already scraped general_df_properties and general_df_hotel_details
+            # to check if retraining is needed.
+            # If these were loaded from cache, and retraining is triggered,
+            # we will force a refetch.
+
+            if should_retrain_model(
+                model_filename,
+                len(general_df_properties),
+                len(general_df_hotel_details),
+            ):
+                logger.info(f"Retraining model '{model_filename}' is recommended.")
+                
+                # Force a refetch of general data for training if retraining is recommended
+                # and the data might be stale or incomplete.
+                if not force_refetch: # Only force refetch if it wasn't already requested
+                    logger.info("Forcing refetch of general data for model retraining.")
+                    (
+                        general_df_properties,
+                        general_df_hotel_details,
+                    ) = await _scrape_general_data(
+                        browser,
+                        destination,
+                        hotel_details_limit,
+                        adults,
+                        rooms,
+                        limit,
+                        force_refetch=True, # Force refetch here
+                        specific_property_to_exclude=specific_property,
+                    )
+                else:
+                    logger.info("General data already refetched due to --force_refetch flag.")
+
+                logger.info(f"Initiating retraining for model '{model_filename}'...")
+                # Assuming train_model in basic_trainer takes properties_df and hotel_details_df
+                await train_model(
+                    general_df_properties, # Use the potentially refetched data
+                    general_df_hotel_details, # Use the potentially refetched data
+                    destination,
+                    adults,
+                    rooms,
+                    limit,
+                    hotel_details_limit,
+                    model_filename,
+                )
+                # Save new metadata based on the data actually used for training
+                metadata = {
+                    "last_trained_at": datetime.now().isoformat(),
+                    "trained_properties_count": len(general_df_properties),
+                    "trained_hotel_details_count": len(general_df_hotel_details),
+                }
+                save_model_metadata(model_filename, metadata)
+                logger.success(f"Model '{model_filename}' retrained and metadata updated.")
+            else:
+                logger.info(f"Model '{model_filename}' is up-to-date. Skipping retraining.")
+
 
         except Exception as e:
             logger.error(f"Error during scraping process: {e}", exc_info=True)

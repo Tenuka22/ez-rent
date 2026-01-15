@@ -6,6 +6,7 @@ import tensorflow as tf
 from app.prediction.feature_engineering import extract_hotel_details_features
 from app.prediction.model_loader import load_model_artifacts  # Import the new function
 from app.utils.logger import logger
+from app.scrapers.booking_com.orchestrator import _get_model_filename # Import the helper
 
 
 async def predict_price(
@@ -15,7 +16,8 @@ async def predict_price(
     destination: str,
     adults: int,
     rooms: int,
-    limit: int,
+    limit: int, # properties_limit
+    hotel_details_limit: int, # New parameter
 ) -> pd.DataFrame:
     """
     Loads a trained model and predicts prices for new input data.
@@ -28,14 +30,18 @@ async def predict_price(
         adults (int): Number of adults used to save/load the model.
         rooms (int): Number of rooms used to save/load the model.
         limit (int): Limit used to save/load the model.
+        hotel_details_limit (int): The limit for hotel details, used for model filename.
 
     Returns:
         pd.DataFrame: DataFrame with predicted prices.
     """
     logger.info(f"Attempting to predict prices using {model_type} model.")
 
+    # Generate the model filename consistently
+    model_filename = _get_model_filename(destination, adults, rooms, limit, hotel_details_limit, model_name=model_type + "_price_predictor")
+
     # Load model, scalers, and metadata using the new loader function
-    loaded_artifacts = load_model_artifacts(model_type, destination, adults, rooms, limit)
+    loaded_artifacts = load_model_artifacts(model_filename, model_type)
     model = loaded_artifacts["model"]
     scaler_X = loaded_artifacts["scaler_X"]
     scaler_y = loaded_artifacts["scaler_y"]
