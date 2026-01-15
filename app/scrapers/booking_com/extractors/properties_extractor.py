@@ -1,0 +1,309 @@
+import re
+from typing import List
+
+from playwright.async_api import Page
+
+from app.data_models import PropertyListing
+from app.utils.logger import logger
+from app.scrapers.booking_com.parsers.data_parsers import (
+    extract_float_value,
+    extract_price_components,
+    parse_distance_km,
+)
+
+
+async def scrape_properties_data(page: Page, limit: int) -> List[PropertyListing]:
+    hotels: List[PropertyListing] = []
+    seen_links: set[str] = set()
+    last_card_count = 0
+    same_count = 0
+    max_no_change_scrolls = 3 # How many times to scroll with no new cards before stopping
+
+    while len(hotels) < limit:
+        await page.wait_for_load_state("networkidle")
+
+        cards = page.locator('[data-testid="property-card"]')
+        current_card_count = await cards.count()
+        logger.info(f"Found {current_card_count} property cards")
+
+        # Process new cards since last scroll
+        for i in range(last_card_count, current_card_count):
+            if len(hotels) >= limit:
+                break
+
+            card = cards.nth(i)
+
+            try:
+                # ---------- LINK ----------
+                link = await card.locator('a[data-testid="title-link"]').get_attribute(
+                    "href"
+                )
+
+                if not link or link in seen_links:
+                    continue
+
+                seen_links.add(link)
+
+                if link.startswith("/"):
+                    link = f"https://www.booking.com{link}"
+
+                # ---------- NAME ----------
+                name = await card.locator('[data-testid="title"]').inner_text()
+
+                # ---------- ADDRESS ----------
+                address = None
+                address_el = card.locator('[data-testid="address"]')
+                if await address_el.count():
+                    address = (await address_el.inner_text()).strip()
+
+                # ---------- STAR RATING ----------
+                star_rating = 0.0  # Default value
+                star_el = card.locator('[aria-label*="star"]')
+                if await star_el.count():
+                    extracted_star_rating_text = await star_el.get_attribute(
+                        "aria-label"
+                    )
+                    if extracted_star_rating_text:
+                        # Extract number from "X-star hotel"
+                        match = re.search(r"(\d+)-star", extracted_star_rating_text)
+                        if match:
+                            star_rating = float(match.group(1))
+                        else:  # Fallback if no match or just extract the float value directly
+                            extracted_star_rating_value = extract_float_value(
+                                extracted_star_rating_text
+                            )
+                            if extracted_star_rating_value is not None:
+                                star_rating = extracted_star_rating_value
+
+                # ---------- GUEST RATING ----------
+                guest_rating_score = 0.0  # Default value
+                rating_el = card.locator('[data-testid="review-score"] .bc946a29db')
+                if await rating_el.count():
+                    extracted_score = extract_float_value(await rating_el.inner_text())
+                    if extracted_score is not None:
+                        guest_rating_score = extracted_score
+
+                # ---------- REVIEW COUNT ----------
+                reviews = 0.0  # Default value
+                reviews_el = card.locator(
+                    '[data-testid="review-score"] .fff1944c52.fb14de7f14.eaa8455879'
+                )
+                if await reviews_el.count():
+                    reviews_text = (await reviews_el.inner_text()).strip()
+                    extracted_reviews_value = extract_float_value(reviews_text)
+                    if extracted_reviews_value is not None:
+                        reviews = extracted_reviews_value
+
+                distance_from_downtown = None
+                distance_from_beach = None
+
+                # ---------- DISTANCE ----------
+                downtown_el = card.locator('[data-testid="distance"]')
+
+                if await downtown_el.count():
+                    text = (await downtown_el.first.inner_text()).lower()
+                    value = parse_distance_km(text)
+                    if value is not None:
+                        distance_from_downtown = value
+
+                beach_el = card.locator("span.fff1944c52.d4d73793a3")
+
+                if await beach_el.count():
+                    beach_text = (await beach_el.first.inner_text()).lower()
+
+                    if "beachfront" in beach_text:
+                        distance_from_beach = 0.0
+                    else:
+                        value = parse_distance_km(beach_text)
+                        if value is not None:
+                            distance_from_beach = value
+
+                # ---------- PREFERRED BADGE ----------
+                preferred_badge = 0  # Default value
+                preferred_badge_el = card.locator('[data-testid="preferred-badge"]')
+                if await preferred_badge_el.count():
+                    preferred_badge = 1
+
+                # ---------- DEAL BADGE ----------
+                deal_badge = 0  # Default value
+
+                # Use the correct data-testid for the deal badge
+                deal_badge_el = card.locator('[data-testid="property-card-deal"]')
+                if await deal_badge_el.count():
+                    deal_badge = 1
+
+                # ---------- PRICE (Values Only) ----------
+                original_price_value = None
+                original_price_currency = ""  # Default to empty string
+                discounted_price_value = None
+                discounted_price_currency = ""  # Default to empty string
+
+                price_el_container = card.locator(
+                    '[data-testid="price-and-discounted-price"]'
+                )
+                if await price_el_container.count():
+                    full_price_text = await price_el_container.inner_text()
+
+                    # First, extract discounted price
+                    (
+                        extracted_discounted_value,
+                        extracted_discounted_currency,
+                    ) = extract_price_components(full_price_text)
+                    if extracted_discounted_value is not None:
+                        discounted_price_value = extracted_discounted_value
+                    if extracted_discounted_currency is not None:
+                        discounted_price_currency = extracted_discounted_currency
+
+                    # Now, try to find an explicit original price (e.g., strikethrough)
+                    original_price_el_explicit = card.locator(
+                        '[data-testid="price-and-discounted-price"] span[style*="line-through"], '
+                        '[data-testid="price-and-discounted-price"] span.prco-old-price, '
+                        '[data-testid="price-and-discounted-price"] span.e2e-original-price'
+                    )
+                    if await original_price_el_explicit.count():
+                        original_price_text = (
+                            await original_price_el_explicit.inner_text()
+                        ).strip()
+                        (
+                            extracted_original_value,
+                            extracted_original_currency,
+                        ) = extract_price_components(original_price_text)
+                        if extracted_original_value is not None:
+                            original_price_value = extracted_original_value
+                        if extracted_original_currency is not None:
+                            original_price_currency = extracted_original_currency
+
+                    # Fallback: If no explicit original price is found but discounted price is, assume original is same as discounted
+                    if (
+                        original_price_value is None
+                        and discounted_price_value is not None
+                    ):
+                        original_price_value = discounted_price_value
+                        original_price_currency = discounted_price_currency
+
+                # ---------- TAXES (Values Only) ----------
+                taxes_value = None
+                taxes_currency = ""  # Default to empty string
+
+                tax_el = card.locator('[data-testid="taxes-and-charges"]')
+                if await tax_el.count():
+                    taxes_and_fees_text = (await tax_el.inner_text()).strip()
+                    (
+                        extracted_taxes_value,
+                        extracted_taxes_currency,
+                    ) = extract_price_components(taxes_and_fees_text)
+                    if extracted_taxes_value is not None:
+                        taxes_value = extracted_taxes_value
+                    if extracted_taxes_currency is not None:
+                        taxes_currency = extracted_taxes_currency
+
+                # ---------- ROOM TYPE ----------
+                room_type = ""  # Default value
+                room_type_el = card.locator('h4[role="link"]')
+                if await room_type_el.count():
+                    room_type = (await room_type_el.inner_text()).strip()
+
+                # ---------- BED DETAILS ----------
+                bed_details = ""  # Default value
+                bed_details_el = card.locator(
+                    "ul.d1e8dce286 li:first-child div.fff1944c52"
+                )
+                if await bed_details_el.count():
+                    bed_details = (await bed_details_el.inner_text()).strip()
+
+                # ---------- CANCELLATION POLICY ----------
+                cancellation_policy = ""  # Default value
+                cancellation_el = card.locator(
+                    '[data-testid="cancellation-policy-icon"] + div div.fff1944c52'
+                )
+                if await cancellation_el.count():
+                    cancellation_policy = (await cancellation_el.inner_text()).strip()
+
+                # ---------- PREPAYMENT POLICY ----------
+                prepayment_policy = ""  # Default value
+                prepayment_el = card.locator(
+                    '[data-testid="prepayment-policy-icon"] + div div.fff1944c52'
+                )
+                if await prepayment_el.count():
+                    prepayment_policy = (await prepayment_el.inner_text()).strip()
+
+                # ---------- AVAILABILITY MESSAGE ----------
+                availability_message = ""  # Default value
+                availability_el = card.locator(
+                    "ul.d1e8dce286 li:last-child div.b7d3eb6716"
+                )
+                if await availability_el.count():
+                    availability_message = (await availability_el.inner_text()).strip()
+
+                # ---------- NIGHTS AND GUESTS ----------
+                nights_and_guests = ""  # Default value
+                nights_and_guests_el = card.locator(
+                    '[data-testid="price-for-x-nights"]'
+                )
+                if await nights_and_guests_el.count():
+                    nights_and_guests = (
+                        await nights_and_guests_el.inner_text()
+                    ).strip()
+
+                hotels.append(
+                    PropertyListing(
+                        name=name.strip(),
+                        hotel_link=link,
+                        address=address,
+                        star_rating=star_rating,
+                        guest_rating_score=guest_rating_score,
+                        reviews=reviews,
+                        distance_from_downtown=distance_from_downtown,
+                        distance_from_beach=distance_from_beach,
+                        preferred_badge=preferred_badge,
+                        deal_badge=deal_badge,
+                        room_type=room_type,
+                        bed_details=bed_details,
+                        cancellation_policy=cancellation_policy,
+                        prepayment_policy=prepayment_policy,
+                        availability_message=availability_message,
+                        nights_and_guests=nights_and_guests,
+                        original_price_value=original_price_value,  # Now only value
+                        original_price_currency=original_price_currency,
+                        discounted_price_value=discounted_price_value,
+                        discounted_price_currency=discounted_price_currency,
+                        taxes_and_fees_value=taxes_value,
+                        taxes_and_fees_currency=taxes_currency,
+                    )
+                )
+
+                logger.info(f"✓ Listing scraped: {name}")
+
+            except Exception as e:
+                logger.warning(f"Failed to parse listing card: {e}")
+                continue
+        
+        last_card_count = current_card_count
+
+        # ---------- LOAD MORE ----------
+        load_more = page.locator('button:has-text("Load more results")')
+        if await load_more.count() and await load_more.is_visible():
+            await load_more.click()
+            await page.wait_for_load_state("networkidle")
+            # After clicking load more, reset same_count as new content is expected
+            same_count = 0
+            continue
+
+        # ---------- SCROLL AND WAIT FOR MORE CARDS ----------
+        # Scroll to load more if no "Load more results" button was found or clicked
+        await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+        
+        # Instead of fixed sleep, wait for cards to increase
+        await page.wait_for_timeout(200) # Give a small moment for scroll to take effect and new content to initiate loading
+
+        new_card_count = await cards.count()
+
+        if new_card_count == current_card_count:
+            same_count += 1
+            if same_count >= max_no_change_scrolls:
+                logger.info(f"No new cards appeared after {max_no_change_scrolls} scrolls, stopping.")
+                break
+        else:
+            same_count = 0 # Reset if new cards are found
+
+    return hotels[:limit]
