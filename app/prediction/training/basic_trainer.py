@@ -7,8 +7,8 @@ import tensorflow as tf
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
+from app.utils.constants import ML_MODEL_DIR  # Import ML_MODEL_DIR
 from app.utils.logger import logger
-from app.utils.constants import ML_MODEL_DIR # Import ML_MODEL_DIR
 
 
 async def train_model(
@@ -17,10 +17,10 @@ async def train_model(
     destination: str,
     adults: int,
     rooms: int,
-    limit: int, # This is properties_limit
+    limit: int,  # This is properties_limit
     hotel_details_limit: int,
-    model_filename: str, # New parameter for the full model filename
-) -> str: # Return model_filename
+    model_filename: str,  # New parameter for the full model filename
+) -> str:  # Return model_filename
     logger.info(
         f"Starting price predictor training for model: '{model_filename}' for destination='{destination}', "
         f"adults={adults}, rooms={rooms}, properties_limit={limit}, hotel_details_limit={hotel_details_limit}."
@@ -34,41 +34,90 @@ async def train_model(
         # Normalize URLs for consistent merging
         def normalize_booking_url(url: str) -> str:
             if not isinstance(url, str):
-                return "" # Return empty string for non-string types to avoid errors
-            return url.split('?')[0].strip()
+                return ""  # Return empty string for non-string types to avoid errors
+            return url.split("?")[0].strip()
 
-        properties_df['hotel_link_normalized'] = properties_df['hotel_link'].apply(normalize_booking_url)
-        hotel_details_df['url_normalized'] = hotel_details_df['url'].apply(normalize_booking_url)
+        properties_df["hotel_link_normalized"] = properties_df["hotel_link"].apply(
+            normalize_booking_url
+        )
+        hotel_details_df["url_normalized"] = hotel_details_df["url"].apply(
+            normalize_booking_url
+        )
+
+        # Rename conflicting columns in hotel_details_df before merge to avoid _x, _y suffixes
+        hotel_details_df_renamed = hotel_details_df.rename(columns={
+            "name": "detail_name",
+            "star_rating": "detail_star_rating",
+            "address": "detail_address",
+            "guest_rating": "detail_guest_rating",
+            "review_count": "detail_review_count",
+        })
 
         # Debugging logs before merge
         logger.debug(f"Properties DF count before merge: {len(properties_df)}")
-        logger.debug(f"Hotel Details DF count before merge: {len(hotel_details_df)}")
+        logger.debug(f"Hotel Details DF count before merge: {len(hotel_details_df_renamed)}")
 
         if not properties_df.empty:
-            logger.debug(f"Properties DF 'hotel_link_normalized' sample (first 5): {properties_df['hotel_link_normalized'].head().tolist()}")
-        if not hotel_details_df.empty:
-            logger.debug(f"Hotel Details DF 'url_normalized' sample (first 5): {hotel_details_df['url_normalized'].head().tolist()}")
+            logger.debug(
+                f"Properties DF 'hotel_link_normalized' sample (first 5): {properties_df['hotel_link_normalized'].head().tolist()}"
+            )
+        if not hotel_details_df_renamed.empty:
+            logger.debug(
+                f"Hotel Details DF 'url_normalized' sample (first 5): {hotel_details_df_renamed['url_normalized'].head().tolist()}"
+            )
 
-        if not properties_df.empty and not hotel_details_df.empty:
-            properties_links = set(properties_df['hotel_link_normalized'].dropna().unique())
-            hotel_details_urls = set(hotel_details_df['url_normalized'].dropna().unique())
+        if not properties_df.empty and not hotel_details_df_renamed.empty:
+            properties_links = set(
+                properties_df["hotel_link_normalized"].dropna().unique()
+            )
+            hotel_details_urls = set(
+                hotel_details_df_renamed["url_normalized"].dropna().unique()
+            )
 
             missing_in_hotel_details = properties_links - hotel_details_urls
             missing_in_properties = hotel_details_urls - properties_links
 
             if missing_in_hotel_details:
-                logger.warning(f"Hotel links in properties_df not found in hotel_details_df (normalized): {len(missing_in_hotel_details)} items. Sample: {list(missing_in_hotel_details)[:5]}")
+                logger.warning(
+                    f"Hotel links in properties_df not found in hotel_details_df (normalized): {len(missing_in_hotel_details)} items. Sample: {list(missing_in_hotel_details)[:5]}"
+                )
             if missing_in_properties:
-                logger.warning(f"Hotel URLs in hotel_details_df not found in properties_df (normalized): {len(missing_in_properties)} items. Sample: {list(missing_in_properties)[:5]}")
-        
-        df = pd.merge(properties_df, hotel_details_df, left_on='hotel_link_normalized', right_on='url_normalized', how='inner')
+                logger.warning(
+                    f"Hotel URLs in hotel_details_df not found in properties_df (normalized): {len(missing_in_properties)} items. Sample: {list(missing_in_properties)[:5]}"
+                )
+
+        df = pd.merge(
+            properties_df,
+            hotel_details_df_renamed, # Use the renamed DataFrame
+            left_on="hotel_link_normalized",
+            right_on="url_normalized",
+            how="inner",
+        )
 
         logger.info(
             f"Merged {initial_properties_count} properties and {initial_hotel_details_count} hotel details. "
             f"Resulting training dataset has {len(df)} entries after inner join."
         )
 
-        if len(df) < 10: # Minimum data requirement after merge
+        # Fill missing values in properties_df columns using data from hotel_details_df
+        # Prioritize detailed information where available
+        if "detail_star_rating" in df.columns:
+            df["star_rating"] = df["star_rating"].fillna(df["detail_star_rating"])
+        if "detail_guest_rating" in df.columns:
+            df["guest_rating_score"] = df["guest_rating_score"].fillna(df["detail_guest_rating"])
+        if "detail_review_count" in df.columns:
+            df["reviews"] = df["reviews"].fillna(df["detail_review_count"])
+
+        # Drop the temporary detail_ columns
+        df.drop(
+            columns=[
+                col for col in ["detail_name", "detail_star_rating", "detail_address", "detail_guest_rating", "detail_review_count"]
+                if col in df.columns
+            ],
+            inplace=True
+        )
+
+        if len(df) < 10:  # Minimum data requirement after merge
             logger.warning(
                 f"Insufficient data after merge: only {len(df)} properties found. Need at least 10 for training."
             )
@@ -76,15 +125,12 @@ async def train_model(
                 f"Insufficient data after merge: only {len(df)} properties found. Need at least 10 for training."
             )
 
-        print(df.head())
-        print(df.columns)
-
         # Fixed: Removed duplicate and added distance_from_beach
         df = cast(
             pd.DataFrame,
             df[
                 [
-                    "star_rating_x", # Changed from "star_rating"
+                    "star_rating",  # Changed from "star_rating"
                     "guest_rating_score",
                     "reviews",
                     "distance_from_downtown",
@@ -106,7 +152,7 @@ async def train_model(
 
         # Fixed: Updated required_cols to match actual columns
         required_cols = [
-                    "star_rating_x", # Changed from "star_rating"
+            "star_rating",  # Changed from "star_rating"
             "guest_rating_score",
             "reviews",
             "distance_from_downtown",
@@ -134,7 +180,7 @@ async def train_model(
         # Fixed: Updated feature selection to include distance_from_beach
         X = df[
             [
-                    "star_rating_x", # Changed from "star_rating"
+                "star_rating",  # Changed from "star_rating"
                 "guest_rating_score",
                 "reviews",
                 "distance_from_downtown",
@@ -272,15 +318,19 @@ async def train_model(
         logger.debug("TensorFlow model saved.")
 
         # Save BOTH scalers
-        joblib.dump(scaler_X, os.path.join(model_path, f"{model_filename}_scaler_X.joblib"))
-        joblib.dump(scaler_y, os.path.join(model_path, f"{model_filename}_scaler_y.joblib"))
+        joblib.dump(
+            scaler_X, os.path.join(model_path, f"{model_filename}_scaler_X.joblib")
+        )
+        joblib.dump(
+            scaler_y, os.path.join(model_path, f"{model_filename}_scaler_y.joblib")
+        )
         logger.debug("Scalers saved.")
 
         # Fixed: Updated metadata to include all 6 features
         joblib.dump(
             {
                 "features": [
-                    "star_rating_x",
+                    "star_rating",
                     "guest_rating_score",
                     "reviews",
                     "distance_from_downtown",
