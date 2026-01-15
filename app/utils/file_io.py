@@ -2,6 +2,10 @@ import os
 
 import pandas as pd
 
+from app.utils.constants import (
+    HOTEL_DETAILS_CSV_PATH_TEMPLATE,
+    PROPERTIES_CSV_PATH_TEMPLATE,
+)
 from app.utils.logger import logger
 
 
@@ -18,7 +22,9 @@ def save_scraped_data_to_csv(
         rooms: The number of rooms.
         limit: The limit used for scraping.
     """
-    file_path = f"./scraped/properties/{destination}/{adults}/{rooms}/limit_{limit}.csv"
+    file_path = PROPERTIES_CSV_PATH_TEMPLATE.format(
+        destination=destination, adults=adults, rooms=rooms, limit=limit
+    )
     logger.info(
         f"Attempting to save scraped data to CSV: {file_path}. "
         f"Destination='{destination}', Adults={adults}, Rooms={rooms}, Limit={limit}"
@@ -55,8 +61,8 @@ def save_hotel_detail_data_to_csv(
         rooms: The number of rooms.
         limit: The limit used for scraping.
     """
-    file_path = (
-        f"./scraped/hotel_details/{destination}/{adults}/{rooms}/limit_{limit}.csv"
+    file_path = HOTEL_DETAILS_CSV_PATH_TEMPLATE.format(
+        destination=destination, adults=adults, rooms=rooms, limit=limit
     )
     logger.info(
         f"Attempting to save hotel detail data to CSV: {file_path}. "

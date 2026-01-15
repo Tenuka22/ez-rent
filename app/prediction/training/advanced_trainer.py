@@ -198,7 +198,8 @@ async def train_advanced_model(
         logger.info("Advanced model compiled successfully.")
 
         patience = max(
-            10, min(25, num_samples // 3) # Slightly more patience for advanced model
+            10,
+            min(25, num_samples // 3),  # Slightly more patience for advanced model
         )
         early_stopping = tf.keras.callbacks.EarlyStopping(
             monitor="val_loss", patience=patience, restore_best_weights=True
@@ -207,7 +208,7 @@ async def train_advanced_model(
 
         logger.info("Starting advanced model training.")
         if num_samples < 30:
-            epochs = 150 # More epochs for smaller datasets
+            epochs = 150  # More epochs for smaller datasets
         elif num_samples < 100:
             epochs = 80
         else:
@@ -231,8 +232,8 @@ async def train_advanced_model(
         logger.info(f"Final training loss: {history.history['loss'][-1]:.4f}")
         logger.info(f"Final validation loss: {history.history['val_loss'][-1]:.4f}")
 
-        model_name = "advanced_price_predictor" # New model name
-        base_path = f"./ml_files/{destination}/{adults}/{rooms}/{limit}/{model_name}"
+        model_name = "advanced_price_predictor"  # New model name
+        base_path = f"./ml_files/{destination}_{adults}_{rooms}_{limit}_{model_name}"
         os.makedirs(base_path, exist_ok=True)
         logger.info(f"Saving advanced model artifacts to: {base_path}")
 
@@ -245,7 +246,7 @@ async def train_advanced_model(
 
         joblib.dump(
             {
-                "features": feature_columns, # Use dynamically generated feature_columns
+                "features": feature_columns,  # Use dynamically generated feature_columns
                 "target": target_column,
                 "currency": currency,
             },

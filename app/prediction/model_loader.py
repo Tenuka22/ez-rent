@@ -1,11 +1,15 @@
 import os
+from typing import Any, Dict
+
 import joblib
 import tensorflow as tf
-from typing import Dict, Any
 
 from app.utils.logger import logger
 
-def load_model_artifacts(model_type: str, destination: str, adults: int, rooms: int, limit: int) -> Dict[str, Any]:
+
+def load_model_artifacts(
+    model_type: str, destination: str, adults: int, rooms: int, limit: int
+) -> Dict[str, Any]:
     """
     Loads a trained model, its scalers, and metadata.
 
@@ -18,7 +22,7 @@ def load_model_artifacts(model_type: str, destination: str, adults: int, rooms: 
 
     Returns:
         Dict[str, Any]: A dictionary containing the loaded model, scaler_X, scaler_y, and metadata.
-    
+
     Raises:
         ValueError: If an unknown model_type is provided.
         FileNotFoundError: If any required model artifact is not found.
@@ -30,7 +34,7 @@ def load_model_artifacts(model_type: str, destination: str, adults: int, rooms: 
     else:
         raise ValueError(f"Unknown model_type: {model_type}")
 
-    base_path = f"./ml_files/{destination}/{adults}/{rooms}/{limit}/{model_name}"
+    base_path = f"./ml_files/{destination}_{adults}_{rooms}_{limit}_{model_name}"
     model_path = os.path.join(base_path, "tf_model.keras")
     scaler_x_path = os.path.join(base_path, f"{model_name}_scaler_X.joblib")
     scaler_y_path = os.path.join(base_path, f"{model_name}_scaler_y.joblib")
@@ -52,9 +56,4 @@ def load_model_artifacts(model_type: str, destination: str, adults: int, rooms: 
     meta = joblib.load(meta_path)
     logger.info("Model artifacts loaded successfully.")
 
-    return {
-        "model": model,
-        "scaler_X": scaler_X,
-        "scaler_y": scaler_y,
-        "meta": meta
-    }
+    return {"model": model, "scaler_X": scaler_X, "scaler_y": scaler_y, "meta": meta}

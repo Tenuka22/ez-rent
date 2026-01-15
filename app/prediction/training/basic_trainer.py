@@ -221,7 +221,7 @@ async def train_basic_model(
         logger.info(f"Final validation loss: {history.history['val_loss'][-1]:.4f}")
 
         model_name = "price_predictor"
-        base_path = f"./ml_files/{destination}/{adults}/{rooms}/{limit}/{model_name}"
+        base_path = f"./ml_files/{destination}_{adults}_{rooms}_{limit}_{model_name}"
         os.makedirs(base_path, exist_ok=True)
         logger.info(f"Saving model artifacts to: {base_path}")
 

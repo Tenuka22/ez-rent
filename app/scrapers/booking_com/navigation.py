@@ -4,13 +4,11 @@ import time
 from playwright.async_api import Page
 
 from app.scrapers.booking_com.playwright_urls import BookingComUrls
+from app.scrapers.booking_com.utils import modal_dismisser  # Import from new utils file
 from app.utils.logger import logger
-from app.scrapers.booking_com.utils import modal_dismisser # Import from new utils file
 
 
-async def set_booking_com_counter(
-    page: Page, input_id: str, target: int
-) -> None:
+async def set_booking_com_counter(page: Page, input_id: str, target: int) -> None:
     """
     Sets the value of a counter on booking.com (e.g., number of adults, rooms).
 
@@ -33,7 +31,9 @@ async def set_booking_com_counter(
         # Increase
         while current < target:
             if not await plus_btn.is_enabled():
-                logger.warning(f"Cannot increase {input_id} further, plus button disabled.")
+                logger.warning(
+                    f"Cannot increase {input_id} further, plus button disabled."
+                )
                 break  # can't increase, exit loop
             await plus_btn.click()
             current += 1
@@ -42,7 +42,9 @@ async def set_booking_com_counter(
         # Decrease
         while current > target:
             if not await minus_btn.is_enabled():
-                logger.warning(f"Cannot decrease {input_id} further, minus button disabled.")
+                logger.warning(
+                    f"Cannot decrease {input_id} further, minus button disabled."
+                )
                 break  # can't decrease, exit loop
             await minus_btn.click()
             current -= 1
@@ -50,8 +52,11 @@ async def set_booking_com_counter(
         logger.info(f"Counter for {input_id} successfully set to {target}.")
         return
     except Exception as e:
-        logger.error(f"Error setting booking.com counter for {input_id}: {e}", exc_info=True)
+        logger.error(
+            f"Error setting booking.com counter for {input_id}: {e}", exc_info=True
+        )
         raise Exception(str(e))
+
 
 async def goto_properties_page(
     page: Page,
@@ -60,7 +65,9 @@ async def goto_properties_page(
     adults: int = 2,
     rooms: int = 1,
 ) -> None:
-    logger.info(f"Navigating to properties page for destination: '{destination}', adults: {adults}, rooms: {rooms}")
+    logger.info(
+        f"Navigating to properties page for destination: '{destination}', adults: {adults}, rooms: {rooms}"
+    )
     try:
         # Go to home page
         logger.info(f"Going to Booking.com home page: {urls.home}")
@@ -105,7 +112,7 @@ async def goto_properties_page(
         num_months_to_select = min(3, await month_buttons.count())
         for i in range(num_months_to_select):
             await month_buttons.nth(i).click()
-            logger.debug(f"Selected month {i+1}.")
+            logger.debug(f"Selected month {i + 1}.")
 
         # ✅ Select length of stay (required for "Select dates" to be clickable)
         logger.info("Selecting length of stay.")
@@ -129,7 +136,9 @@ async def goto_properties_page(
         logger.debug("Occupancy button clicked.")
 
         await set_booking_com_counter(page, "group_adults", adults)
-        await set_booking_com_counter(page, "group_children", 0) # Assuming 0 children for now
+        await set_booking_com_counter(
+            page, "group_children", 0
+        )  # Assuming 0 children for now
         await set_booking_com_counter(page, "no_rooms", rooms)
 
         logger.info("Clicking Done on occupancy configuration.")
@@ -146,6 +155,7 @@ async def goto_properties_page(
         await dest_input.fill("")  # Clear input
         await dest_input.type(destination, delay=50)
         logger.debug("Destination typed into input field.")
+        await page.wait_for_timeout(2000)
 
         # Try selecting autocomplete options up to 3 times
         autocomplete_list = page.locator(
@@ -162,12 +172,15 @@ async def goto_properties_page(
             if option_text and option_text.lower().startswith(destination.lower()):
                 await option.click()
                 selected = True
-                logger.info(f"Autocomplete option '{option_text}' selected for '{destination}'.")
+                logger.info(
+                    f"Autocomplete option '{option_text}' selected for '{destination}'."
+                )
                 break
-        
-        if not selected:
-            logger.info("No matching autocomplete option found, proceeding with typed destination.")
 
+        if not selected:
+            logger.info(
+                "No matching autocomplete option found, proceeding with typed destination."
+            )
 
         # Click the Search button
         logger.info("Clicking search button.")
@@ -183,11 +196,13 @@ async def goto_properties_page(
         return
 
     except Exception as e:
-        logger.error(f"Error navigating to properties page for {destination}: {e}", exc_info=True)
-        os.makedirs("./errors", exist_ok=True)
-        screenshot_path = f"./errors/{destination}_a{adults}_r{rooms}_{int(time.time())}.png"
-        await page.screenshot(
-            path=screenshot_path
+        logger.error(
+            f"Error navigating to properties page for {destination}: {e}", exc_info=True
         )
+        os.makedirs("./errors", exist_ok=True)
+        screenshot_path = (
+            f"./errors/{destination}_a{adults}_r{rooms}_{int(time.time())}.png"
+        )
+        await page.screenshot(path=screenshot_path)
         logger.error(f"Screenshot saved to {screenshot_path}")
         raise Exception(str(e))
