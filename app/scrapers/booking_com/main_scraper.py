@@ -208,7 +208,7 @@ async def scrape_booking_com_data(
                             f"Could not find specific property: {target_hotel_name}. Proceeding with general scrape."
                         )
 
-                    if specific_hotel_detail:
+                    if specific_hotel_detail and hotel_details_limit > 0:
                         temp_df_specific_hotel_detail = pd.DataFrame(
                             [asdict(specific_hotel_detail)]
                         )
@@ -292,74 +292,58 @@ async def scrape_booking_com_data(
                         logger.error(f"Failed to save scraped properties to CSV: {e}")
 
                 # --- Scrape hotel details if not cached or forced refetch ---
-                if not hotel_details_from_cache or force_refetch:
-                    if scraped_properties.empty:
-                        logger.warning(
-                            "No properties available to scrape hotel details for."
-                        )
-                    else:
-                        logger.debug(
-                            f"Length of scraped_properties: {len(scraped_properties)}"
-                        )
-                        hotel_urls_to_scrape: list[str] = [
-                            link
-                            for link in scraped_properties["hotel_link"]
-                            .head(hotel_details_limit)
-                            .dropna()
-                            .tolist()
-                        ]
-                        logger.debug(
-                            f"Length of hotel_urls_to_scrape: {len(hotel_urls_to_scrape)}"
-                        )
-
-                        logger.info(
-                            f"Scraping details for {len(hotel_urls_to_scrape)} hotels concurrently."
-                        )
-                        general_hotel_details = await scrape_hotel_data_concurrent(
-                            browser, hotel_urls_to_scrape
-                        )
-
-                        # Filter out the specific hotel detail from general_hotel_details to avoid duplicates
-                        if specific_hotel_detail:
-                            general_hotel_details = [
-                                h
-                                for h in general_hotel_details
-                                if h.name != specific_hotel_detail.name
+                if (not hotel_details_from_cache or force_refetch):
+                    if hotel_details_limit > 0:
+                        if scraped_properties.empty:
+                            logger.warning(
+                                "No properties available to scrape hotel details for."
+                            )
+                        else:
+                            logger.debug(
+                                f"Length of scraped_properties: {len(scraped_properties)}"
+                            )
+                            hotel_urls_to_scrape: list[str] = [
+                                link
+                                for link in scraped_properties["hotel_link"]
+                                .head(hotel_details_limit)
+                                .dropna()
+                                .tolist()
                             ]
-
-                        hotel_details_data = pd.concat(
-                            [
-                                hotel_details_data,
-                                pd.DataFrame(
-                                    [asdict(h) for h in general_hotel_details]
-                                ),
-                            ],
-                            ignore_index=True,
-                        )
-
-                        # Rename columns to match price_model expectations
-                        if "discounted_price_value" in hotel_details_data.columns:
-                            hotel_details_data.rename(
-                                columns={"discounted_price_value": "discounted_price"},
-                                inplace=True,
-                            )
-                        if "taxes_and_fees_value" in hotel_details_data.columns:
-                            hotel_details_data.rename(
-                                columns={"taxes_and_fees_value": "taxes_and_fees"},
-                                inplace=True,
-                            )
-                        # Rename columns to match price_model expectations
-                        if "discounted_price_value" in hotel_details_data.columns:
-                            hotel_details_data.rename(
-                                columns={"discounted_price_value": "discounted_price"},
-                                inplace=True,
-                            )
-                        if "taxes_and_fees_value" in hotel_details_data.columns:
-                            hotel_details_data.rename(
-                                columns={"taxes_and_fees_value": "taxes_and_fees"},
-                                inplace=True,
+                            logger.debug(
+                                f"Length of hotel_urls_to_scrape: {len(hotel_urls_to_scrape)}"
                             )
 
+                            logger.info(
+                                f"Scraping details for {len(hotel_urls_to_scrape)} hotels concurrently."
+                            )
+                            general_hotel_details = await scrape_hotel_data_concurrent(
+                                browser, hotel_urls_to_scrape
+                            )
+
+                            # Filter out the specific hotel detail from general_hotel_details to avoid duplicates
+                            if specific_hotel_detail:
+                                general_hotel_details = [
+                                    h
+                                    for h in general_hotel_details
+                                    if h.name != specific_hotel_detail.name
+                                ]
+
+                            hotel_details_data = pd.concat(
+                                [
+                                    hotel_details_data,
+                                    pd.DataFrame(
+                                        [asdict(h) for h in general_hotel_details]
+                                    ),
+                                ],
+                                ignore_index=True,
+                            )
+                    else: # hotel_details_limit is 0
+                        logger.info("hotel_details_limit is 0, skipping general hotel detail scraping.")
+                        # Ensure hotel_details_data is empty if not loaded from cache
+                        if hotel_details_data.empty: # Check if it's already empty from initial assignment
+                             hotel_details_data = pd.DataFrame()
+                        # Save an empty dataframe to create the 'limit_0.csv' cache file
+                        # This prevents redundant checks for 'hotel_details_from_cache' on subsequent runs
                         try:
                             save_hotel_detail_data_to_csv(
                                 hotel_details_data,
@@ -369,7 +353,10 @@ async def scrape_booking_com_data(
                                 hotel_details_limit,
                             )
                         except Exception as e:
-                            logger.error(f"Failed to save hotel details to CSV: {e}")
+                            logger.error(f"Failed to save empty hotel details to CSV: {e}")
+
+
+
 
             except Exception as e:
                 raise Exception(str(e))

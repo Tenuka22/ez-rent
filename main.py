@@ -199,17 +199,17 @@ async def main():
     destination = "Unawatuna"
     adults = 2
     rooms = 1
-    limit = 100
+    limit = 300
     hotel_details_limit = 100
     force_refetch = False
 
     # New configuration variables
     DATA_SOURCE = "scrape"  # Options: "scrape", "manual"
-    PREDICTION_MODEL_TYPE = "advanced"  # Options: "basic" ("low"), "advanced" ("high")
+    PREDICTION_MODEL_TYPE = "basic"  # Options: "basic" ("low"), "advanced" ("high")
     TARGET_HOTEL_NAME: str | None = (
-        "Sunset Mirage Villa Unawatuna"  # Set to None if no specific hotel is targeted, otherwise provide exact name
+        "Sunset Mirage Villa Unawatuna"  # Set to None if no specific hotel is targeted (used only when DATA_SOURCE="scrape")
     )
-    OUTPUT_SINGLE_AVERAGE_PRICE: bool = True  # Set to True to output a single average price for multiple predictions, or False to list all predictions
+    OUTPUT_SINGLE_AVERAGE_PRICE: bool = False  # Set to True to output a single average price for multiple predictions, or False to list all predictions
 
     logger.info("\nStarting process with parameters:")
     logger.debug(f"  Data Source: {DATA_SOURCE}")
@@ -219,91 +219,132 @@ async def main():
     logger.debug(f"  Limit: {limit}")
     logger.debug(f"  Hotel Details Limit: {hotel_details_limit}")
     logger.debug(f"  Force Refetch: {force_refetch}")
-    logger.debug(
-        f"  Target Hotel Name: {TARGET_HOTEL_NAME if DATA_SOURCE == 'scrape' else 'Not applicable for general scrape'}"
-    )  # Clarify when target hotel name is used
-    logger.debug(
-        f"  Prediction Model Type: {PREDICTION_MODEL_TYPE}"
-    )  # Added for clarity
+    logger.debug(f"  Prediction Model Type: {PREDICTION_MODEL_TYPE}")
+    if DATA_SOURCE == "scrape":
+        logger.debug(f"  Target Hotel Name: {TARGET_HOTEL_NAME}")
     logger.info("-" * 30)
 
     try:
-        # Always perform scraping
-        logger.info("Starting data scraping from Booking.com...")
-        (property_data, hotel_details_data) = await scrape_booking_com_data(
-            destination=destination,
-            adults=adults,
-            rooms=rooms,
-            limit=limit,
-            hotel_details_limit=hotel_details_limit,
-            force_refetch=force_refetch,
-            target_hotel_name=TARGET_HOTEL_NAME
-            if DATA_SOURCE == "scrape"
-            else None,  # Only target a specific hotel if DATA_SOURCE is 'scrape'
-        )
-        logger.success(f"Scraping successful! Found {len(property_data)} properties.")
-
-        df_properties = pd.DataFrame(property_data)
-        df_hotel_details = pd.DataFrame(hotel_details_data)
+        # Initialize variables
+        df_properties_for_training = None
+        df_hotel_details_for_training = None
+        df_properties_for_prediction = None
+        df_hotel_details_for_prediction = None
 
         if DATA_SOURCE == "manual":
-            logger.info("Gathering manual hotel data from user...")
+            # Step 1: Get manual input for YOUR villa (to predict)
+            logger.info("Gathering manual hotel data from user (for prediction)...")
             (
-                manual_df_properties,
-                manual_df_hotel_details,
+                df_properties_for_prediction,
+                df_hotel_details_for_prediction,
             ) = await get_manual_hotel_data_from_user()
             logger.success("Manual data entry successful!")
 
-            # Append manual data to scraped data
-            df_properties = pd.concat(
-                [df_properties, manual_df_properties], ignore_index=True
+            # Step 2: Scrape OTHER properties from destination (for training)
+            logger.info(f"Scraping properties from {destination} for model training...")
+            # Determine hotel_details_limit based on model type
+            scrape_hotel_details_limit = (
+                0
+                if PREDICTION_MODEL_TYPE.lower() in ["basic", "low"]
+                else hotel_details_limit
             )
-            df_hotel_details = pd.concat(
-                [df_hotel_details, manual_df_hotel_details], ignore_index=True
+
+            (property_data, hotel_details_data) = await scrape_booking_com_data(
+                destination=destination,
+                adults=adults,
+                rooms=rooms,
+                limit=limit,
+                hotel_details_limit=scrape_hotel_details_limit,
+                force_refetch=force_refetch,
+                target_hotel_name=None,  # Don't target specific hotel when scraping for training
             )
-            logger.info("Scraped data combined with manual input for prediction.")
-        elif DATA_SOURCE != "scrape":
+            logger.success(
+                f"Scraping successful! Found {len(property_data)} properties for training."
+            )
+
+            df_properties_for_training = pd.DataFrame(property_data)
+            df_hotel_details_for_training = pd.DataFrame(hotel_details_data)
+
+        elif DATA_SOURCE == "scrape":
+            # Scrape properties from destination
+            logger.info(f"Scraping properties from {destination}...")
+            # Determine hotel_details_limit based on model type
+            scrape_hotel_details_limit = (
+                0
+                if PREDICTION_MODEL_TYPE.lower() in ["basic", "low"]
+                else hotel_details_limit
+            )
+
+            (property_data, hotel_details_data) = await scrape_booking_com_data(
+                destination=destination,
+                adults=adults,
+                rooms=rooms,
+                limit=limit,
+                hotel_details_limit=scrape_hotel_details_limit,
+                force_refetch=force_refetch,
+                target_hotel_name=TARGET_HOTEL_NAME,  # Target specific hotel if specified
+            )
+            logger.success(
+                f"Scraping successful! Found {len(property_data)} properties."
+            )
+
+            df_properties_for_training = pd.DataFrame(property_data)
+            df_hotel_details_for_training = pd.DataFrame(hotel_details_data)
+
+            # For scrape mode, use the same data for prediction
+            df_properties_for_prediction = df_properties_for_training.copy()
+            df_hotel_details_for_prediction = df_hotel_details_for_training.copy()
+
+        else:
             logger.error(
                 f"Unknown DATA_SOURCE: {DATA_SOURCE}. Please choose 'scrape' or 'manual'."
             )
             return
 
-        # Train selected model
+        # Train selected model using training data
         if PREDICTION_MODEL_TYPE.lower() in ["advanced", "high"]:
-            if not df_hotel_details.empty:
+            if not df_hotel_details_for_training.empty:
                 logger.info("Training advanced price prediction model...")
                 await train_advanced_price_prediction_model(
-                    df_properties,
-                    df_hotel_details,
-                    destination=destination,  # Using destination for naming convention
-                    adults=adults,  # Using adults for naming convention
-                    rooms=rooms,  # Using rooms for naming convention
-                    limit=limit,  # Using limit for naming convention
+                    df_properties_for_training,
+                    df_hotel_details_for_training,
+                    destination=destination,
+                    adults=adults,
+                    rooms=rooms,
+                    limit=limit,
                 )
             else:
                 logger.warning(
-                    "Advanced model selected but no hotel details available. Skipping advanced model training."
+                    "Advanced model selected but no hotel details available. Falling back to basic model."
+                )
+                logger.info("Training basic price prediction model...")
+                await train_price_prediction_model_without_high_level_data(
+                    df_properties_for_training,
+                    destination=destination,
+                    adults=adults,
+                    rooms=rooms,
+                    limit=limit,
                 )
         elif PREDICTION_MODEL_TYPE.lower() in ["basic", "low"]:
             logger.info("Training basic price prediction model...")
             await train_price_prediction_model_without_high_level_data(
-                df_properties,
-                destination=destination,  # Using destination for naming convention
-                adults=adults,  # Using adults for naming convention
-                rooms=rooms,  # Using rooms for naming convention
-                limit=limit,  # Using limit for naming convention
+                df_properties_for_training,
+                destination=destination,
+                adults=adults,
+                rooms=rooms,
+                limit=limit,
             )
         else:
             logger.warning(
                 f"Unknown prediction model type '{PREDICTION_MODEL_TYPE}'. No model will be trained."
             )
 
-        # --- Prediction using the trained model ---
+        # --- Prediction using the trained model on prediction data ---
         logger.info("\n--- Making price predictions ---")
-        if not df_properties.empty:
+        if not df_properties_for_prediction.empty:
             predicted_prices_df = await predict_price(
-                df_properties=df_properties,
-                df_hotel_details=df_hotel_details
+                df_properties=df_properties_for_prediction,
+                df_hotel_details=df_hotel_details_for_prediction
                 if PREDICTION_MODEL_TYPE.lower() in ["advanced", "high"]
                 else None,
                 model_type=PREDICTION_MODEL_TYPE,
