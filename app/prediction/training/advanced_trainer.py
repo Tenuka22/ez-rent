@@ -263,3 +263,37 @@ async def train_advanced_model(
             exc_info=True,
         )
         raise Exception(f"Error creating advanced price predictor: {str(e)}")
+
+
+if __name__ == "__main__":
+    import asyncio
+
+    # Define paths to the scraped data
+    hotel_details_path = r"D:\\Projects\\ez-rent\\scraped\\hotel_details\\Unawatuna_2_1_limit_100.csv"
+    properties_path = (
+        r"D:\\Projects\\ez-rent\\scraped\\properties\\Unawatuna_2_1_limit_300.csv"
+    )
+
+    # Load the datasets
+    df_hotel_details = pd.read_csv(hotel_details_path)
+    df_properties = pd.read_csv(properties_path)
+
+    # Extract parameters from file names or define them manually
+    destination = "Unawatuna"
+    adults = 2
+    rooms = 1
+    limit = 300  # This corresponds to the properties limit
+
+    # Run the asynchronous training function
+    print("Running advanced training...")
+    asyncio.run(
+        train_advanced_model(
+            df_properties=df_properties,
+            df_hotel_details=df_hotel_details,
+            destination=destination,
+            adults=adults,
+            rooms=rooms,
+            limit=limit,
+        )
+    )
+    print("Advanced training finished.")

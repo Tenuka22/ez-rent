@@ -1,29 +1,25 @@
 import argparse
+from typing import Literal
 
 import pandas as pd
 
 from app.cli.manual_data_entry import get_manual_hotel_data_from_user
-from app.data_models import HotelDetails, PropertyListing
-from app.prediction.model_loader import load_model_artifacts  # To check if model exists
 from app.prediction.model_predictor import predict_price
-from app.prediction.training.advanced_trainer import train_advanced_model
-from app.prediction.training.basic_trainer import train_model
 from app.scrapers.booking_com.orchestrator import scrape_booking_com_data
 from app.utils.logger import logger
 
 
 async def main():
-    """Main function to run the scraper with user-provided values."""
     parser = argparse.ArgumentParser(
         description="Run the Ez-Rent scraper and prediction."
     )
-
     parser.add_argument(
         "--destination",
         type=str,
         default="Unawatuna",
         help="Destination for scraping (e.g., city, region).",
     )
+    # The below values changes how much properties you get to see.
     parser.add_argument(
         "--adults", type=int, default=2, help="Number of adults for the booking."
     )
@@ -31,7 +27,10 @@ async def main():
         "--rooms", type=int, default=1, help="Number of rooms for the booking."
     )
     parser.add_argument(
-        "--limit", type=int, default=300, help="Maximum number of properties to scrape."
+        "--properties_limit",
+        type=int,
+        default=300,
+        help="Maximum number of properties to scrape.",
     )
     parser.add_argument(
         "--hotel_details_limit",
@@ -44,13 +43,15 @@ async def main():
         action="store_true",
         help="If set, forces refetching of data even if cached.",
     )
+    # Does the house is on the platform we are scraping on, if so "scrape" or else "manual".
     parser.add_argument(
-        "--data_source",
+        "--predictor_house_data_source",
         type=str,
         choices=["scrape", "manual"],
         default="scrape",
         help="Source of data: 'scrape' from Booking.com or 'manual' entry.",
     )
+    # The basic prediction is pretty lightwaight. But thee advanced can give you a better result.
     parser.add_argument(
         "--prediction_model_type",
         type=str,
@@ -58,6 +59,7 @@ async def main():
         default="basic",
         help="Type of prediction model to use: 'basic' or 'advanced'.",
     )
+    # If you have selected "scrape" as the preticting house, this should be the platform's unique name. first search with the platform to match.
     parser.add_argument(
         "--target_hotel_name",
         type=str,
@@ -67,16 +69,21 @@ async def main():
 
     args = parser.parse_args()
 
-    destination = args.destination
-    adults = args.adults
-    rooms = args.rooms
-    limit = args.limit
-    hotel_details_limit = args.hotel_details_limit
-    force_refetch = args.force_refetch
+    destination: str = args.destination
+    adults: int = args.adults
+    rooms: int = args.rooms
+    limit: int = args.properties_limit
+    hotel_details_limit: int = args.hotel_details_limit
+    force_refetch: bool = args.force_refetch
 
-    DATA_SOURCE = args.data_source
-    PREDICTION_MODEL_TYPE = args.prediction_model_type
-    TARGET_HOTEL_NAME = args.target_hotel_name
+    DATA_SOURCE: Literal["scrape", "manual"] = args.data_source
+    PREDICTION_MODEL_TYPE: Literal["basic", "advanced"] = args.prediction_model_type
+    TARGET_HOTEL_NAME: str = args.target_hotel_name
+
+    if DATA_SOURCE == "scrape" and not TARGET_HOTEL_NAME:
+        raise Exception(
+            "If you are using the scrape parameter you must give a target hotel name"
+        )
 
     logger.info("\nStarting process with parameters:")
     logger.debug(f"  Data Source: {DATA_SOURCE}")
@@ -87,14 +94,14 @@ async def main():
     logger.debug(f"  Hotel Details Limit: {hotel_details_limit}")
     logger.debug(f"  Force Refetch: {force_refetch}")
     logger.debug(f"  Prediction Model Type: {PREDICTION_MODEL_TYPE}")
+
     if DATA_SOURCE == "scrape":
         logger.debug(f"  Target Hotel Name: {TARGET_HOTEL_NAME}")
+
     logger.info("---")
 
     user_df_properties: pd.DataFrame = pd.DataFrame()
     user_df_hotel_details: pd.DataFrame = pd.DataFrame()
-    general_df_properties: pd.DataFrame = pd.DataFrame()
-    general_df_hotel_details: pd.DataFrame = pd.DataFrame()
 
     # --- Data Collection ---
     if DATA_SOURCE == "scrape":
@@ -102,8 +109,6 @@ async def main():
         (
             specific_property,
             specific_hotel_detail,
-            general_df_properties,
-            general_df_hotel_details,
         ) = await scrape_booking_com_data(
             destination=destination,
             model_type=PREDICTION_MODEL_TYPE,
@@ -158,8 +163,6 @@ async def main():
         (
             _,  # specific_property is not relevant here
             _,  # specific_hotel_detail is not relevant here
-            general_df_properties,
-            general_df_hotel_details,
         ) = await scrape_booking_com_data(
             destination=destination,
             model_type=PREDICTION_MODEL_TYPE,
@@ -184,7 +187,7 @@ async def main():
                 adults=adults,
                 rooms=rooms,
                 limit=limit,
-                hotel_details_limit=hotel_details_limit, # New parameter
+                hotel_details_limit=hotel_details_limit,  # New parameter
             )
             logger.info("Price prediction successful!")
             logger.info("\n--- Predicted Prices ---")

@@ -12,10 +12,7 @@ from app.scrapers.booking_com.parsers.data_parsers import (
 from app.utils.logger import logger
 
 
-async def _extract_property_listing_from_card(card: Locator) -> PropertyListing:
-    """
-    Extracts a PropertyListing object from a given Playwright Locator representing a property card.
-    """
+async def extract_property_listing_from_card(card: Locator) -> PropertyListing:
     # ---------- LINK ----------
     link = await card.locator('a[data-testid="title-link"]').get_attribute("href")
 
@@ -178,9 +175,7 @@ async def _extract_property_listing_from_card(card: Locator) -> PropertyListing:
 
     # ---------- BED DETAILS ----------
     bed_details = ""  # Default value
-    bed_details_el = card.locator(
-        "ul.d1e8dce286 li:first-child div.fff1944c52"
-    ).nth(1)
+    bed_details_el = card.locator("ul.d1e8dce286 li:first-child div.fff1944c52").nth(1)
     if await bed_details_el.count():
         bed_details = (await bed_details_el.inner_text()).strip()
 
@@ -242,10 +237,6 @@ async def scrape_properties_data(page: Page, limit: int) -> List[PropertyListing
     hotels: List[PropertyListing] = []
     seen_links: set[str] = set()
     last_card_count = 0
-    same_count = 0
-    max_no_change_scrolls = (
-        3  # How many times to scroll with no new cards before stopping
-    )
 
     while len(hotels) < limit:
         await page.wait_for_load_state("networkidle")
@@ -262,7 +253,7 @@ async def scrape_properties_data(page: Page, limit: int) -> List[PropertyListing
             card = cards.nth(i)
 
             try:
-                property_listing = await _extract_property_listing_from_card(card)
+                property_listing = await extract_property_listing_from_card(card)
 
                 if (
                     not property_listing.hotel_link
@@ -289,29 +280,24 @@ async def scrape_properties_data(page: Page, limit: int) -> List[PropertyListing
         if await load_more.count() and await load_more.is_visible():
             await load_more.click()
             await page.wait_for_load_state("networkidle")
-            # After clicking load more, reset same_count as new content is expected
-            same_count = 0
             continue
 
         # ---------- SCROLL AND WAIT FOR MORE CARDS ----------
         # Scroll to load more if no "Load more results" button was found or clicked
         await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
 
-        # Instead of fixed sleep, wait for cards to increase
         await page.wait_for_timeout(
-            200
+            3000
         )  # Give a small moment for scroll to take effect and new content to initiate loading
 
         new_card_count = await cards.count()
 
-        if new_card_count == current_card_count:
-            same_count += 1
-            if same_count >= max_no_change_scrolls:
-                logger.info(
-                    f"No new cards appeared after {max_no_change_scrolls} scrolls, stopping."
-                )
-                break
-        else:
-            same_count = 0  # Reset if new cards are found
+        # If after scrolling, no new cards are found and no "Load more results" button,
+        # it implies no more content is available. This prevents an infinite loop.
+        if new_card_count == current_card_count and not (await load_more.count() and await load_more.is_visible()):
+            logger.info(
+                "No new cards appeared after scrolling and no 'Load more results' button, stopping."
+            )
+            break
 
     return hotels[:limit]

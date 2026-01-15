@@ -2,16 +2,18 @@ import asyncio
 import os
 import time
 from dataclasses import asdict
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional, Tuple
 
 import pandas as pd
 from playwright.async_api import Browser, Page, async_playwright
 
 from app.data_models import HotelDetails, PropertyListing
-from app.scrapers.booking_com.extractors.hotel_details_extractor import (
-    scrape_hotel_data,
+from app.prediction.model_utils import (
+    save_model_metadata,
+    should_retrain_model,
 )
+from app.prediction.training.basic_trainer import train_model
 from app.scrapers.booking_com.extractors.properties_extractor import (
     scrape_properties_data,
 )
@@ -26,8 +28,8 @@ from app.scrapers.booking_com.processing.concurrent_scrapers import (
 from app.scrapers.booking_com.utils import modal_dismisser
 from app.utils.cache import cache_url, get_cached_url
 from app.utils.constants import (
-    HOTEL_DETAILS_CSV_PATH_TEMPLATE,
-    PROPERTIES_CSV_PATH_TEMPLATE,
+    get_model_filepath,
+    get_scraped_data_filepath,
 )
 from app.utils.file_io import (
     read_scraped_data_from_csv,
@@ -35,46 +37,9 @@ from app.utils.file_io import (
     save_scraped_data_to_csv,
 )
 from app.utils.logger import logger
-from app.prediction.model_utils import (
-    should_retrain_model,
-    load_model_metadata,
-    save_model_metadata,
-)
-from app.prediction.training.basic_trainer import train_model
-
-def _get_scraped_data_filepath(
-    data_type: str, destination: str, adults: int, rooms: int, limit: int
-) -> str:
-    """
-    Constructs the correct file path for scraped data CSVs.
-    data_type can be "properties" or "hotel_details".
-    """
-    if data_type == "properties":
-        return PROPERTIES_CSV_PATH_TEMPLATE.format(
-            destination=destination, adults=adults, rooms=rooms, limit=limit
-        )
-    elif data_type == "hotel_details":
-        return HOTEL_DETAILS_CSV_PATH_TEMPLATE.format(
-            destination=destination, adults=adults, rooms=rooms, limit=limit
-        )
-    else:
-        raise ValueError(f"Unknown data_type: {data_type}")
-
-def _get_model_filename(
-    destination: str,
-    adults: int,
-    rooms: int,
-    properties_limit: int,
-    hotel_details_limit: int,
-    model_name: str = "price_predictor",
-) -> str:
-    """
-    Generates a consistent filename for the trained model.
-    """
-    return f"{destination}_{adults}_{rooms}_{properties_limit}_{hotel_details_limit}_{model_name}"
 
 
-async def _scrape_general_data(
+async def scrape_general_data(
     browser: Browser,
     destination: str,
     hotel_details_limit: int,
@@ -82,25 +47,24 @@ async def _scrape_general_data(
     rooms: int,
     limit: int,
     force_refetch: bool,
+    force_fetch_delay: Optional[timedelta],
     specific_property_to_exclude: Optional[PropertyListing] = None,
 ) -> Tuple[pd.DataFrame, pd.DataFrame]:
-    """
-    Internal function to scrape general properties and their details.
-    This data is intended for model training and excludes any specific target hotel.
-    """
-    properties_file_path = _get_scraped_data_filepath(
+    properties_file_path = get_scraped_data_filepath(
         "properties", destination, adults, rooms, limit
     )
-    hotel_details_file_path = _get_scraped_data_filepath(
+    hotel_details_file_path = get_scraped_data_filepath(
         "hotel_details", destination, adults, rooms, hotel_details_limit
     )
 
     scraped_properties: pd.DataFrame = pd.DataFrame()
     hotel_details_data: pd.DataFrame = pd.DataFrame()
 
+    delay_seconds = (force_fetch_delay or timedelta(days=7)).total_seconds()
+
     properties_from_cache = False
     if not force_refetch and os.path.exists(properties_file_path):
-        if (time.time() - os.path.getmtime(properties_file_path)) < 86400:  # 24 hours
+        if (time.time() - os.path.getmtime(properties_file_path)) < delay_seconds:
             logger.info(
                 f"Attempting to use cached general properties data from {properties_file_path}"
             )
@@ -117,9 +81,7 @@ async def _scrape_general_data(
 
     hotel_details_from_cache = False
     if not force_refetch and os.path.exists(hotel_details_file_path):
-        if (
-            time.time() - os.path.getmtime(hotel_details_file_path)
-        ) < 86400:  # 24 hours
+        if (time.time() - os.path.getmtime(hotel_details_file_path)) < delay_seconds:
             logger.info(
                 f"Attempting to use cached general hotel details data from {hotel_details_file_path}"
             )
@@ -221,13 +183,13 @@ async def _scrape_general_data(
                 else:
                     hotel_urls_to_scrape: list[str] = [
                         link
-                        for link in scraped_properties["hotel_link"]
-                        .dropna()
-                        .tolist()
+                        for link in scraped_properties["hotel_link"].dropna().tolist()
                     ]
                     if hotel_details_limit > 0:
-                        hotel_urls_to_scrape = hotel_urls_to_scrape[:hotel_details_limit]
-                    
+                        hotel_urls_to_scrape = hotel_urls_to_scrape[
+                            :hotel_details_limit
+                        ]
+
                     logger.info(
                         f"Scraping details for {len(hotel_urls_to_scrape)} general hotels concurrently."
                     )
@@ -287,11 +249,10 @@ async def scrape_booking_com_data(
     limit: int = 100,
     force_refetch: bool = False,
     target_hotel_name: Optional[str] = None,
+    force_fetch_delay: Optional[timedelta] = None,
 ) -> Tuple[
     Optional[PropertyListing],
     Optional[HotelDetails],
-    pd.DataFrame,
-    pd.DataFrame,
 ]:
     logger.debug(f"hotel_details_limit received: {hotel_details_limit}")
 
@@ -301,7 +262,6 @@ async def scrape_booking_com_data(
         specific_hotel_detail: Optional[HotelDetails] = None
 
         try:
-            # --- Scrape specific hotel if target_hotel_name is provided ---
             if target_hotel_name:
                 logger.info(f"Attempting to scrape specific hotel: {target_hotel_name}")
                 context = await browser.new_context(
@@ -312,22 +272,17 @@ async def scrape_booking_com_data(
                     ),
                 )
                 page = await context.new_page()
+
                 try:
                     (
                         specific_property,
                         specific_hotel_detail,
                     ) = await scrape_specific_property_data(
-                        page, destination, adults, rooms, target_hotel_name
+                        page, adults, rooms, target_hotel_name
                     )
-                    if specific_property:
-                        logger.success(
-                            f"Successfully scraped specific property: {target_hotel_name}"
-                        )
-                    else:
-                        logger.warning(
-                            f"Could not find specific property: {target_hotel_name}. "
-                            "It might not be on the first page of search results."
-                        )
+                    logger.success(
+                        f"Successfully scraped specific property: {target_hotel_name}"
+                    )
                 finally:
                     await page.close()
                     await context.close()
@@ -336,7 +291,7 @@ async def scrape_booking_com_data(
             (
                 general_df_properties,
                 general_df_hotel_details,
-            ) = await _scrape_general_data(
+            ) = await scrape_general_data(
                 browser,
                 destination,
                 hotel_details_limit,
@@ -344,58 +299,61 @@ async def scrape_booking_com_data(
                 rooms,
                 limit,
                 force_refetch,
-                specific_property_to_exclude=specific_property,  # Pass the specific_property object
+                specific_property_to_exclude=specific_property,
+                force_fetch_delay=force_fetch_delay,
             )
 
             # --- Dynamic Model Training ---
-            model_filename = _get_model_filename(
-                destination, adults, rooms, limit, hotel_details_limit,
-                model_name=f"{model_type}_price_predictor"
+            model_filepath = get_model_filepath(
+                destination,
+                adults,
+                rooms,
+                limit,
+                hotel_details_limit,
+                model_name=f"{model_type}_price_predictor",
             )
-            
-            # Use the already scraped general_df_properties and general_df_hotel_details
-            # to check if retraining is needed.
-            # If these were loaded from cache, and retraining is triggered,
-            # we will force a refetch.
 
             if should_retrain_model(
-                model_filename,
+                model_filepath,
                 len(general_df_properties),
                 len(general_df_hotel_details),
             ):
-                logger.info(f"Retraining model '{model_filename}' is recommended.")
-                
-                # Force a refetch of general data for training if retraining is recommended
-                # and the data might be stale or incomplete.
-                if not force_refetch: # Only force refetch if it wasn't already requested
+                logger.info(f"Retraining model '{model_filepath}' is recommended.")
+
+                if (
+                    not force_refetch
+                ):  # Only force refetch if it wasn't already requested
                     logger.info("Forcing refetch of general data for model retraining.")
                     (
                         general_df_properties,
                         general_df_hotel_details,
-                    ) = await _scrape_general_data(
+                    ) = await scrape_general_data(
                         browser,
                         destination,
                         hotel_details_limit,
                         adults,
                         rooms,
                         limit,
-                        force_refetch=True, # Force refetch here
+                        force_refetch=True,
                         specific_property_to_exclude=specific_property,
+                        force_fetch_delay=force_fetch_delay,
                     )
                 else:
-                    logger.info("General data already refetched due to --force_refetch flag.")
+                    logger.info(
+                        "General data already refetched due to --force_refetch flag."
+                    )
 
-                logger.info(f"Initiating retraining for model '{model_filename}'...")
+                logger.info(f"Initiating retraining for model '{model_filepath}'...")
                 # Assuming train_model in basic_trainer takes properties_df and hotel_details_df
                 await train_model(
-                    general_df_properties, # Use the potentially refetched data
-                    general_df_hotel_details, # Use the potentially refetched data
+                    general_df_properties,  # Use the potentially refetched data
+                    general_df_hotel_details,  # Use the potentially refetched data
                     destination,
                     adults,
                     rooms,
                     limit,
                     hotel_details_limit,
-                    model_filename,
+                    model_filepath,
                 )
                 # Save new metadata based on the data actually used for training
                 metadata = {
@@ -403,11 +361,14 @@ async def scrape_booking_com_data(
                     "trained_properties_count": len(general_df_properties),
                     "trained_hotel_details_count": len(general_df_hotel_details),
                 }
-                save_model_metadata(model_filename, metadata)
-                logger.success(f"Model '{model_filename}' retrained and metadata updated.")
+                save_model_metadata(model_filepath, metadata)
+                logger.success(
+                    f"Model '{model_filepath}' retrained and metadata updated."
+                )
             else:
-                logger.info(f"Model '{model_filename}' is up-to-date. Skipping retraining.")
-
+                logger.info(
+                    f"Model '{model_filepath}' is up-to-date. Skipping retraining."
+                )
 
         except Exception as e:
             logger.error(f"Error during scraping process: {e}", exc_info=True)
@@ -418,6 +379,42 @@ async def scrape_booking_com_data(
     return (
         specific_property,
         specific_hotel_detail,
-        general_df_properties,
-        general_df_hotel_details,
     )
+
+async def run():
+    destination = "Unawatuna"
+    adults = 2
+    rooms = 1
+    limit = 300  # Corresponds to properties limit
+    hotel_details_limit = 100
+
+    logger.info(
+        f"Starting scraping for: Destination={destination}, Adults={adults}, Rooms={rooms}, Properties Limit={limit}, Hotel Details Limit={hotel_details_limit}"
+    )
+
+    # Call the main scraping function
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True)
+        try:
+            df_properties, df_hotel_details = await scrape_general_data(
+                browser=browser,
+                destination=destination,
+                hotel_details_limit=hotel_details_limit,
+                adults=adults,
+                rooms=rooms,
+                limit=limit,
+                force_refetch=True,  # Set to True to force re-scraping
+                force_fetch_delay=None,
+                specific_property_to_exclude=None,
+            )
+
+            logger.info(f"Scraped {len(df_properties)} properties.")
+            logger.info(f"Scraped {len(df_hotel_details)} hotel details.")
+        finally:
+            await browser.close()
+
+    logger.info("Scraping process finished.")
+
+
+if __name__ == "__main__":
+    asyncio.run(run())

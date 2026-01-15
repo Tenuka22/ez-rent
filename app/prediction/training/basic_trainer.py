@@ -1,5 +1,5 @@
 import os
-from typing import Optional, cast
+from typing import cast
 
 import joblib
 import pandas as pd
@@ -45,17 +45,21 @@ async def train_model(
         )
 
         # Rename conflicting columns in hotel_details_df before merge to avoid _x, _y suffixes
-        hotel_details_df_renamed = hotel_details_df.rename(columns={
-            "name": "detail_name",
-            "star_rating": "detail_star_rating",
-            "address": "detail_address",
-            "guest_rating": "detail_guest_rating",
-            "review_count": "detail_review_count",
-        })
+        hotel_details_df_renamed = hotel_details_df.rename(
+            columns={
+                "name": "detail_name",
+                "star_rating": "detail_star_rating",
+                "address": "detail_address",
+                "guest_rating": "detail_guest_rating",
+                "review_count": "detail_review_count",
+            }
+        )
 
         # Debugging logs before merge
         logger.debug(f"Properties DF count before merge: {len(properties_df)}")
-        logger.debug(f"Hotel Details DF count before merge: {len(hotel_details_df_renamed)}")
+        logger.debug(
+            f"Hotel Details DF count before merge: {len(hotel_details_df_renamed)}"
+        )
 
         if not properties_df.empty:
             logger.debug(
@@ -88,7 +92,7 @@ async def train_model(
 
         df = pd.merge(
             properties_df,
-            hotel_details_df_renamed, # Use the renamed DataFrame
+            hotel_details_df_renamed,  # Use the renamed DataFrame
             left_on="hotel_link_normalized",
             right_on="url_normalized",
             how="inner",
@@ -104,17 +108,26 @@ async def train_model(
         if "detail_star_rating" in df.columns:
             df["star_rating"] = df["star_rating"].fillna(df["detail_star_rating"])
         if "detail_guest_rating" in df.columns:
-            df["guest_rating_score"] = df["guest_rating_score"].fillna(df["detail_guest_rating"])
+            df["guest_rating_score"] = df["guest_rating_score"].fillna(
+                df["detail_guest_rating"]
+            )
         if "detail_review_count" in df.columns:
             df["reviews"] = df["reviews"].fillna(df["detail_review_count"])
 
         # Drop the temporary detail_ columns
         df.drop(
             columns=[
-                col for col in ["detail_name", "detail_star_rating", "detail_address", "detail_guest_rating", "detail_review_count"]
+                col
+                for col in [
+                    "detail_name",
+                    "detail_star_rating",
+                    "detail_address",
+                    "detail_guest_rating",
+                    "detail_review_count",
+                ]
                 if col in df.columns
             ],
-            inplace=True
+            inplace=True,
         )
 
         if len(df) < 10:  # Minimum data requirement after merge
@@ -310,19 +323,22 @@ async def train_model(
         logger.info(f"Final training loss: {history.history['loss'][-1]:.4f}")
         logger.info(f"Final validation loss: {history.history['val_loss'][-1]:.4f}")
 
-        model_path = os.path.join(ML_MODEL_DIR, model_filename)
-        os.makedirs(model_path, exist_ok=True)
-        logger.info(f"Saving model artifacts to: {model_path}")
+        model_dir = model_filename  # `model_filename` is already the full path to the directory
+        os.makedirs(model_dir, exist_ok=True)
+        logger.info(f"Saving model artifacts to: {model_dir}")
 
-        model.save(os.path.join(model_path, "tf_model.keras"))
+        # Extract the base name from the full path for artifact filenames
+        model_base_name = os.path.basename(model_dir)
+
+        model.save(os.path.join(model_dir, "tf_model.keras"))
         logger.debug("TensorFlow model saved.")
 
         # Save BOTH scalers
         joblib.dump(
-            scaler_X, os.path.join(model_path, f"{model_filename}_scaler_X.joblib")
+            scaler_X, os.path.join(model_dir, f"{model_base_name}_scaler_X.joblib")
         )
         joblib.dump(
-            scaler_y, os.path.join(model_path, f"{model_filename}_scaler_y.joblib")
+            scaler_y, os.path.join(model_dir, f"{model_base_name}_scaler_y.joblib")
         )
         logger.debug("Scalers saved.")
 
@@ -340,7 +356,7 @@ async def train_model(
                 "target": "discounted_price_value",
                 "currency": currency,
             },
-            os.path.join(model_path, f"{model_filename}_meta.joblib"),
+            os.path.join(model_dir, f"{model_base_name}_meta.joblib"),
         )
         logger.debug("Metadata saved.")
 
@@ -353,3 +369,43 @@ async def train_model(
             exc_info=True,
         )
         raise Exception(f"Error creating basic price predictor: {str(e)}")
+
+
+if __name__ == "__main__":
+    import asyncio
+
+    # Define paths to the scraped data
+    hotel_details_path = r"D:\\Projects\\ez-rent\\scraped\\hotel_details\\Unawatuna_2_1_limit_100.csv"
+    properties_path = (
+        r"D:\\Projects\\ez-rent\\scraped\\properties\\Unawatuna_2_1_limit_300.csv"
+    )
+
+    # Load the datasets
+    df_hotel_details = pd.read_csv(hotel_details_path)
+    df_properties = pd.read_csv(properties_path)
+
+    # Extract parameters from file names or define them manually
+    destination = "Unawatuna"
+    adults = 2
+    rooms = 1
+    properties_limit = 300
+    hotel_details_limit_val = 100
+
+    # Construct model filename
+    model_filename = f"{destination}_{adults}_{rooms}_{properties_limit}_basic"
+
+    # Run the asynchronous training function
+    print(f"Running basic training for {model_filename}...")
+    asyncio.run(
+        train_model(
+            properties_df=df_properties,
+            hotel_details_df=df_hotel_details,
+            destination=destination,
+            adults=adults,
+            rooms=rooms,
+            limit=properties_limit,
+            hotel_details_limit=hotel_details_limit_val,
+            model_filename=model_filename,
+        )
+    )
+    print("Basic training finished.")

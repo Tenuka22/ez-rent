@@ -12,16 +12,6 @@ from app.utils.logger import logger
 def save_scraped_data_to_csv(
     data: pd.DataFrame, destination: str, adults: int, rooms: int, limit: int
 ) -> None:
-    """
-    Saves a list of PropertyListing objects to a CSV file.
-
-    Args:
-        data: List of PropertyListing objects.
-        destination: The destination string.
-        adults: The number of adults.
-        rooms: The number of rooms.
-        limit: The limit used for scraping.
-    """
     file_path = PROPERTIES_CSV_PATH_TEMPLATE.format(
         destination=destination, adults=adults, rooms=rooms, limit=limit
     )
@@ -51,16 +41,6 @@ def save_scraped_data_to_csv(
 def save_hotel_detail_data_to_csv(
     data: pd.DataFrame, destination: str, adults: int, rooms: int, limit: int
 ) -> None:
-    """
-    Saves a list of HotelDetails objects to a CSV file.
-
-    Args:
-        data: List of HotelDetails objects.
-        destination: The destination string.
-        adults: The number of adults.
-        rooms: The number of rooms.
-        limit: The limit used for scraping.
-    """
     file_path = HOTEL_DETAILS_CSV_PATH_TEMPLATE.format(
         destination=destination, adults=adults, rooms=rooms, limit=limit
     )
@@ -99,16 +79,6 @@ def save_hotel_detail_data_to_csv(
 def read_scraped_data_from_csv(
     file_path: str, is_hotel_detail: bool = False
 ) -> pd.DataFrame:
-    """
-    Reads scraped data from a CSV file and returns a list of PropertyListing or HotelDetails objects.
-
-    Args:
-        file_path: The path to the CSV file.
-        is_hotel_detail: If True, reads data as HotelDetails; otherwise, as PropertyListing.
-
-    Returns:
-        List[PropertyListing] | List[HotelDetails]: A list of objects.
-    """
     logger.info(
         f"Attempting to read scraped data from CSV: {file_path}. "
         f"is_hotel_detail: {is_hotel_detail}"
