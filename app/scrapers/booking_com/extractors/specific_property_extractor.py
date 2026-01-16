@@ -7,10 +7,10 @@ from app.data_models import HotelDetails, PropertyListing
 from app.scrapers.booking_com.extractors.hotel_details_extractor import (
     scrape_hotel_data,
 )
-from app.scrapers.booking_com.extractors.properties_extractor import (
+from app.scrapers.booking_com.extractors.extract_property_listing_from_card import (
     extract_property_listing_from_card,
 )
-from app.scrapers.booking_com.navigation import goto_properties_page
+from app.scrapers.booking_com.navigation.goto_properties_page import goto_properties_page
 from app.scrapers.booking_com.playwright_urls import BookingComUrls
 from app.utils.logger import logger
 

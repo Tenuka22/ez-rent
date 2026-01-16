@@ -1,15 +1,22 @@
 # app/utils/constants.py
 
+# Base directories
+BASE_SCAPRED_DIR = "./scraped"
+BASE_ML_DIR = "./ml_files"
+
 # Templates for scraped data CSV file paths
 PROPERTIES_CSV_PATH_TEMPLATE = (
-    "./scraped/properties/{destination}/{adults}/{rooms}/limit_{limit}.csv"
+    f"{BASE_SCAPRED_DIR}/properties/{{destination}}/{{adults}}/{{rooms}}/limit_{{limit}}.csv"
 )
 HOTEL_DETAILS_CSV_PATH_TEMPLATE = (
-    "./scraped/hotel_details/{destination}/{adults}/{rooms}/limit_{limit}.csv"
+    f"{BASE_SCAPRED_DIR}/hotel_details/{{destination}}/{{adults}}/{{rooms}}/limit_{{limit}}.csv"
 )
 
+# Cache file path for URLs
+URL_CSV_PATH = f"{BASE_SCAPRED_DIR}/urls.csv"
+
 # Directory for storing machine learning model artifacts
-ML_MODEL_DIR = "./ml_files"
+ML_MODEL_DIR = BASE_ML_DIR
 
 
 def get_scraped_data_filepath(

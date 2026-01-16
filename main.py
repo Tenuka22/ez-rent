@@ -5,7 +5,7 @@ import pandas as pd
 
 from app.cli.manual_data_entry import get_manual_hotel_data_from_user
 from app.prediction.model_predictor import predict_price
-from app.scrapers.booking_com.orchestrator import scrape_booking_com_data
+from app.scrapers.booking_com.orchestrator.scrape_booking_com_data import scrape_booking_com_data
 from app.utils.logger import logger
 
 
@@ -76,7 +76,7 @@ async def main():
     hotel_details_limit: int = args.hotel_details_limit
     force_refetch: bool = args.force_refetch
 
-    DATA_SOURCE: Literal["scrape", "manual"] = args.data_source
+    DATA_SOURCE: Literal["scrape", "manual"] = args.predictor_house_data_source
     PREDICTION_MODEL_TYPE: Literal["basic", "advanced"] = args.prediction_model_type
     TARGET_HOTEL_NAME: str = args.target_hotel_name
 

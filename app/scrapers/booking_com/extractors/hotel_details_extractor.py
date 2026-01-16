@@ -4,8 +4,8 @@ from playwright.async_api import Page
 
 from app.data_models import HotelDetails
 from app.utils.logger import logger
-from app.scrapers.booking_com.actions.page_actions import (
-    scroll_page_fully,
+from app.scrapers.booking_com.actions.scroll_page_fully import scroll_page_fully
+from app.scrapers.booking_com.actions.extract_facility_group import (
     extract_facility_group,
 )
 from app.scrapers.booking_com.utils import modal_dismisser

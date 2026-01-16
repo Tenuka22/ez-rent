@@ -5,8 +5,8 @@ import tensorflow as tf
 
 from app.prediction.feature_engineering import extract_hotel_details_features
 from app.prediction.model_loader import load_model_artifacts  # Import the new function
-from app.scrapers.booking_com.orchestrator import (
-    get_model_filepath,  # Import the helper
+from app.utils.constants import (
+    get_model_filepath,
 )
 from app.utils.logger import logger
 
@@ -117,3 +117,93 @@ async def predict_price(
 
     logger.info("Price prediction completed.")
     return results_df
+
+
+if __name__ == "__main__":
+    import asyncio
+    import pandas as pd
+    import os
+    # from app.data_models import PropertyListing # These are not directly used here, but good for context
+    # from app.data_models import HotelDetails # These are not directly used here, but good for context
+
+    async def main():
+        # Define the parameters that match how the model was trained
+        destination = "Unawatuna"
+        adults = 2
+        rooms = 1
+        properties_limit = 20 # Changed from 300 to 20
+        hotel_details_limit = 10  # Changed from 100 to 10
+
+        # Paths to the scraped data that the model would have been trained on
+        # For demonstration, we'll try to load existing scraped data
+        properties_path = os.path.join(
+            "scraped", "properties", str(destination), str(adults), str(rooms), f"limit_{properties_limit}.csv"
+        )
+        hotel_details_path = os.path.join(
+            "scraped", "hotel_details", str(destination), str(adults), str(rooms), f"limit_{hotel_details_limit}.csv"
+        )
+        
+        df_properties = pd.DataFrame()
+        df_hotel_details = None # Only for advanced model
+
+        try:
+            df_properties = pd.read_csv(properties_path)
+            print(f"Loaded {len(df_properties)} properties from {properties_path}")
+        except FileNotFoundError:
+            print(f"Properties file not found at {properties_path}. Cannot perform prediction.")
+            return
+
+        # Prepare df_properties for a specific prediction if desired, or use the full df
+        # For the user's request "Unawatuna Sunset Mirage Villa", let's filter for it
+        target_hotel_name = "Sunset Mirage Villa" # From user prompt
+        specific_property_df = df_properties[df_properties["name"].str.contains(target_hotel_name, case=False, na=False)]
+
+        if specific_property_df.empty:
+            print(f"Target hotel '{target_hotel_name}' not found in scraped properties. Using all properties for prediction.")
+            df_properties_for_prediction = df_properties
+        else:
+            print(f"Found target hotel '{target_hotel_name}'. Predicting for this hotel.")
+            df_properties_for_prediction = specific_property_df
+        
+        # Determine model type and load hotel details if using advanced model
+        # For now, explicitly use basic model as that's what was last trained successfully with these limits
+        model_type_to_use = "basic" 
+        
+        # Check if an advanced model exists for this configuration. 
+        # Note: with current training flow, advanced model for limit=20, details=10 might not exist yet.
+        advanced_model_name = "advanced_price_predictor"
+        advanced_model_filepath = get_model_filepath(destination, adults, rooms, properties_limit, hotel_details_limit, model_name=advanced_model_name)
+        
+        if os.path.exists(os.path.join(advanced_model_filepath, "tf_model.keras")):
+            print(f"Found advanced model artifacts at {advanced_model_filepath}. Attempting to use advanced model.")
+            model_type_to_use = "advanced"
+            
+            try:
+                df_hotel_details = pd.read_csv(hotel_details_path)
+                print(f"Loaded {len(df_hotel_details)} hotel details from {hotel_details_path} for advanced model.")
+            except FileNotFoundError:
+                print(f"Hotel details file not found at {hotel_details_path}. Cannot perform advanced prediction. Falling back to basic model.")
+                df_hotel_details = None
+                model_type_to_use = "basic" # Fallback if hotel details not found for advanced
+        else:
+            print(f"No advanced model artifacts found at {advanced_model_filepath}. Using basic model.")
+
+
+        print(f"Using model type: {model_type_to_use}")
+
+        # Perform prediction
+        predicted_df = await predict_price(
+            df_properties=df_properties_for_prediction,
+            df_hotel_details=df_hotel_details, # Pass hotel details for advanced model
+            model_type=model_type_to_use, # Use the determined model type
+            destination=destination,
+            adults=adults,
+            rooms=rooms,
+            limit=properties_limit,
+            hotel_details_limit=hotel_details_limit,
+        )
+
+        print("\nPredicted Prices:")
+        print(predicted_df.to_string())
+
+    asyncio.run(main())

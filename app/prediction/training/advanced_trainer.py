@@ -1,4 +1,5 @@
 import os
+import os
 from typing import cast
 
 import joblib
@@ -8,6 +9,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 from app.prediction.feature_engineering import extract_hotel_details_features
+from app.utils.constants import ML_MODEL_DIR, get_model_filepath
 from app.utils.logger import logger
 
 
@@ -227,21 +229,29 @@ async def train_advanced_model(
             callbacks=[early_stopping],
             verbose=1,
         )
-        logger.info("Advanced model training completed.")
+        logger.info(f"Advanced model training completed.")
 
         logger.info(f"Final training loss: {history.history['loss'][-1]:.4f}")
         logger.info(f"Final validation loss: {history.history['val_loss'][-1]:.4f}")
 
-        model_name = "advanced_price_predictor"  # New model name
-        base_path = f"./ml_files/{destination}_{adults}_{rooms}_{limit}_{model_name}"
+        model_name_prefix = "advanced_price_predictor"
+        model_filename_full = get_model_filepath(
+            destination,
+            adults,
+            rooms,
+            limit,
+            hotel_details_limit=0, # Advanced model is not limited by hotel_details_limit directly for its name
+            model_name=model_name_prefix
+        )
+        base_path = model_filename_full # The function already returns the full base path
         os.makedirs(base_path, exist_ok=True)
         logger.info(f"Saving advanced model artifacts to: {base_path}")
 
         model.save(os.path.join(base_path, "tf_model.keras"))
         logger.debug("Advanced TensorFlow model saved.")
 
-        joblib.dump(scaler_X, os.path.join(base_path, f"{model_name}_scaler_X.joblib"))
-        joblib.dump(scaler_y, os.path.join(base_path, f"{model_name}_scaler_y.joblib"))
+        joblib.dump(scaler_X, os.path.join(base_path, f"{model_name_prefix}_scaler_X.joblib"))
+        joblib.dump(scaler_y, os.path.join(base_path, f"{model_name_prefix}_scaler_y.joblib"))
         logger.debug("Advanced scalers saved.")
 
         joblib.dump(
@@ -250,7 +260,7 @@ async def train_advanced_model(
                 "target": target_column,
                 "currency": currency,
             },
-            os.path.join(base_path, f"{model_name}_meta.joblib"),
+            os.path.join(base_path, f"{model_name_prefix}_meta.joblib"),
         )
         logger.debug("Advanced metadata saved.")
 
@@ -269,9 +279,11 @@ if __name__ == "__main__":
     import asyncio
 
     # Define paths to the scraped data
-    hotel_details_path = r"D:\\Projects\\ez-rent\\scraped\\hotel_details\\Unawatuna_2_1_limit_100.csv"
-    properties_path = (
-        r"D:\\Projects\\ez-rent\\scraped\\properties\\Unawatuna_2_1_limit_300.csv"
+    properties_path = os.path.join(
+        "scraped", "properties", str(destination), str(adults), str(rooms), f"limit_{limit}.csv"
+    )
+    hotel_details_path = os.path.join(
+        "scraped", "hotel_details", str(destination), str(adults), str(rooms), f"limit_100.csv" # The original model used a hotel_details_limit of 100
     )
 
     # Load the datasets

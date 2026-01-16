@@ -23,11 +23,15 @@ def load_model_artifacts(
     Raises:
         FileNotFoundError: If any required model artifact is not found.
     """
-    base_path = os.path.join(ML_MODEL_DIR, model_filename)
+    base_path = model_filename # model_filename is already the full path to the model directory
     model_path = os.path.join(base_path, "tf_model.keras")
-    scaler_x_path = os.path.join(base_path, f"{model_filename}_scaler_X.joblib")
-    scaler_y_path = os.path.join(base_path, f"{model_filename}_scaler_y.joblib")
-    meta_path = os.path.join(base_path, f"{model_filename}_meta.joblib")
+    
+    # Extract the base name from the full path for the scaler and meta files
+    model_base_name = os.path.basename(base_path)
+
+    scaler_x_path = os.path.join(base_path, f"{model_base_name}_scaler_X.joblib")
+    scaler_y_path = os.path.join(base_path, f"{model_base_name}_scaler_y.joblib")
+    meta_path = os.path.join(base_path, f"{model_base_name}_meta.joblib")
 
     # Check if all model artifacts exist
     if not all(

@@ -1,4 +1,5 @@
 import os
+import os
 from typing import cast
 
 import joblib
@@ -7,7 +8,7 @@ import tensorflow as tf
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
-from app.utils.constants import ML_MODEL_DIR  # Import ML_MODEL_DIR
+
 from app.utils.logger import logger
 
 
@@ -375,9 +376,11 @@ if __name__ == "__main__":
     import asyncio
 
     # Define paths to the scraped data
-    hotel_details_path = r"D:\\Projects\\ez-rent\\scraped\\hotel_details\\Unawatuna_2_1_limit_100.csv"
-    properties_path = (
-        r"D:\\Projects\\ez-rent\\scraped\\properties\\Unawatuna_2_1_limit_300.csv"
+    properties_path = os.path.join(
+        "scraped", "properties", str(destination), str(adults), str(rooms), f"limit_{properties_limit}.csv"
+    )
+    hotel_details_path = os.path.join(
+        "scraped", "hotel_details", str(destination), str(adults), str(rooms), f"limit_{hotel_details_limit_val}.csv"
     )
 
     # Load the datasets
