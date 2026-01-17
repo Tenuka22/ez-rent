@@ -8,6 +8,7 @@ app = FastAPI(
     version="1.0.0",
 )
 
+
 app.include_router(predictions.router, tags=["Predictions"])
 app.include_router(properties.router, tags=["Properties"])
 app.include_router(cache.router, tags=["Scrapes"])

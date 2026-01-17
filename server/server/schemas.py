@@ -54,3 +54,37 @@ class PropertyDetailsResponse(BaseModel):
 class PaginatedPropertiesResponse(BaseModel):
     properties: List[PropertyListing]
     total: int
+    skip: int = 0
+    page_size: int = 20
+
+
+class PaginatedScrapesResponse(BaseModel):
+    available_scrapes: List[ScrapeConfig]
+    total: int
+    skip: int = 0
+    page_size: int = 20
+
+
+class PredictionHistoryEntry(BaseModel):
+    model_type: str
+    destination: str
+    adults: int
+    rooms: int
+    properties_limit: Optional[int]
+    hotel_details_limit: Optional[int]
+    timestamp: str
+    filename: str
+    full_path: str
+
+class PredictionHistoryResponse(BaseModel):
+    predictions: List[PredictionHistoryEntry]
+    total: int
+    skip: int = 0
+    page_size: int = 20
+
+
+class PaginatedPredictionDataResponse(BaseModel):
+    data: List[dict]
+    total: int
+    skip: int = 0
+    page_size: int = 20
