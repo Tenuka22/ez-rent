@@ -138,7 +138,7 @@ async def scrape_booking_com_data(
                         adults,
                         rooms,
                         limit,
-                        force_refetch=True,
+                        force_refetch=force_refetch,
                         specific_property_to_exclude=specific_property,
                         force_fetch_delay=force_fetch_delay,
                     )
@@ -166,8 +166,8 @@ async def scrape_booking_com_data(
                     "trained_hotel_details_count": len(general_df_hotel_details),
                 }
                 # Extract the base name from the full model_filepath for metadata saving
-                model_base_name_for_metadata = os.path.basename(model_filepath)
-                save_model_metadata(model_base_name_for_metadata, metadata)
+               
+                save_model_metadata(model_filename=model_filepath,metadata=metadata)
                 logger.success(
                     f"Model '{model_filepath}' retrained and metadata updated."
                 )

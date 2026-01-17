@@ -1,7 +1,5 @@
 import os
 
-from app.utils.constants import ML_MODEL_DIR
-
 
 def get_model_metadata_path(model_filename: str) -> str:
     """
@@ -13,4 +11,4 @@ def get_model_metadata_path(model_filename: str) -> str:
     Returns:
         str: The full path to the metadata JSON file.
     """
-    return os.path.join(ML_MODEL_DIR, f"{model_filename}.json")
+    return os.path.join(f"{model_filename}.json")
