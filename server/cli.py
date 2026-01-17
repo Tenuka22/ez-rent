@@ -2,11 +2,9 @@ import asyncio
 from typing import Literal, Optional
 
 import typer
-import uvicorn
 
 from app.core_logic import run_prediction_flow
 from app.utils.logger import logger
-from server import app as fastapi_app
 
 cli_app = typer.Typer()
 
@@ -33,7 +31,9 @@ def run(
         100, help="Maximum number of hotel details to scrape."
     ),
     force_refetch: bool = typer.Option(
-        False, "--force-refetch", help="If set, forces refetching of data even if cached."
+        False,
+        "--force-refetch",
+        help="If set, forces refetching of data even if cached.",
     ),
     prediction_model_type: Literal["basic", "advanced"] = typer.Option(
         "basic",
@@ -68,18 +68,6 @@ def run(
     except Exception as e:
         logger.error(f"An unexpected error occurred: {e}", exc_info=True)
         raise typer.Exit(code=1)
-
-
-@cli_app.command(help="Start the FastAPI web server.")
-def serve(
-    host: str = typer.Option("127.0.0.1", help="The host to bind the server to."),
-    port: int = typer.Option(8000, help="The port to run the server on."),
-):
-    """
-    Starts the Uvicorn server for the FastAPI application.
-    """
-    logger.info(f"Starting Ez-Rent API server at http://{host}:{port}")
-    uvicorn.run(fastapi_app, host=host, port=port)
 
 
 if __name__ == "__main__":

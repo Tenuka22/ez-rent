@@ -1,3 +1,5 @@
+import os
+
 # app/utils/constants.py
 
 # Base directories
@@ -49,4 +51,34 @@ def get_model_filepath(
     """
     Generates a consistent filename for the trained model.
     """
-    return f"{ML_MODEL_DIR}/{destination}_{adults}_{rooms}_{properties_limit}_{hotel_details_limit}_{model_name}"
+    filename = f"{destination}_{adults}_{rooms}_{properties_limit}_{hotel_details_limit}_{model_name}"
+    return os.path.join(ML_MODEL_DIR, filename)
+
+
+# Directory for storing prediction results
+PREDICTIONS_DIR = os.path.join(BASE_SCAPRED_DIR, "predictions")
+
+
+def get_prediction_filepath(
+    destination: str,
+    adults: int,
+    rooms: int,
+    properties_limit: int,
+    hotel_details_limit: int,
+    model_type: str,
+    timestamp: str,
+) -> str:
+    """
+    Constructs the file path for saving prediction results.
+    """
+    dir_path = os.path.join(
+        PREDICTIONS_DIR,
+        model_type,
+        destination,
+        str(adults),
+        str(rooms),
+        f"props_{properties_limit}",
+        f"details_{hotel_details_limit}",
+    )
+    os.makedirs(dir_path, exist_ok=True)
+    return os.path.join(dir_path, f"predictions_{timestamp}.csv")

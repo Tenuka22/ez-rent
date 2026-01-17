@@ -1,5 +1,6 @@
-import pandas as pd
 from typing import Literal, Optional
+
+import pandas as pd
 
 from app.cli.manual_data_entry import get_manual_hotel_data_from_user
 from app.prediction.model_predictor import predict_price

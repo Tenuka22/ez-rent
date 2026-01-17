@@ -1,0 +1,124 @@
+{
+  "hotel_name": "Sunset Mirage Villa",
+  "adults": 2,
+  "rooms": 1,
+  "cached_at": "2026-01-17T18:22:18.460320",
+  "property_listing": {
+    "name": "Sunset Mirage Villa Unawatuna",
+    "hotel_link": "https://www.booking.com/hotel/lk/sunset-mirage-villa-unawatuna.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALTi67LBsACAdICJGY5NDdmYmIyLWQzZmItNDJhMy1iZGEzLTUwNzJjY2RjYjBjZNgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-23&checkout=2026-01-24&dest_id=14882776&dest_type=hotel&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=popularity&srpvid=1f085a7527da003c&srepoch=1768654318&all_sr_blocks=1488277601_420293444_4_0_0&highlighted_blocks=1488277601_420293444_4_0_0&matching_block_id=1488277601_420293444_4_0_0&sr_pri_blocks=1488277601_420293444_4_0_0__3990&from=searchresults",
+    "address": "Unawatuna",
+    "star_rating": 0.0,
+    "guest_rating_score": 9.0,
+    "reviews": 1.0,
+    "distance_from_downtown": 1.3,
+    "distance_from_beach": 1.0,
+    "preferred_badge": 0,
+    "deal_badge": 0,
+    "room_type": "Three-Bedroom Villa",
+    "bed_details": "5 beds (1 single, 1 extra-large double, 2 sofa beds, 1 large double)",
+    "cancellation_policy": "",
+    "prepayment_policy": "",
+    "availability_message": "",
+    "nights_and_guests": "1 night, 1 adult",
+    "original_price_value": 40.0,
+    "original_price_currency": "$",
+    "discounted_price_value": 40.0,
+    "discounted_price_currency": "$",
+    "taxes_and_fees_value": 4.0,
+    "taxes_and_fees_currency": "$"
+  },
+  "hotel_details": {
+    "url": "https://www.booking.com/hotel/lk/sunset-mirage-villa-unawatuna.en-gb.html?label=gen173nr-10CAEoggI46AdIM1gEaIUBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuALTi67LBsACAdICJGY5NDdmYmIyLWQzZmItNDJhMy1iZGEzLTUwNzJjY2RjYjBjZNgCAeACAQ&aid=304142&ucfs=1&arphpl=1&checkin=2026-01-23&checkout=2026-01-24&dest_id=14882776&dest_type=hotel&group_adults=1&req_adults=1&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=popularity&srpvid=1f085a7527da003c&srepoch=1768654318&all_sr_blocks=1488277601_420293444_4_0_0&highlighted_blocks=1488277601_420293444_4_0_0&matching_block_id=1488277601_420293444_4_0_0&sr_pri_blocks=1488277601_420293444_4_0_0__3990&from=searchresults",
+    "name": "Sunset Mirage Villa Unawatuna (Villa) (Sri Lanka) deals",
+    "star_rating": 0,
+    "guest_rating": 9.0,
+    "review_count": null,
+    "review_score_text": "Superb",
+    "address": "Sunset Mirage Villa, 80600 Unawatuna, Sri Lanka\nAfter booking, all of the property’s details, including telephone and address, are provided in your booking confirmation and your account.",
+    "coordinates": {
+      "lat": 6.0117216,
+      "lng": 80.2603298
+    },
+    "location_score": null,
+    "description": "Spacious Accommodation: Sunset Mirage Villa in Unawatuna offers a spacious villa with three bedrooms and two bathrooms. The property features a living room, balcony, terrace, and garden views.\n\nModern Amenities: Guests enjoy free WiFi, air-conditioning, a kitchenette, washing machine, and free toiletries. Additional facilities include a work desk, wardrobe, and free on-site private parking.\n\nConvenient Location: Located 7 km from Koggala Airport, the villa is a 19-minute walk from Unawatuna Beach. Nearby attractions include Galle Fort and Dutch Church Galle, each 7 km away.\n\nActivities and Surroundings: Sunset Mirage Villa provides access to scuba diving and offers paid shuttle, outdoor seating, family rooms, bicycle parking, bike hire, and car hire services.",
+    "property_highlights": [
+      "Quiet street view",
+      "Mountain view",
+      "Terrace",
+      "Garden view",
+      "Quiet street view",
+      "Mountain view",
+      "Terrace",
+      "Garden view",
+      "Free private parking available on-site",
+      "Bicycle rental"
+    ],
+    "most_popular_facilities": [
+      "Airport shuttle",
+      "Free parking",
+      "Non-smoking rooms",
+      "Fast free WiFi (80 Mbps)",
+      "Family rooms",
+      "Terrace",
+      "Air conditioning",
+      "Garden",
+      "Airport shuttle",
+      "Free parking",
+      "Non-smoking rooms",
+      "Fast free WiFi (80 Mbps)",
+      "Family rooms",
+      "Terrace",
+      "Air conditioning",
+      "Garden"
+    ],
+    "bathroom_facilities": [
+      "Toilet paper",
+      "Towels",
+      "Towels/sheets (extra fee)",
+      "Bath or shower",
+      "Private bathroom",
+      "Toilet",
+      "Free toiletries",
+      "Shower"
+    ],
+    "view_type": [
+      "Mountain view",
+      "Garden view"
+    ],
+    "outdoor_facilities": [
+      "Outdoor furniture",
+      "Balcony",
+      "Terrace",
+      "Garden"
+    ],
+    "kitchen_facilities": [
+      "Cleaning products",
+      "Kitchen",
+      "Washing machine",
+      "Kitchenette"
+    ],
+    "room_amenities": [
+      "Socket near the bed",
+      "Drying rack for clothing",
+      "Clothes rack",
+      "Fan",
+      "Iron"
+    ],
+    "activities": null,
+    "food_drink": null,
+    "internet_info": "Fast free WiFi 80 Mbps. Suitable for streaming 4K content and making video calls on multiple devices. Speed test carried out by the host.",
+    "parking_info": "Free private parking is possible on site (reservation is needed).",
+    "services": null,
+    "safety_security": [
+      "CCTV outside property",
+      "CCTV in common areas",
+      "Safety deposit box"
+    ],
+    "general_facilities": null,
+    "pool_info": null,
+    "spa_wellness": null,
+    "languages_spoken": [
+      "English"
+    ]
+  }
+}
