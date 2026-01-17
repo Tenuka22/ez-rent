@@ -1,6 +1,6 @@
+import argparse
 import asyncio
 import os
-import argparse
 from dataclasses import asdict
 from datetime import datetime, timedelta
 from typing import Optional, Tuple
@@ -166,8 +166,8 @@ async def scrape_booking_com_data(
                     "trained_hotel_details_count": len(general_df_hotel_details),
                 }
                 # Extract the base name from the full model_filepath for metadata saving
-               
-                save_model_metadata(model_filename=model_filepath,metadata=metadata)
+
+                save_model_metadata(model_filename=model_filepath, metadata=metadata)
                 logger.success(
                     f"Model '{model_filepath}' retrained and metadata updated."
                 )
@@ -186,54 +186,3 @@ async def scrape_booking_com_data(
         specific_property,
         specific_hotel_detail,
     )
-
-
-if __name__ == "__main__":
-    import asyncio
-    import argparse
-
-    parser = argparse.ArgumentParser(description="Scrape Booking.com data and train model.")
-    parser.add_argument("--destination", type=str, default="Unawatuna", help="Destination to scrape (e.g., 'Unawatuna').")
-    parser.add_argument("--adults", type=int, default=2, help="Number of adults.")
-    parser.add_argument("--rooms", type=int, default=1, help="Number of rooms.")
-    parser.add_argument("--limit", type=int, default=300, help="Maximum number of properties to scrape.")
-    parser.add_argument("--hotel_details_limit", type=int, default=100, help="Maximum number of hotel details to scrape.")
-    parser.add_argument("--model_type", type=str, default="basic", choices=["basic", "advanced"], help="Type of model to train.")
-    parser.add_argument("--force_refetch", action="store_true", help="Force refetching of data even if cached.")
-    parser.add_argument("--target_hotel_name", type=str, default=None, help="Specific hotel name to target (e.g., 'Sunset Mirage Villa').")
-    parser.add_argument("--force_fetch_delay_hours", type=int, default=None, help="Force refetch data if older than this many hours. Defaults to 24 if target_hotel_name is provided, otherwise 7 days.")
-
-    args = parser.parse_args()
-
-    # Convert force_fetch_delay_hours to timedelta if provided, else use default logic
-    force_fetch_delay = None
-    if args.force_fetch_delay_hours is not None:
-        force_fetch_delay = timedelta(hours=args.force_fetch_delay_hours)
-    elif args.target_hotel_name: # Default to 24 hours if target_hotel_name is provided
-        force_fetch_delay = timedelta(hours=24)
-    else: # Default to 7 days otherwise
-        force_fetch_delay = timedelta(days=7)
-
-
-    print(
-        f"Running scrape_booking_com_data for destination='{args.destination}', "
-        f"adults={args.adults}, rooms={args.rooms}, limit={args.limit}, "
-        f"hotel_details_limit={args.hotel_details_limit}, model_type='{args.model_type}', "
-        f"force_refetch={args.force_refetch}, target_hotel_name='{args.target_hotel_name}', "
-        f"force_fetch_delay={force_fetch_delay}"
-    )
-    
-    asyncio.run(
-        scrape_booking_com_data(
-            destination=args.destination,
-            adults=args.adults,
-            rooms=args.rooms,
-            limit=args.limit,
-            hotel_details_limit=args.hotel_details_limit,
-            model_type=args.model_type,
-            force_refetch=args.force_refetch,
-            target_hotel_name=args.target_hotel_name,
-            force_fetch_delay=force_fetch_delay
-        )
-    )
-    print("scrape_booking_com_data finished.")

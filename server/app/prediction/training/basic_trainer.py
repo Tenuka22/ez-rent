@@ -1,5 +1,4 @@
 import os
-import os
 from typing import cast
 
 import joblib
@@ -7,7 +6,6 @@ import pandas as pd
 import tensorflow as tf
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-
 
 from app.utils.logger import logger
 
@@ -324,7 +322,9 @@ async def train_model(
         logger.info(f"Final training loss: {history.history['loss'][-1]:.4f}")
         logger.info(f"Final validation loss: {history.history['val_loss'][-1]:.4f}")
 
-        model_dir = model_filename  # `model_filename` is already the full path to the directory
+        model_dir = (
+            model_filename  # `model_filename` is already the full path to the directory
+        )
         os.makedirs(model_dir, exist_ok=True)
         logger.info(f"Saving model artifacts to: {model_dir}")
 
@@ -370,45 +370,3 @@ async def train_model(
             exc_info=True,
         )
         raise Exception(f"Error creating basic price predictor: {str(e)}")
-
-
-if __name__ == "__main__":
-    import asyncio
-
-    # Define paths to the scraped data
-    properties_path = os.path.join(
-        "scraped", "properties", str(destination), str(adults), str(rooms), f"limit_{properties_limit}.csv"
-    )
-    hotel_details_path = os.path.join(
-        "scraped", "hotel_details", str(destination), str(adults), str(rooms), f"limit_{hotel_details_limit_val}.csv"
-    )
-
-    # Load the datasets
-    df_hotel_details = pd.read_csv(hotel_details_path)
-    df_properties = pd.read_csv(properties_path)
-
-    # Extract parameters from file names or define them manually
-    destination = "Unawatuna"
-    adults = 2
-    rooms = 1
-    properties_limit = 300
-    hotel_details_limit_val = 100
-
-    # Construct model filename
-    model_filename = f"{destination}_{adults}_{rooms}_{properties_limit}_basic"
-
-    # Run the asynchronous training function
-    print(f"Running basic training for {model_filename}...")
-    asyncio.run(
-        train_model(
-            properties_df=df_properties,
-            hotel_details_df=df_hotel_details,
-            destination=destination,
-            adults=adults,
-            rooms=rooms,
-            limit=properties_limit,
-            hotel_details_limit=hotel_details_limit_val,
-            model_filename=model_filename,
-        )
-    )
-    print("Basic training finished.")

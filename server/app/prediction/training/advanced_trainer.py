@@ -1,5 +1,4 @@
 import os
-import os
 from typing import cast
 
 import joblib
@@ -240,18 +239,24 @@ async def train_advanced_model(
             adults,
             rooms,
             limit,
-            hotel_details_limit=0, # Advanced model is not limited by hotel_details_limit directly for its name
-            model_name=model_name_prefix
+            hotel_details_limit=0,  # Advanced model is not limited by hotel_details_limit directly for its name
+            model_name=model_name_prefix,
         )
-        base_path = model_filename_full # The function already returns the full base path
+        base_path = (
+            model_filename_full  # The function already returns the full base path
+        )
         os.makedirs(base_path, exist_ok=True)
         logger.info(f"Saving advanced model artifacts to: {base_path}")
 
         model.save(os.path.join(base_path, "tf_model.keras"))
         logger.debug("Advanced TensorFlow model saved.")
 
-        joblib.dump(scaler_X, os.path.join(base_path, f"{model_name_prefix}_scaler_X.joblib"))
-        joblib.dump(scaler_y, os.path.join(base_path, f"{model_name_prefix}_scaler_y.joblib"))
+        joblib.dump(
+            scaler_X, os.path.join(base_path, f"{model_name_prefix}_scaler_X.joblib")
+        )
+        joblib.dump(
+            scaler_y, os.path.join(base_path, f"{model_name_prefix}_scaler_y.joblib")
+        )
         logger.debug("Advanced scalers saved.")
 
         joblib.dump(
@@ -273,39 +278,3 @@ async def train_advanced_model(
             exc_info=True,
         )
         raise Exception(f"Error creating advanced price predictor: {str(e)}")
-
-
-if __name__ == "__main__":
-    import asyncio
-
-    # Define paths to the scraped data
-    properties_path = os.path.join(
-        "scraped", "properties", str(destination), str(adults), str(rooms), f"limit_{limit}.csv"
-    )
-    hotel_details_path = os.path.join(
-        "scraped", "hotel_details", str(destination), str(adults), str(rooms), f"limit_100.csv" # The original model used a hotel_details_limit of 100
-    )
-
-    # Load the datasets
-    df_hotel_details = pd.read_csv(hotel_details_path)
-    df_properties = pd.read_csv(properties_path)
-
-    # Extract parameters from file names or define them manually
-    destination = "Unawatuna"
-    adults = 2
-    rooms = 1
-    limit = 300  # This corresponds to the properties limit
-
-    # Run the asynchronous training function
-    print("Running advanced training...")
-    asyncio.run(
-        train_advanced_model(
-            df_properties=df_properties,
-            df_hotel_details=df_hotel_details,
-            destination=destination,
-            adults=adults,
-            rooms=rooms,
-            limit=limit,
-        )
-    )
-    print("Advanced training finished.")
